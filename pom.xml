@@ -3,12 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>com.github.jinahya</groupId>
-    <artifactId>jinahya-parent</artifactId>
-    <version>0.9.2</version>
-  </parent>
+  <!--  <parent>-->
+  <!--    <groupId>com.github.jinahya</groupId>-->
+  <!--    <artifactId>jinahya-parent</artifactId>-->
+  <!--    <version>0.9.2</version>-->
+  <!--  </parent>-->
 
+  <groupId>com.github.jinahya</groupId>
   <artifactId>mysql-employees-persistece</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
@@ -38,27 +39,23 @@
   </ciManagement>
 
   <properties>
-    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
-    <maven.compiler.release>8</maven.compiler.release>
-    <maven.compiler.testSource>21</maven.compiler.testSource>
+    <maven.compiler.release>${maven.compiler.target}</maven.compiler.release>
+    <maven.compiler.testSource>${maven.compiler.source}</maven.compiler.testSource>
     <maven.compiler.testTarget>${maven.compiler.testSource}</maven.compiler.testTarget>
     <maven.compiler.testRelease>${maven.compiler.testTarget}</maven.compiler.testRelease>
     <doclint>none</doclint>
     <sonar.organization>jinahya-github</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-    <version.animal-sniffer>1.23</version.animal-sniffer>
-    <version.com.oracle.ojdbc>23.3.0.23.09</version.com.oracle.ojdbc>
     <version.lombok>1.18.30</version.lombok>
     <version.maven-failsafe>${version.maven-surefire}</version.maven-failsafe>
     <version.maven-surefire>3.2.5</version.maven-surefire>
     <version.mysql-connector-j>8.3.0</version.mysql-connector-j>
-    <version.ojdbc6>11.2.0.4</version.ojdbc6>
-    <version.ojdbc8>21.8.0.0</version.ojdbc8>
-    <version.ojdbc10>19.17.0.0</version.ojdbc10>
-    <version.ojdbc11>21.8.0.0</version.ojdbc11>
     <!--    <version.org.apache.derby>10.16.1.1</version.org.apache.derby>-->
     <version.org.apache.derby>10.17.1.0</version.org.apache.derby>
+    <version.org.eclipse.persistence>4.0.2</version.org.eclipse.persistence>
+    <version.org.hibernate.orm>6.0.0.Alpha7</version.org.hibernate.orm>
     <version.org.hibernate.validator>8.0.1.Final</version.org.hibernate.validator>
     <version.org.junit.jupiter>5.10.2</version.org.junit.jupiter>
     <version.org.mockito>5.10.0</version.org.mockito>
@@ -73,6 +70,25 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <!-- https://wiki.eclipse.org/EclipseLink/Maven -->
+      <!-- https://search.maven.org/search?q=org.eclipse.persistence -->
+      <dependency>
+        <groupId>org.eclipse.persistence</groupId>
+        <artifactId>org.eclipse.persistence.jpa</artifactId>
+        <version>${version.org.eclipse.persistence}</version>
+      </dependency>
+      <!--      <dependency>-->
+      <!--        <groupId>org.eclipse.persistence</groupId>-->
+      <!--        <artifactId>org.eclipse.persistence.jpa.modelgen</artifactId>-->
+      <!--        <version>2.4.2</version>-->
+      <!--      </dependency>-->
+      <!-- https://search.maven.org/search?q=g:org.hibernate.orm -->
+      <!-- https://search.maven.org/artifact/org.hibernate.orm/hibernate-entitymanager -->
+      <dependency>
+        <groupId>org.hibernate.orm</groupId>
+        <artifactId>hibernate-entitymanager</artifactId>
+        <version>${version.org.hibernate.orm}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
   <dependencies>
@@ -83,33 +99,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.diffplug.durian</groupId>
-      <artifactId>durian</artifactId>
-      <version>3.4.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>33.0.0-jre</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.ibm.db2</groupId>
-      <artifactId>jcc</artifactId>
-      <version>11.5.9.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <version>2.2.224</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.vavr</groupId>
-      <artifactId>vavr</artifactId>
-      <version>1.0.0-alpha-4</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -169,12 +161,6 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.codehaus.mojo</groupId>
-      <artifactId>animal-sniffer-annotations</artifactId>
-      <version>${version.animal-sniffer}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>org.glassfish.expressly</groupId>
       <artifactId>expressly</artifactId>
       <version>5.0.0</version>
@@ -204,12 +190,6 @@
       <version>${version.org.junit.jupiter}</version>
       <scope>test</scope>
     </dependency>
-    <!--    <dependency>-->
-    <!--      <groupId>org.mockito</groupId>-->
-    <!--      <artifactId>mockito-inline</artifactId>-->
-    <!--      <version>${version.org.mockito}</version>-->
-    <!--      <scope>test</scope>-->
-    <!--    </dependency>-->
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-junit-jupiter</artifactId>
@@ -245,7 +225,7 @@
               <link>https://javadoc.io/doc/jakarta.platform/jakarta.jakartaee-api/latest</link>
             </links>
             <release>${maven.compiler.testRelease}</release>
-              <!-- https://issues.apache.org/jira/browse/MJAVADOC-720 -->
+            <!-- https://issues.apache.org/jira/browse/MJAVADOC-720 -->
             <sourcepath>${project.build.directory}/generated-sources-noduplicate/delombok</sourcepath>
             <!--            <sourcepath>target/generated-sources-noduplicate/delombok</sourcepath>-->
             <tags>
@@ -328,7 +308,7 @@
         <configuration>
           <archive>
             <manifestEntries>
-              <Automatic-Module-Name>com.github.jinahya.database.metadata.bind</Automatic-Module-Name>
+              <Automatic-Module-Name>com.github.jinahya.employees.persistence</Automatic-Module-Name>
             </manifestEntries>
           </archive>
         </configuration>
@@ -357,7 +337,7 @@
             <configuration>
               <rules>
                 <requireJavaVersion>
-                  <version>[1.8.0,)</version>
+                  <version>[21.0.0,)</version>
                 </requireJavaVersion>
               </rules>
             </configuration>
@@ -393,27 +373,6 @@
           </systemProperties>
           <trimStackTrace>false</trimStackTrace>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>animal-sniffer-maven-plugin</artifactId>
-        <version>${version.animal-sniffer}</version>
-        <executions>
-          <execution>
-            <id>check-against-java18</id>
-            <phase>test</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-            <configuration>
-              <signature>
-                <groupId>org.codehaus.mojo.signature</groupId>
-                <artifactId>java18</artifactId>
-                <version>1.0</version>
-              </signature>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -456,7 +415,7 @@
             </configuration>
             <phase>generate-sources</phase>
             <goals>
-              <goal>delombok</goal>
+<!--              <goal>delombok</goal>-->
             </goals>
           </execution>
         </executions>
@@ -562,108 +521,7 @@
       </build>
     </profile>
     <profile>
-      <id>testcontainers</id>
-      <dependencyManagement>
-        <dependencies>
-          <dependency>
-            <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ojdbc-bom</artifactId>
-            <!--            <version>23.2.0.0</version>-->
-            <version>23.3.0.23.09</version>
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
-          <dependency><!-- https://search.maven.org/search?q=g:org.testcontainers -->
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers-bom</artifactId>
-            <version>1.19.6</version>
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
-        </dependencies>
-      </dependencyManagement>
-      <dependencies>
-        <dependency>
-          <groupId>org.testcontainers</groupId>
-          <artifactId>db2</artifactId>
-          <scope>test</scope>
-        </dependency>
-        <dependency><!-- https://search.maven.org/search?q=a:mssql-jdbc -->
-          <groupId>com.microsoft.sqlserver</groupId>
-          <artifactId>mssql-jdbc</artifactId>
-          <!--          <version>11.2.3.jre17</version>-->
-          <version>12.6.1.jre11</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>com.mysql</groupId>
-          <artifactId>mysql-connector-j</artifactId>
-          <version>${version.mysql-connector-j}</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>com.oracle.database.jdbc</groupId>
-          <artifactId>ojdbc11</artifactId>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.mariadb.jdbc</groupId>
-          <artifactId>mariadb-java-client</artifactId>
-          <version>3.3.3</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.postgresql</groupId>
-          <artifactId>postgresql</artifactId>
-          <version>42.7.2</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.testcontainers</groupId>
-          <artifactId>junit-jupiter</artifactId>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.testcontainers</groupId>
-          <artifactId>mariadb</artifactId>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.testcontainers</groupId>
-          <artifactId>mssqlserver</artifactId>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.testcontainers</groupId>
-          <artifactId>mysql</artifactId>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.testcontainers</groupId>
-          <artifactId>oracle-xe</artifactId>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.testcontainers</groupId>
-          <artifactId>postgresql</artifactId>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.testcontainers</groupId>
-          <artifactId>testcontainers</artifactId>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.testcontainers</groupId>
-          <artifactId>trino</artifactId>
-          <scope>test</scope>
-        </dependency>
-        <!--        <dependency>-->
-        <!--          <groupId>org.testcontainers</groupId>-->
-        <!--          <artifactId>yugabytedb</artifactId>-->
-        <!--          <scope>test</scope>-->
-        <!--        </dependency>-->
-      </dependencies>
+      <id>persistence-provider-eclipselink</id>
       <build>
         <plugins>
           <plugin>
@@ -671,15 +529,44 @@
             <artifactId>build-helper-maven-plugin</artifactId>
             <executions>
               <execution>
-                <id>add-test-source</id>
-                <phase>generate-sources</phase>
+                <id>add-test-resource</id>
+                <phase>generate-resources</phase>
                 <goals>
-                  <goal>add-test-source</goal>
+                  <goal>add-test-resource</goal>
                 </goals>
                 <configuration>
-                  <sources>
-                    <source>${project.basedir}/src/test/java-testcontainers</source>
-                  </sources>
+                  <resources>
+                    <resource>
+                      <directory>src/test/resources-eclipselink</directory>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>persistence-provider-hibernate</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>add-test-resource</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>add-test-resource</goal>
+                </goals>
+                <configuration>
+                  <resources>
+                    <resource>
+                      <directory>src/test/resources-hibernate</directory>
+                    </resource>
+                  </resources>
                 </configuration>
               </execution>
             </executions>

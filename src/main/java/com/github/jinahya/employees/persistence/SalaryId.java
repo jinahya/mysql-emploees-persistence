@@ -1,0 +1,45 @@
+package com.github.jinahya.employees.persistence;
+
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Objects;
+
+@Setter
+@Getter
+@ToString(callSuper = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class SalaryId implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -378954798191441067L;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof SalaryId that)) {
+            return false;
+        }
+        return Objects.equals(empNo, that.empNo) &&
+                Objects.equals(fromDate, that.fromDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(empNo, fromDate);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @NotNull
+    private Integer empNo;
+
+    @NotNull
+    private LocalDate fromDate;
+
+}
