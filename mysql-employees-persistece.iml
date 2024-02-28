@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="4">
+  <component name="FacetManager">
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <datasource-mapping />
+        <naming-strategy-map />
+        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/test/resources-eclipselink/META-INF/persistence.xml" />
+      </configuration>
+    </facet>
+  </component>
   <component name="SonarLintModuleSettings">
     <option name="uniqueId" value="9344075e-1c1e-4ec8-ba4a-2880127e9991" />
   </component>

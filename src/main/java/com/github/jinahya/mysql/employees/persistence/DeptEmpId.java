@@ -1,30 +1,26 @@
-package com.github.jinahya.employees.persistence;
+package com.github.jinahya.mysql.employees.persistence;
 
-import jakarta.persistence.Embeddable;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.Objects;
 
-@Embeddable
 @Setter
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class DeptManagerId implements Serializable {
+public class DeptEmpId implements BaseId {
 
     @Serial
-    private static final long serialVersionUID = 3570976925092865329L;
+    private static final long serialVersionUID = 6356541964725322638L;
 
     // -----------------------------------------------------------------------------------------------------------------
     @Override
-    public boolean equals(final Object obj) {
+    public final boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof DeptManagerId that)) {
+        if (!(obj instanceof DeptEmpId that)) {
             return false;
         }
         return Objects.equals(empNo, that.empNo) &&
@@ -32,15 +28,12 @@ public class DeptManagerId implements Serializable {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return Objects.hash(empNo, deptNo);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @NotNull
     private Integer empNo;
 
-    @NotNull
     private String deptNo;
-
 }

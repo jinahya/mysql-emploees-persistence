@@ -1,4 +1,4 @@
-package com.github.jinahya.employees.persistence;
+package com.github.jinahya.mysql.employees.persistence;
 
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -10,26 +10,31 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 
-@IdClass(SalaryId.class)
 @Entity
-@Table(name = Salary.TABLE_NAME)
+@Table(name = DeptManager.TABLE_NAME)
 @Setter
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor
-public class Salary extends BaseEntity {
+public class DeptManager extends BaseEntity {
 
     @Serial
-    private static final long serialVersionUID = 604718367871825963L;
+    private static final long serialVersionUID = 7562801904287742000L;
 
     // -----------------------------------------------------------------------------------------------------------------
-    public static final String TABLE_NAME = "salary";
+    public static final String TABLE_NAME = "dept_manager";
 
     // -----------------------------------------------------------------------------------------------------------------
     public static final String COLUMN_NAME_EMP_NO = Employee.COLUMN_NAME_EMP_NO;
 
-    // ---------------------------------------------------------------------------------------------------------- salary
-    public static final String COLUMN_NAME_SALARY = "salary";
+    // -----------------------------------------------------------------------------------------------------------------
+    public static final String COLUMN_NAME_DEPT_NO = Department.COLUMN_NAME_DEPT_NO;
+
+    public static final int COLUMN_LENGTH_DEPT_NO = Department.COLUMN_LENGTH_DEPT_NO;
+
+    public static final int SIZE_MIN_DEPT_NO = Department.SIZE_MIN_DEPT_NO;
+
+    public static final int SIZE_MAX_DEPT_NO = Department.SIZE_MAX_DEPT_NO;
 
     // ------------------------------------------------------------------------------------------------------- from_date
     public static final String COLUMN_NAME_FROM_DATE = "from_date";
@@ -44,16 +49,15 @@ public class Salary extends BaseEntity {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof Salary that)) {
+        if (!(obj instanceof DeptManager that)) {
             return false;
         }
-        return Objects.equals(empNo, that.empNo) &&
-                Objects.equals(fromDate, that.fromDate);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(empNo, fromDate);
+        return Objects.hash(id);
     }
 
     // -------------------------------------------------------------------------------------------------------- employee
@@ -64,31 +68,47 @@ public class Salary extends BaseEntity {
 
     public void setEmployee(final Employee employee) {
         this.employee = employee;
-        setEmpNo(
+        id.setEmpNo(
                 Optional.ofNullable(this.employee)
                         .map(Employee::getEmpNo)
                         .orElse(null)
         );
     }
 
+    // ------------------------------------------------------------------------------------------------------ department
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(final Department department) {
+        this.department = department;
+        id.setDeptNo(
+                Optional.ofNullable(department)
+                        .map(Department::getDeptNo)
+                        .orElse(null)
+        );
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
+    @Valid
     @NotNull
-    @Id
-    @Column(name = COLUMN_NAME_EMP_NO, nullable = false, insertable = true, updatable = false)
-    private Integer empNo;
+    @EmbeddedId
+    @Setter(AccessLevel.NONE)
+    private DeptManagerId id = new DeptManagerId();
 
     @Valid
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = COLUMN_NAME_EMP_NO, nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = COLUMN_NAME_DEPT_NO, nullable = false, insertable = false, updatable = false)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Employee employee;
 
-    // -----------------------------------------------------------------------------------------------------------------
-    @NotNull
-    @Basic(optional = false)
-    @Column(name = COLUMN_NAME_SALARY, nullable = false, insertable = true, updatable = true)
-    private Integer salary;
+    @Valid
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = COLUMN_NAME_DEPT_NO, nullable = false, insertable = false, updatable = false)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Department department;
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotNull

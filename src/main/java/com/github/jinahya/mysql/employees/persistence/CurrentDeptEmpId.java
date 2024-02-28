@@ -1,38 +1,41 @@
-package com.github.jinahya.employees.persistence;
+package com.github.jinahya.mysql.employees.persistence;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serial;
-import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Objects;
 
 @Setter
 @Getter
 @ToString(callSuper = true)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SalaryId implements Serializable {
+@NoArgsConstructor
+// TODO: Make it extends DeptEmpId
+public class CurrentDeptEmpId implements BaseId {
 
     @Serial
-    private static final long serialVersionUID = -378954798191441067L;
+    private static final long serialVersionUID = -1321574687810134588L;
 
     // -----------------------------------------------------------------------------------------------------------------
+
     @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof SalaryId that)) {
+        if (!(obj instanceof CurrentDeptEmpId that)) {
             return false;
         }
         return Objects.equals(empNo, that.empNo) &&
-                Objects.equals(fromDate, that.fromDate);
+                Objects.equals(deptNo, that.deptNo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(empNo, fromDate);
+        return Objects.hash(empNo, deptNo);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -40,6 +43,5 @@ public class SalaryId implements Serializable {
     private Integer empNo;
 
     @NotNull
-    private LocalDate fromDate;
-
+    private String deptNo;
 }

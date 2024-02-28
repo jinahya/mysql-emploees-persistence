@@ -1,4 +1,4 @@
-package com.github.jinahya.employees.persistence;
+package com.github.jinahya.mysql.employees.persistence;
 
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -10,25 +10,26 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 
+@IdClass(SalaryId.class)
 @Entity
-@Table(name = Title.TABLE_NAME)
+@Table(name = Salary.TABLE_NAME)
 @Setter
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor
-public class Title extends BaseEntity {
+public class Salary extends BaseEntity {
 
     @Serial
-    private static final long serialVersionUID = -6271293641555396755L;
+    private static final long serialVersionUID = 604718367871825963L;
 
     // -----------------------------------------------------------------------------------------------------------------
-    public static final String TABLE_NAME = "title";
+    public static final String TABLE_NAME = "salary";
 
     // -----------------------------------------------------------------------------------------------------------------
     public static final String COLUMN_NAME_EMP_NO = Employee.COLUMN_NAME_EMP_NO;
 
     // ---------------------------------------------------------------------------------------------------------- salary
-    public static final String COLUMN_NAME_TITLE = "title";
+    public static final String COLUMN_NAME_SALARY = "salary";
 
     // ------------------------------------------------------------------------------------------------------- from_date
     public static final String COLUMN_NAME_FROM_DATE = "from_date";
@@ -43,15 +44,16 @@ public class Title extends BaseEntity {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof Title that)) {
+        if (!(obj instanceof Salary that)) {
             return false;
         }
-        return Objects.equals(id, that.id);
+        return Objects.equals(empNo, that.empNo) &&
+                Objects.equals(fromDate, that.fromDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(empNo, fromDate);
     }
 
     // -------------------------------------------------------------------------------------------------------- employee
@@ -62,7 +64,7 @@ public class Title extends BaseEntity {
 
     public void setEmployee(final Employee employee) {
         this.employee = employee;
-        id.setEmpNo(
+        setEmpNo(
                 Optional.ofNullable(this.employee)
                         .map(Employee::getEmpNo)
                         .orElse(null)
@@ -70,11 +72,10 @@ public class Title extends BaseEntity {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @Valid
     @NotNull
-    @EmbeddedId
-    @Getter(AccessLevel.NONE)
-    private TitleId id = new TitleId();
+    @Id
+    @Column(name = COLUMN_NAME_EMP_NO, nullable = false, insertable = true, updatable = false)
+    private Integer empNo;
 
     @Valid
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -82,6 +83,18 @@ public class Title extends BaseEntity {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Employee employee;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @NotNull
+    @Basic(optional = false)
+    @Column(name = COLUMN_NAME_SALARY, nullable = false, insertable = true, updatable = true)
+    private Integer salary;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @NotNull
+    @Basic(optional = false)
+    @Column(name = COLUMN_NAME_FROM_DATE, nullable = false, insertable = true, updatable = true)
+    private LocalDate fromDate;
 
     @NotNull
     @Basic(optional = false)

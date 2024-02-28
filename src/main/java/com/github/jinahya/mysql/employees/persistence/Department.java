@@ -1,4 +1,4 @@
-package com.github.jinahya.employees.persistence;
+package com.github.jinahya.mysql.employees.persistence;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
