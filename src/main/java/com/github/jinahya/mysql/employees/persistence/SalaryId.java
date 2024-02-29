@@ -12,14 +12,14 @@ import java.util.Objects;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SalaryId implements Serializable {
+public class SalaryId implements BaseId {
 
     @Serial
     private static final long serialVersionUID = -378954798191441067L;
 
     // -----------------------------------------------------------------------------------------------------------------
     @Override
-    public boolean equals(final Object obj) {
+    public final boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -31,7 +31,7 @@ public class SalaryId implements Serializable {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return Objects.hash(empNo, fromDate);
     }
 

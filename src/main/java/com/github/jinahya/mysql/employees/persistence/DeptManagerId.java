@@ -1,5 +1,7 @@
 package com.github.jinahya.mysql.employees.persistence;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -38,9 +40,12 @@ public class DeptManagerId implements Serializable {
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotNull
+    @Basic(optional = false)
+    @Column(name = DeptManager.COLUMN_NAME_EMP_NO, nullable = false, insertable = true, updatable = false)
     private Integer empNo;
 
     @NotNull
+    @Basic(optional = false)
+    @Column(name = DeptManager.COLUMN_NAME_DEPT_NO, nullable = false, insertable = true, updatable = false)
     private String deptNo;
-
 }

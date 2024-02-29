@@ -26,7 +26,7 @@ public class Salary extends BaseEntity<Integer> {
     private static final long serialVersionUID = 604718367871825963L;
 
     // -----------------------------------------------------------------------------------------------------------------
-    public static final String TABLE_NAME = "salary";
+    public static final String TABLE_NAME = "salaries";
 
     // -----------------------------------------------------------------------------------------------------------------
     public static final String COLUMN_NAME_EMP_NO = Employee.COLUMN_NAME_EMP_NO;

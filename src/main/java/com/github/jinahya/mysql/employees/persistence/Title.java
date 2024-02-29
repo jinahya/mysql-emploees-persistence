@@ -22,7 +22,7 @@ public class Title extends BaseEntity<TitleId> {
     private static final long serialVersionUID = -6271293641555396755L;
 
     // -----------------------------------------------------------------------------------------------------------------
-    public static final String TABLE_NAME = "title";
+    public static final String TABLE_NAME = "titles";
 
     // -----------------------------------------------------------------------------------------------------------------
     public static final String COLUMN_NAME_EMP_NO = Employee.COLUMN_NAME_EMP_NO;
@@ -83,6 +83,7 @@ public class Title extends BaseEntity<TitleId> {
     @ToString.Exclude
     private Employee employee;
 
+    // -----------------------------------------------------------------------------------------------------------------
     @NotNull
     @Basic(optional = false)
     @Column(name = COLUMN_NAME_TO_DATE, nullable = false, insertable = true, updatable = true)

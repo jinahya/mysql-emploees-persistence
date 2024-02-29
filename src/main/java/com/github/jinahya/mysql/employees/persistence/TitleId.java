@@ -1,11 +1,13 @@
 package com.github.jinahya.mysql.employees.persistence;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.io.Serial;
-import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Embeddable
@@ -13,7 +15,7 @@ import java.util.Objects;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TitleId implements Serializable {
+public class TitleId implements BaseId {
 
     @Serial
     private static final long serialVersionUID = -7452067856104640617L;
@@ -29,22 +31,28 @@ public class TitleId implements Serializable {
         }
         return Objects.equals(empNo, that.empNo) &&
                 Objects.equals(title, that.title) &&
-                Objects.equals(deptNo, that.deptNo);
+                Objects.equals(fromDate, that.fromDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(empNo, title, deptNo);
+        return Objects.hash(empNo, title, fromDate);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotNull
+    @Basic(optional = false)
+    @Column(name = Title.COLUMN_NAME_EMP_NO, nullable = false, insertable = true, updatable = false)
     private Integer empNo;
 
     @NotNull
+    @Basic(optional = false)
+    @Column(name = Title.COLUMN_NAME_TITLE, nullable = false, insertable = true, updatable = false)
     private String title;
 
     @NotNull
-    private String deptNo;
+    @Basic(optional = false)
+    @Column(name = Title.COLUMN_NAME_FROM_DATE, nullable = false, insertable = true, updatable = false)
+    private LocalDate fromDate;
 
 }
