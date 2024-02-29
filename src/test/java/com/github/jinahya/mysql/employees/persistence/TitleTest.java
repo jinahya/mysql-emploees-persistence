@@ -3,14 +3,14 @@ package com.github.jinahya.mysql.employees.persistence;
 import nl.jqno.equalsverifier.Warning;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 
-class CurrentDeptEmpTest extends _BaseEntityTest<CurrentDeptEmp, CurrentDeptEmpId> {
+class TitleTest extends _BaseEntityTest<Title, TitleId> {
 
-    CurrentDeptEmpTest() {
-        super(CurrentDeptEmp.class);
+    TitleTest() {
+        super(Title.class);
     }
 
     @Override
-    SingleTypeEqualsVerifierApi<CurrentDeptEmp> equals__(final SingleTypeEqualsVerifierApi<CurrentDeptEmp> verifierApi) {
+    SingleTypeEqualsVerifierApi<Title> equals__(final SingleTypeEqualsVerifierApi<Title> verifierApi) {
         return super.equals__(verifierApi)
                 .suppress(Warning.SURROGATE_KEY);
     }

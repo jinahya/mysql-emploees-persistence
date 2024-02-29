@@ -12,19 +12,20 @@ import java.util.Objects;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-abstract class BaseEntityTest<ENTITY extends BaseEntity> {
+abstract class _BaseIdTest<ID extends BaseId> {
 
-    BaseEntityTest(final Class<ENTITY> entityClass) {
+    // -----------------------------------------------------------------------------------------------------------------
+    _BaseIdTest(final Class<ID> idClass) {
         super();
-        this.entityClass = Objects.requireNonNull(entityClass, "entityClass is null");
+        this.idClass = Objects.requireNonNull(idClass, "idClass is null");
     }
 
     // --------------------------------------------------------------------------------------------------- getter/setter
     @Test
     void accessors__() {
-        final var instance = newEntityInstance();
+        final var instance = newIdInstance();
         try {
-            final var info = Introspector.getBeanInfo(entityClass);
+            final var info = Introspector.getBeanInfo(idClass);
             for (final var descriptor : info.getPropertyDescriptors()) {
                 final var reader = descriptor.getReadMethod();
                 if (reader == null) {
@@ -46,9 +47,9 @@ abstract class BaseEntityTest<ENTITY extends BaseEntity> {
                 }).doesNotThrowAnyException();
             }
         } catch (final ReflectiveOperationException roe) {
-            throw new RuntimeException("failed to check accessors of " + entityClass, roe);
+            throw new RuntimeException("failed to check accessors of " + idClass, roe);
         } catch (final IntrospectionException ie) {
-            throw new RuntimeException("failed to introspect " + entityClass, ie);
+            throw new RuntimeException("failed to introspect " + idClass, ie);
         }
     }
 
@@ -56,7 +57,7 @@ abstract class BaseEntityTest<ENTITY extends BaseEntity> {
     @DisplayName("toString()")
     @Test
     void toString__() {
-        final var instance = newEntityInstance();
+        final var instance = newIdInstance();
         assertThatCode(() -> {
             final var string = instance.toString();
             assertThat(string).isNotBlank();
@@ -66,28 +67,28 @@ abstract class BaseEntityTest<ENTITY extends BaseEntity> {
     // ------------------------------------------------------------------------------------------------- equals/hashCode
     @Test
     void equals__() {
-        final var verifierApi = EqualsVerifier.forClass(entityClass);
+        final var verifierApi = EqualsVerifier.forClass(idClass);
         equals__(verifierApi);
         verifierApi.verify();
     }
 
-    SingleTypeEqualsVerifierApi<ENTITY> equals__(final SingleTypeEqualsVerifierApi<ENTITY> verifierApi) {
+    SingleTypeEqualsVerifierApi<ID> equals__(final SingleTypeEqualsVerifierApi<ID> verifierApi) {
         return verifierApi;
     }
 
-    // ----------------------------------------------------------------------------------------------------- entityClass
-    ENTITY newEntityInstance() {
+    // --------------------------------------------------------------------------------------------------------- idClass
+    ID newIdInstance() {
         try {
-            final var constructor = entityClass.getDeclaredConstructor();
+            final var constructor = idClass.getDeclaredConstructor();
             if (!constructor.canAccess(null)) {
                 constructor.setAccessible(true);
             }
             return constructor.newInstance();
         } catch (final ReflectiveOperationException roe) {
-            throw new RuntimeException("failed to instantiate " + entityClass, roe);
+            throw new RuntimeException("failed to instantiate " + idClass, roe);
         }
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    final Class<ENTITY> entityClass;
+    final Class<ID> idClass;
 }

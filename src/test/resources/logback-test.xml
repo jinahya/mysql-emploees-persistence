@@ -1,0 +1,32 @@
+<configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%kvp- %msg%n</pattern>
+    </encoder>
+  </appender>
+  <root level="debug">
+    <appender-ref ref="STDOUT"/>
+  </root>
+  <logger name="org.jboss.weld" level="WARN"/>
+  <logger name="org.hibernate" level="WARN"/>
+  <logger name="org.hibernate.SQL" level="DEBUG"/>
+  <!-- https://stackoverflow.com/a/1713464/330457 -->
+  <logger name="org.hibernate.orm.jdbc.bind" level="TRACE"/>
+  <!--  <logger name="org.hibernate.boot" level="WARN"/>-->
+  <!--  <logger name="org.hibernate.cache" level="WARN"/>-->
+  <!--  <logger name="org.hibernate.cfg" level="WARN"/>-->
+  <!--  <logger name="org.hibernate.engine" level="WARN"/>-->
+  <!--  <logger name="org.hibernate.integrator" level="WARN"/>-->
+  <!--  <logger name="org.hibernate.internal" level="WARN"/>-->
+  <!--  <logger name="org.hibernate.jpa" level="WARN"/>-->
+  <!--  <logger name="org.hibernate.mapping" level="WARN"/>-->
+  <!--  <logger name="org.hibernate.type" level="WARN"/>-->
+  <!--  <logger name="org.hibernate.orm.connections" level="WARN"/>-->
+  <!--  <logger name="org.hibernate.orm.connections.pooling" level="WARN"/>-->
+  <!--  <logger name="org.hibernate.orm.dialect" level="WARN"/>-->
+  <!--  <logger name="org.hibernate.orm.idgen" level="WARN"/>-->
+  <!--  <logger name="org.hibernate.orm.results" level="WARN"/>-->
+  <!--  <logger name="org.hibernate.orm.sql.exec" level="WARN"/>-->
+  <!--  <logger name="org.hibernate.query" level="WARN"/>-->
+  <!--  <logger name="org.hibernate.validator" level="WARN"/>-->
+</configuration>

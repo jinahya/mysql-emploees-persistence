@@ -1,5 +1,6 @@
 package com.github.jinahya.mysql.employees.persistence;
 
+import lombok.extern.slf4j.Slf4j;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.junit.jupiter.api.DisplayName;
@@ -7,25 +8,40 @@ import org.junit.jupiter.api.Test;
 
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
-import java.util.Objects;
+import java.io.Serializable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-abstract class BaseIdTest<ID extends BaseId> {
+@Slf4j
+abstract class _BaseEntityTest<ENTITY extends BaseEntity<ID>, ID extends Serializable>
+        extends __BaseEntityTest<ENTITY, ID> {
+
+    @Deprecated(forRemoval = true)
+    _BaseEntityTest(final Class<ENTITY> entityClass, final Class<ID> idClass) {
+        super(entityClass, idClass);
+    }
+
+    _BaseEntityTest(final Class<ENTITY> entityClass) {
+        this(entityClass, null);
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
-    BaseIdTest(final Class<ID> idClass) {
-        super();
-        this.idClass = Objects.requireNonNull(idClass, "idClass is null");
+    @DisplayName("idClass()")
+    @Test
+    void idClass_() {
+        final var idClass = idClass();
+        assertThat(idClass)
+                .as("resolved <ID> class of %s", entityClass)
+                .isNotNull();
     }
 
     // --------------------------------------------------------------------------------------------------- getter/setter
     @Test
     void accessors__() {
-        final var instance = newIdInstance();
+        final var instance = newEntityInstance();
         try {
-            final var info = Introspector.getBeanInfo(idClass);
+            final var info = Introspector.getBeanInfo(entityClass);
             for (final var descriptor : info.getPropertyDescriptors()) {
                 final var reader = descriptor.getReadMethod();
                 if (reader == null) {
@@ -47,9 +63,9 @@ abstract class BaseIdTest<ID extends BaseId> {
                 }).doesNotThrowAnyException();
             }
         } catch (final ReflectiveOperationException roe) {
-            throw new RuntimeException("failed to check accessors of " + idClass, roe);
+            throw new RuntimeException("failed to check accessors of " + entityClass, roe);
         } catch (final IntrospectionException ie) {
-            throw new RuntimeException("failed to introspect " + idClass, ie);
+            throw new RuntimeException("failed to introspect " + entityClass, ie);
         }
     }
 
@@ -57,7 +73,7 @@ abstract class BaseIdTest<ID extends BaseId> {
     @DisplayName("toString()")
     @Test
     void toString__() {
-        final var instance = newIdInstance();
+        final var instance = newEntityInstance();
         assertThatCode(() -> {
             final var string = instance.toString();
             assertThat(string).isNotBlank();
@@ -67,28 +83,25 @@ abstract class BaseIdTest<ID extends BaseId> {
     // ------------------------------------------------------------------------------------------------- equals/hashCode
     @Test
     void equals__() {
-        final var verifierApi = EqualsVerifier.forClass(idClass);
+        final var verifierApi = EqualsVerifier.forClass(entityClass);
         equals__(verifierApi);
         verifierApi.verify();
     }
 
-    SingleTypeEqualsVerifierApi<ID> equals__(final SingleTypeEqualsVerifierApi<ID> verifierApi) {
+    SingleTypeEqualsVerifierApi<ENTITY> equals__(final SingleTypeEqualsVerifierApi<ENTITY> verifierApi) {
         return verifierApi;
     }
 
-    // --------------------------------------------------------------------------------------------------------- idClass
-    ID newIdInstance() {
+    // ----------------------------------------------------------------------------------------------------- entityClass
+    ENTITY newEntityInstance() {
         try {
-            final var constructor = idClass.getDeclaredConstructor();
+            final var constructor = entityClass.getDeclaredConstructor();
             if (!constructor.canAccess(null)) {
                 constructor.setAccessible(true);
             }
             return constructor.newInstance();
         } catch (final ReflectiveOperationException roe) {
-            throw new RuntimeException("failed to instantiate " + idClass, roe);
+            throw new RuntimeException("failed to instantiate " + entityClass, roe);
         }
     }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    final Class<ID> idClass;
 }

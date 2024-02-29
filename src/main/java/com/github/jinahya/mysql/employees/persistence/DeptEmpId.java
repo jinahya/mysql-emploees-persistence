@@ -8,7 +8,7 @@ import java.util.Objects;
 @Setter
 @Getter
 @ToString(callSuper = true)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor//(access = AccessLevel.PROTECTED) // eclipselink
 public class DeptEmpId implements BaseId {
 
     @Serial

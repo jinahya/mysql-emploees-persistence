@@ -3,7 +3,10 @@ package com.github.jinahya.mysql.employees.persistence;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serial;
 import java.time.LocalDate;
@@ -11,11 +14,10 @@ import java.util.Objects;
 
 @Entity
 @Table(name = DeptEmpLatestDate.VIEW_NAME)
-@Setter
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor
-public class DeptEmpLatestDate extends BaseEntity {
+public class DeptEmpLatestDate extends BaseEntity<Integer> {
 
     @Serial
     private static final long serialVersionUID = 4331323808137781879L;
@@ -57,7 +59,10 @@ public class DeptEmpLatestDate extends BaseEntity {
     // -----------------------------------------------------------------------------------------------------------------
     @NotNull
     @Id
-    @Column(name = COLUMN_NAME_EMP_NO, nullable = false, insertable = false, updatable = false)
+    @Column(name = COLUMN_NAME_EMP_NO, nullable = false,
+//            insertable = false, // eclipselink
+            insertable = true,
+            updatable = false)
     private Integer empNo;
 
     @Valid

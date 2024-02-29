@@ -58,10 +58,9 @@
     <version.maven-surefire>3.2.5</version.maven-surefire>
     <version.mysql-connector-j>8.3.0</version.mysql-connector-j>
     <version.org.eclipse.persistence>4.0.2</version.org.eclipse.persistence>
-    <version.org.hibernate.orm>6.0.0.Alpha7</version.org.hibernate.orm>
-    <version.org.hibernate.orm-hibernate-jpamodelgen>6.4.4.Final</version.org.hibernate.orm-hibernate-jpamodelgen>
+    <version.org.hibernate.orm>6.4.4.Final</version.org.hibernate.orm>
     <version.org.hibernate.validator>8.0.1.Final</version.org.hibernate.validator>
-    <version.org.jboss.weld.se>6.0.0.Beta1</version.org.jboss.weld.se>
+    <version.org.jboss.weld>4.0.2.Final</version.org.jboss.weld>
     <version.org.junit.jupiter>5.10.2</version.org.junit.jupiter>
     <version.org.mockito>5.10.0</version.org.mockito>
   </properties>
@@ -88,16 +87,16 @@
         <version>${version.org.eclipse.persistence}</version>
       </dependency>
       <!-- https://search.maven.org/search?q=g:org.hibernate.orm -->
-      <!-- https://search.maven.org/artifact/org.hibernate.orm/hibernate-entitymanager -->
+      <!-- https://search.maven.org/artifact/org.hibernate.orm/hibernate-core -->
       <dependency>
         <groupId>org.hibernate.orm</groupId>
-        <artifactId>hibernate-entitymanager</artifactId>
+        <artifactId>hibernate-core</artifactId>
         <version>${version.org.hibernate.orm}</version>
       </dependency>
       <dependency>
         <groupId>org.hibernate.orm</groupId>
         <artifactId>hibernate-jpamodelgen</artifactId>
-        <version>${version.org.hibernate.orm-hibernate-jpamodelgen}</version>
+        <version>${version.org.hibernate.orm}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -116,6 +115,11 @@
     <dependency>
       <groupId>jakarta.enterprise</groupId>
       <artifactId>jakarta.enterprise.cdi-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.inject</groupId>
+      <artifactId>jakarta.inject-api</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -165,11 +169,17 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.jboss.weld.se</groupId>
-      <artifactId>weld-se-core</artifactId>
-      <version>${version.org.jboss.weld.se}</version>
+      <groupId>org.jboss.weld</groupId>
+      <artifactId>weld-junit5</artifactId>
+      <version>${version.org.jboss.weld}</version>
       <scope>test</scope>
     </dependency>
+    <!--    <dependency>-->
+    <!--      <groupId>org.jboss.weld.se</groupId>-->
+    <!--      <artifactId>weld-se-core</artifactId>-->
+    <!--      <version>${version.org.jboss.weld.se}</version>-->
+    <!--      <scope>test</scope>-->
+    <!--    </dependency>-->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
@@ -286,10 +296,15 @@
               <artifactId>lombok</artifactId>
               <version>${version.lombok}</version>
             </path>
+            <!--            <path>-->
+            <!--              <groupId>org.hibernate.orm</groupId>-->
+            <!--              <artifactId>hibernate-jpamodelgen</artifactId>-->
+            <!--              <version>${version.org.hibernate.orm-hibernate-jpamodelgen}</version>-->
+            <!--            </path>-->
             <path>
               <groupId>org.hibernate.orm</groupId>
               <artifactId>hibernate-jpamodelgen</artifactId>
-              <version>${version.org.hibernate.orm-hibernate-jpamodelgen}</version>
+              <version>${version.org.hibernate.orm}</version>
             </path>
           </annotationProcessorPaths>
           <compilerArgs>
@@ -464,26 +479,6 @@
   <profiles>
     <profile>
       <id>failsafe</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-failsafe-plugin</artifactId>
-            <version>${version.maven-failsafe}</version>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>integration-test</goal>
-                  <goal>verify</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>failsafe-mysql</id>
       <dependencies>
         <dependency>
           <groupId>com.mysql</groupId>
@@ -512,71 +507,32 @@
     </profile>
     <profile>
       <id>persistence-provider-eclipselink</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <persistence.provider>org.eclipse.persistence.jpa.PersistenceProvider</persistence.provider>
+      </properties>
       <dependencies>
         <dependency>
           <groupId>org.eclipse.persistence</groupId>
-          <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
-          <version>${version.org.eclipse.persistence}</version>
+          <artifactId>org.eclipse.persistence.jpa</artifactId>
+          <scope>test</scope>
         </dependency>
       </dependencies>
-      <build>
-        <plugins>
-          <!--          <plugin>-->
-          <!--            <groupId>org.codehaus.mojo</groupId>-->
-          <!--            <artifactId>build-helper-maven-plugin</artifactId>-->
-          <!--            <executions>-->
-          <!--              <execution>-->
-          <!--                <id>add-test-resource</id>-->
-          <!--                <phase>generate-resources</phase>-->
-          <!--                <goals>-->
-          <!--                  <goal>add-test-resource</goal>-->
-          <!--                </goals>-->
-          <!--                <configuration>-->
-          <!--                  <resources>-->
-          <!--                    <resource>-->
-          <!--                      <directory>src/test/resources-eclipselink</directory>-->
-          <!--                    </resource>-->
-          <!--                  </resources>-->
-          <!--                </configuration>-->
-          <!--              </execution>-->
-          <!--            </executions>-->
-          <!--          </plugin>-->
-        </plugins>
-      </build>
     </profile>
     <profile>
       <id>persistence-provider-hibernate</id>
+      <properties>
+        <persistence.provider>org.hibernate.jpa.HibernatePersistenceProvider</persistence.provider>
+      </properties>
       <dependencies>
         <dependency>
           <groupId>org.hibernate.orm</groupId>
-          <artifactId>hibernate-entitymanager</artifactId>
-          <version>${version.org.hibernate.orm}</version>
+          <artifactId>hibernate-core</artifactId>
+          <scope>test</scope>
         </dependency>
       </dependencies>
-      <build>
-        <plugins>
-          <!--          <plugin>-->
-          <!--            <groupId>org.codehaus.mojo</groupId>-->
-          <!--            <artifactId>build-helper-maven-plugin</artifactId>-->
-          <!--            <executions>-->
-          <!--              <execution>-->
-          <!--                <id>add-test-resource</id>-->
-          <!--                <phase>generate-resources</phase>-->
-          <!--                <goals>-->
-          <!--                  <goal>add-test-resource</goal>-->
-          <!--                </goals>-->
-          <!--                <configuration>-->
-          <!--                  <resources>-->
-          <!--                    <resource>-->
-          <!--                      <directory>src/test/resources-hibernate</directory>-->
-          <!--                    </resource>-->
-          <!--                  </resources>-->
-          <!--                </configuration>-->
-          <!--              </execution>-->
-          <!--            </executions>-->
-          <!--          </plugin>-->
-        </plugins>
-      </build>
     </profile>
   </profiles>
 </project>

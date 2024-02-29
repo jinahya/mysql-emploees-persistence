@@ -17,7 +17,10 @@ import java.util.Optional;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor
-public class Salary extends BaseEntity {
+@SuppressWarnings({
+        "java:S1700" // ... salary;
+})
+public class Salary extends BaseEntity<Integer> {
 
     @Serial
     private static final long serialVersionUID = 604718367871825963L;
@@ -37,7 +40,7 @@ public class Salary extends BaseEntity {
     // --------------------------------------------------------------------------------------------------------- to_date
     public static final String COLUMN_NAME_TO_DATE = "to_date";
 
-    // -----------------------------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------------ java.lang.Object
 
     @Override
     public boolean equals(final Object obj) {
@@ -56,8 +59,16 @@ public class Salary extends BaseEntity {
         return Objects.hash(empNo, fromDate);
     }
 
-    // -------------------------------------------------------------------------------------------------------- employee
+    // ------------------------------------------------------------------------------------------------- Bean-Validation
+    //@AssertTrue
+    private boolean isFromDateLessThanOrEqualToToDate() {
+        if (fromDate == null || toDate == null) {
+            return true;
+        }
+        return !fromDate.isAfter(toDate);
+    }
 
+    // -------------------------------------------------------------------------------------------------- empNo/employee
     public Employee getEmployee() {
         return employee;
     }
@@ -70,6 +81,12 @@ public class Salary extends BaseEntity {
                         .orElse(null)
         );
     }
+
+    // ---------------------------------------------------------------------------------------------------------- salary
+
+    // -------------------------------------------------------------------------------------------------------- fromDate
+
+    // ---------------------------------------------------------------------------------------------------------- toDate
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotNull
@@ -85,6 +102,7 @@ public class Salary extends BaseEntity {
     private Employee employee;
 
     // -----------------------------------------------------------------------------------------------------------------
+    //@Positive
     @NotNull
     @Basic(optional = false)
     @Column(name = COLUMN_NAME_SALARY, nullable = false, insertable = true, updatable = true)
@@ -92,6 +110,7 @@ public class Salary extends BaseEntity {
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotNull
+    @Id
     @Basic(optional = false)
     @Column(name = COLUMN_NAME_FROM_DATE, nullable = false, insertable = true, updatable = true)
     private LocalDate fromDate;

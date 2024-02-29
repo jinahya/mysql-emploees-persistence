@@ -16,7 +16,7 @@ import java.util.Optional;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor
-public class DeptManager extends BaseEntity {
+public class DeptManager extends BaseEntity<DeptManagerId> {
 
     @Serial
     private static final long serialVersionUID = 7562801904287742000L;

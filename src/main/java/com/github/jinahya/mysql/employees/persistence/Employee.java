@@ -17,7 +17,7 @@ import java.util.Objects;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor
-public class Employee extends BaseEntity {
+public class Employee extends BaseEntity<Integer> {
 
     @Serial
     private static final long serialVersionUID = -6603383818841085999L;
