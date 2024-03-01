@@ -1,17 +1,19 @@
 package com.github.jinahya.mysql.employees.persistence;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Setter
 @Getter
 @ToString(callSuper = true)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor//(access = AccessLevel.PROTECTED)
 public class SalaryId implements BaseId {
 
     @Serial
@@ -41,5 +43,4 @@ public class SalaryId implements BaseId {
 
     @NotNull
     private LocalDate fromDate;
-
 }

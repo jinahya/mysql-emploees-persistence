@@ -20,7 +20,7 @@ import java.util.Optional;
 @SuppressWarnings({
         "java:S1700" // ... salary;
 })
-public class Salary extends BaseEntity<Integer> {
+public class Salary extends BaseEntity<SalaryId> {
 
     @Serial
     private static final long serialVersionUID = 604718367871825963L;

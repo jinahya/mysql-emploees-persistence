@@ -3,9 +3,9 @@ package com.github.jinahya.mysql.employees.persistence;
 import nl.jqno.equalsverifier.Warning;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 
-class DepartmentTest extends _BaseEntityTest<Department, String> {
+class Department_Test extends _BaseEntityTest<Department, String> {
 
-    DepartmentTest() {
+    Department_Test() {
         super(Department.class);
     }
 

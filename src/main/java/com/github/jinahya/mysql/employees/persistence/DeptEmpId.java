@@ -1,6 +1,9 @@
 package com.github.jinahya.mysql.employees.persistence;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serial;
 import java.util.Objects;

@@ -31,12 +31,12 @@ import java.util.function.Function;
 })
 @ExtendWith(WeldJunit5AutoExtension.class)
 @Slf4j
-abstract class _BaseEntityPersistenceIT<ENTITY extends BaseEntity<ID>, ID extends Serializable>
+abstract class _BaseEntityIT<ENTITY extends BaseEntity<ID>, ID extends Serializable>
         extends __BaseEntityTest<ENTITY, ID> {
 
     // -----------------------------------------------------------------------------------------------------------------
     @Deprecated(forRemoval = true)
-    _BaseEntityPersistenceIT(final Class<ENTITY> entityClass, final Class<ID> idClass) {
+    _BaseEntityIT(final Class<ENTITY> entityClass, final Class<ID> idClass) {
         super(entityClass, idClass);
     }
 
@@ -46,22 +46,13 @@ abstract class _BaseEntityPersistenceIT<ENTITY extends BaseEntity<ID>, ID extend
      * @param entityClass the entity class to test.
      * @see #entityClass
      */
-    _BaseEntityPersistenceIT(final Class<ENTITY> entityClass) {
+    _BaseEntityIT(final Class<ENTITY> entityClass) {
         this(entityClass, null);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     @Test
-    void selectSome() {
-        entityManager
-                .createQuery("SELECT e FROM %1$s AS e".formatted(entityName()), entityClass)
-                .setMaxResults(8)
-                .getResultList()
-                .forEach(e -> {
-                    final var id = entityManager.getEntityManagerFactory().getPersistenceUnitUtil().getIdentifier(e);
-                    log.debug("{}: {}", entityName(), e);
-                    log.debug("\tid: {}", identifier(e));
-                });
+    void doNothing() {
     }
 
     // --------------------------------------------------------------------------------------------------- entityManager

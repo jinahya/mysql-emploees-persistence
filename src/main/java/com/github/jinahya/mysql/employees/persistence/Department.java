@@ -11,6 +11,19 @@ import lombok.ToString;
 import java.io.Serial;
 import java.util.Objects;
 
+@NamedQuery(
+        name = "Department.selectOneByDeptName",
+        query = """
+                SELECT e
+                FROM Department AS e
+                WHERE e.deptName = :deptName"""
+)
+@NamedQuery(
+        name = "Department.selectAll",
+        query = """
+                SELECT e
+                FROM Department AS e"""
+)
 @Entity
 @Table(name = Department.TABLE_NAME)
 @Setter

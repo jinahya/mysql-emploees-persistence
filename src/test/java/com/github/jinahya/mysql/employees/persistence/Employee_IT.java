@@ -1,56 +1,51 @@
 package com.github.jinahya.mysql.employees.persistence;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
-class EmployeePersistenceIT extends _BaseEntityPersistenceIT<Employee, Integer> {
+class Employee_IT extends _BaseEntityIT<Employee, Integer> {
 
-    /**
-     * Returns the maximum value of {@value Employee#COLUMN_NAME_EMP_NO} column value.
-     *
-     * @param entityManager an entity manager.
-     * @return the maximum value of {@value Employee#COLUMN_NAME_EMP_NO} column value; {@link Optional#empty() empty}
-     * when the {@value Employee#TABLE_NAME} table is empty.
-     */
-    static Optional<Integer> maxEmpNo(final EntityManager entityManager) {
-        try {
-            return Optional.of(
-                    entityManager
-                            .createQuery("SELECT MAX(e.empNo) FROM Employee AS e", Integer.class)
-                            .getSingleResult()
-            );
-        } catch (final NoResultException nre) {
-            return Optional.empty();
-        }
-    }
-
-    static Integer nextEmpNo(final EntityManager entityManager) {
-        return maxEmpNo(entityManager)
-                .map(v -> v + 1)
-                .orElse(1);
-    }
+//    /**
+//     * Returns the maximum value of {@value Employee#COLUMN_NAME_EMP_NO} column value.
+//     *
+//     * @param entityManager an entity manager.
+//     * @return the maximum value of {@value Employee#COLUMN_NAME_EMP_NO} column value; {@link Optional#empty() empty}
+//     * when the {@value Employee#TABLE_NAME} table is empty.
+//     */
+//    static Optional<Integer> maxEmpNo(final EntityManager entityManager) {
+//        try {
+//            return Optional.of(
+//                    entityManager
+//                            .createQuery("SELECT MAX(e.empNo) FROM Employee AS e", Integer.class)
+//                            .getSingleResult()
+//            );
+//        } catch (final NoResultException nre) {
+//            return Optional.empty();
+//        }
+//    }
+//
+//    static Integer nextEmpNo(final EntityManager entityManager) {
+//        return maxEmpNo(entityManager).orElse(0) + 1;
+//    }
 
     // -----------------------------------------------------------------------------------------------------------------
-    EmployeePersistenceIT() {
+    Employee_IT() {
         super(Employee.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     @Test
     void persistFindRemove() {
-        applyEntityManagerInTransactionAndRollback(em -> {
+        applyEntityManagerInTransactionAndCommit(em -> {
             // --------------------------------------------------------------------------------------------------- given
             final var instance = newEntityInstance();
-            instance.setEmpNo(nextEmpNo(em));
+            instance.setEmpNo(Employee_SelectMaxEmpNo_IT.getNextEmpNo(em));
             instance.setBirthDate(LocalDate.now().minusYears(10L)); // TODO: Use your own
             instance.setFirstName("First");                         // TODO: Use your own
             instance.setLastName("Last");                           // TODO: Use your own
@@ -74,8 +69,11 @@ class EmployeePersistenceIT extends _BaseEntityPersistenceIT<Employee, Integer> 
                 assertThat(f.getGender()).isEqualTo(instance.getGender());
                 assertThat(f.getHireDate()).isEqualTo(instance.getHireDate());
             });
+            // ---------------------------------------------------------------------------------------------------------
             log.debug("removing {}...", found);
             em.remove(found);
+            em.flush();
+            // ---------------------------------------------------------------------------------------------------------
             log.debug("finding, again...");
             assertThat(em.find(Employee.class, identifier(instance))).isNull();
             return null;

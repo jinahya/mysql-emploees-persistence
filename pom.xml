@@ -59,6 +59,7 @@
     <version.maven-failsafe>${version.maven-surefire}</version.maven-failsafe>
     <version.maven-surefire>3.2.5</version.maven-surefire>
     <version.mysql-connector-j>8.3.0</version.mysql-connector-j>
+    <version.org.datanucleus>6.0.7</version.org.datanucleus>
     <version.org.eclipse.persistence>4.0.2</version.org.eclipse.persistence>
     <version.org.hibernate.orm>6.4.4.Final</version.org.hibernate.orm>
     <version.org.hibernate.validator>8.0.1.Final</version.org.hibernate.validator>
@@ -76,6 +77,38 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <!-- https://www.datanucleus.org/products/accessplatform_6_0/jakarta/tools.html#maven -->
+      <!-- https://www.datanucleus.org/products/accessplatform_6_0/ -->
+      <dependency>
+        <!-- https://search.maven.org/artifact/org.datanucleus/datanucleus-accessplatform-jakarta-rdbms -->
+        <groupId>org.datanucleus</groupId>
+        <artifactId>datanucleus-accessplatform-jakarta-rdbms</artifactId>
+        <version>${version.org.datanucleus}</version>
+        <type>pom</type>
+      </dependency>
+<!--      <dependency>-->
+<!--        <groupId>org.datanucleus</groupId>-->
+<!--        <artifactId>datanucleus-core</artifactId>-->
+<!--        <version>${version.org.datanucleus}</version>-->
+<!--      </dependency>-->
+<!--      <dependency>-->
+<!--        &lt;!&ndash; https://search.maven.org/artifact/org.datanucleus/datanucleus-api-jakarta &ndash;&gt;-->
+<!--        <groupId>org.datanucleus</groupId>-->
+<!--        <artifactId>datanucleus-api-jakarta</artifactId>-->
+<!--        <version>6.0.0-release</version>-->
+<!--      </dependency>-->
+<!--      <dependency>-->
+<!--        &lt;!&ndash; https://search.maven.org/artifact/org.datanucleus/jakarta.persistence &ndash;&gt;-->
+<!--        <groupId>org.datanucleus</groupId>-->
+<!--        <artifactId>jakarta.persistence</artifactId>-->
+<!--        <version>3.1.0</version>-->
+<!--      </dependency>-->
+<!--      <dependency>-->
+<!--        &lt;!&ndash; https://search.maven.org/artifact/org.datanucleus/datanucleus-rdbms &ndash;&gt;-->
+<!--        <groupId>org.datanucleus</groupId>-->
+<!--        <artifactId>datanucleus-rdbms</artifactId>-->
+<!--        <version>${version.org.datanucleus}</version>-->
+<!--      </dependency>-->
       <!-- https://wiki.eclipse.org/EclipseLink/Maven -->
       <!-- https://search.maven.org/search?q=org.eclipse.persistence -->
       <dependency>
@@ -506,6 +539,43 @@
           </plugin>
         </plugins>
       </build>
+    </profile>
+    <profile>
+      <id>persistence-provider-datanucleus</id>
+      <properties>
+        <persistence.provider>org.datanucleus.api.jpa.PersistenceProviderImpl</persistence.provider>
+      </properties>
+      <dependencies>
+        <dependency>
+          <!-- https://search.maven.org/artifact/org.datanucleus/datanucleus-accessplatform-jakarta-rdbms -->
+          <groupId>org.datanucleus</groupId>
+          <artifactId>datanucleus-accessplatform-jakarta-rdbms</artifactId>
+          <type>pom</type>
+          <scope>test</scope>
+        </dependency>
+<!--        <dependency>-->
+<!--          <groupId>org.datanucleus</groupId>-->
+<!--          <artifactId>datanucleus-api-jakarta</artifactId>-->
+<!--          <scope>test</scope>-->
+<!--        </dependency>-->
+<!--&lt;!&ndash;        <dependency>&ndash;&gt;-->
+<!--&lt;!&ndash;          <groupId>org.datanucleus</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;          <artifactId>datanucleus-core</artifactId>&ndash;&gt;-->
+<!--&lt;!&ndash;          <scope>test</scope>&ndash;&gt;-->
+<!--&lt;!&ndash;        </dependency>&ndash;&gt;-->
+<!--        <dependency>-->
+<!--          &lt;!&ndash; https://search.maven.org/artifact/org.datanucleus/jakarta.persistence &ndash;&gt;-->
+<!--          <groupId>org.datanucleus</groupId>-->
+<!--          <artifactId>jakarta.persistence</artifactId>-->
+<!--          <scope>test</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--          &lt;!&ndash; https://search.maven.org/artifact/org.datanucleus/datanucleus-rdbms &ndash;&gt;-->
+<!--          <groupId>org.datanucleus</groupId>-->
+<!--          <artifactId>datanucleus-rdbms</artifactId>-->
+<!--          <scope>test</scope>-->
+<!--        </dependency>-->
+      </dependencies>
     </profile>
     <profile>
       <id>persistence-provider-eclipselink</id>

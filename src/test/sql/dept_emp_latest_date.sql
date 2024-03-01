@@ -1,6 +1,7 @@
 DESC dept_emp_latest_date;
 
-SHOW CREATE VIEW dept_emp_latest_date;
+SHOW
+CREATE VIEW dept_emp_latest_date;
 
 -- CREATE ALGORITHM = UNDEFINED DEFINER =`root`@`localhost` SQL SECURITY DEFINER VIEW `dept_emp_latest_date` AS
 select `dept_emp`.`emp_no`         AS `emp_no`,
