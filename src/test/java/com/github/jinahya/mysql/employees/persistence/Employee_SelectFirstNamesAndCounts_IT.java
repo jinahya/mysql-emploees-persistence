@@ -1,6 +1,7 @@
 package com.github.jinahya.mysql.employees.persistence;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Tuple;
 import jakarta.persistence.criteria.Expression;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -59,6 +60,22 @@ class Employee_SelectFirstNamesAndCounts_IT extends _BaseEntityIT<Employee, Inte
         };
     }
 
+    static List<Tuple> selectFirstNamesAndCounts4(final EntityManager entityManager) {
+        final var builder = entityManager.getCriteriaBuilder();
+        final var query = builder.createQuery(Tuple.class);
+        final var root = query.from(Employee.class);                                          // FROM Employee AS e
+        final var firstName = root.get(Employee_.firstName);
+        final var count = builder.count(firstName);
+        final var c = count.alias("c");
+        query.select(builder.tuple(                                                           // SELECT
+                firstName,                                                                    // e.firstName,
+                c                                                                             // COUNT(e.firstName) AS c
+        ));
+        query.groupBy(firstName);                                                             // GROUP BY e.firstName
+        query.orderBy(builder.desc((Expression<?>) c));                                       // ORDER BY c DESC
+        return entityManager.createQuery(query).getResultList();
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     Employee_SelectFirstNamesAndCounts_IT() {
         super(Employee.class);
@@ -98,6 +115,17 @@ class Employee_SelectFirstNamesAndCounts_IT extends _BaseEntityIT<Employee, Inte
         list.forEach(t -> {
             assertThat(t).isNotNull().hasSize(2);
             log.debug("{}({})", t[0], t[1]);
+        });
+    }
+
+    @Test
+    void selectFirstNamesAndCounts4__() {
+        final var list = applyEntityManager(
+                Employee_SelectFirstNamesAndCounts_IT::selectFirstNamesAndCounts4
+        );
+        assertThat(list).extracting(t -> t.get(1, Long.class)).isSortedAccordingTo(Comparator.reverseOrder());
+        list.forEach(t -> {
+            log.debug("{}({})", t.get(0), t.get(1));
         });
     }
 }
