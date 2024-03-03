@@ -10,6 +10,10 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 
+//@NamedQuery(
+//        name ="Salary.selectLatestByEmpNo",
+//        query = "SELECT e FROM Salary AS e WHERE e.empNo = (SELECT )"
+//)
 @IdClass(SalaryId.class)
 @Entity
 @Table(name = Salary.TABLE_NAME)
@@ -20,7 +24,7 @@ import java.util.Optional;
 @SuppressWarnings({
         "java:S1700" // ... salary;
 })
-public class Salary extends BaseEntity<SalaryId> {
+public class Salary extends _BaseEntity<SalaryId> {
 
     @Serial
     private static final long serialVersionUID = 604718367871825963L;

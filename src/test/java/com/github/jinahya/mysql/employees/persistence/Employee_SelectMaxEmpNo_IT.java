@@ -78,7 +78,7 @@ class Employee_SelectMaxEmpNo_IT extends _BaseEntityIT<Employee, Integer> {
         );
         assertThat(maxEmpNo).satisfiesAnyOf(
                 o -> assertThat(o).isEmpty(),
-                o -> assertThat(o).hasValueSatisfying(meo -> {
+                o -> assertThat(o).hasValueSatisfying(men -> {
                     // empty
                 })
         );
@@ -91,7 +91,7 @@ class Employee_SelectMaxEmpNo_IT extends _BaseEntityIT<Employee, Integer> {
         );
         assertThat(maxEmpNo).satisfiesAnyOf(
                 o -> assertThat(o).isEmpty(),
-                o -> assertThat(o).hasValueSatisfying(meo -> {
+                o -> assertThat(o).hasValueSatisfying(men -> {
                     // empty
                 })
         );
@@ -104,7 +104,7 @@ class Employee_SelectMaxEmpNo_IT extends _BaseEntityIT<Employee, Integer> {
         );
         assertThat(maxEmpNo).satisfiesAnyOf(
                 o -> assertThat(o).isEmpty(),
-                o -> assertThat(o).hasValueSatisfying(meo -> {
+                o -> assertThat(o).hasValueSatisfying(men -> {
                     // empty
                 })
         );

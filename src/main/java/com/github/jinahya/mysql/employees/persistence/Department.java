@@ -30,7 +30,7 @@ import java.util.Objects;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor
-public class Department extends BaseEntity<String> {
+public class Department extends _BaseEntity<String> {
 
     @Serial
     private static final long serialVersionUID = 3430343752363795141L;

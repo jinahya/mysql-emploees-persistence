@@ -4,7 +4,10 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serial;
 import java.time.LocalDate;
@@ -14,8 +17,8 @@ import java.util.Objects;
 @Setter
 @Getter
 @ToString(callSuper = true)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TitleId implements BaseId {
+@NoArgsConstructor//(access = AccessLevel.PROTECTED)
+public class TitleId implements _BaseId {
 
     @Serial
     private static final long serialVersionUID = -7452067856104640617L;

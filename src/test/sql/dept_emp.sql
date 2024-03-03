@@ -30,8 +30,38 @@ FROM dept_emp AS de
          JOIN departments AS d ON de.dept_no = d.dept_no
 ;
 
+-- ------------------------------------------------------------------------------------------------------ emp_no/dept_no
+SELECT emp_no, dept_no, COUNT(1) AS c
+FROM dept_emp
+GROUP BY emp_no, dept_no
+HAVING c > 1
+;
+
+-- ----------------------------------------------------------------------------------------------------------- from_date
+SELECT COUNT(1)
+FROM dept_emp
+WHERE from_date < '1970-01-01'
+;
+SELECT emp_no, from_date, COUNT(emp_no) AS c
+FROM dept_emp
+GROUP BY emp_no, from_date
+HAVING c > 1
+;
+
+-- ------------------------------------------------------------------------------------------------------------- to_date
+SELECT COUNT(1)
+FROM dept_emp
+WHERE to_date > '9999-01-01'
+;
+
 -- --------------------------------------------------------------------------------------------------- from_date/to_date
 SELECT COUNT(1)
 FROM dept_emp
 WHERE from_date > to_date
+;
+
+-- -------------------------------------------------------------------------------------------- emp_no/from_date/to_date
+SELECT emp_no, MAX(from_date), MAX(to_date)
+FROM dept_emp
+GROUP BY emp_no
 ;

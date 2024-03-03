@@ -78,7 +78,36 @@ ORDER BY count DESC
 ;
 
 -- -------------------------------------------------------------------------------------------------------------- gender
-SELECT gender, COUNT(1) AS count
+SELECT gender, COUNT(1) AS c
 FROM employees
-GROUP BY employees.gender
+GROUP BY gender
+;
+
+-- ----------------------------------------------------------------------------------------------------------- hire_date
+SELECT MIN(hire_date), MAX(hire_date)
+FROM employees
+;
+
+SELECT DISTINCT YEAR(hire_date) AS hire_year, COUNT(1) AS c
+FROM employees
+GROUP BY hire_year
+ORDER BY hire_year
+;
+
+SELECT DISTINCT YEAR(hire_date) AS hire_year, MONTH(hire_date) AS hire_month, COUNT(1) AS c
+FROM employees
+GROUP BY hire_year, hire_month
+ORDER BY hire_year, hire_month
+;
+
+SELECT DISTINCT MONTH(hire_date) AS hire_month, COUNT(1) AS c
+FROM employees
+GROUP BY hire_month
+ORDER BY hire_month
+;
+
+SELECT DISTINCT DAYOFWEEK(hire_date) AS hire_weekday, COUNT(1)
+FROM employees
+GROUP BY hire_weekday
+ORDER BY hire_weekday
 ;

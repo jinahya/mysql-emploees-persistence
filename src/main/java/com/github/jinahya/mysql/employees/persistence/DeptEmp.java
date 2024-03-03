@@ -11,6 +11,38 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 
+@NamedQuery(
+        name = "DeptEmp.selectAllByDepartment",
+        query = """
+                SELECT e
+                FROM DeptEmp AS e
+                WHERE e.department = :department
+                order by e.empNo"""
+)
+@NamedQuery(
+        name = "DeptEmp.selectAllByDeptNo",
+        query = """
+                SELECT e
+                FROM DeptEmp AS e
+                WHERE e.deptNo = :deptNo
+                ORDER BY e.empNo"""
+)
+@NamedQuery(
+        name = "DeptEmp.selectAllByEmployee",
+        query = """
+                SELECT e
+                FROM DeptEmp AS e
+                WHERE e.employee = :employee
+                ORDER BY e.fromDate DESC"""
+)
+@NamedQuery(
+        name = "DeptEmp.selectAllByEmpNo",
+        query = """
+                SELECT e
+                FROM DeptEmp AS e
+                WHERE e.empNo = :empNo
+                ORDER BY e.fromDate DESC"""
+)
 @IdClass(DeptEmpId.class)
 @Entity
 @Table(name = DeptEmp.TABLE_NAME)
@@ -18,7 +50,7 @@ import java.util.Optional;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor
-public class DeptEmp extends BaseEntity<DeptEmpId> {
+public class DeptEmp extends _BaseEntity<DeptEmpId> {
 
     @Serial
     private static final long serialVersionUID = -6772594303267134517L;
@@ -44,7 +76,13 @@ public class DeptEmp extends BaseEntity<DeptEmpId> {
     // --------------------------------------------------------------------------------------------------------- to_date
     public static final String COLUMN_NAME_TO_DATE = "to_date";
 
-    // -----------------------------------------------------------------------------------------------------------------
+    public static final LocalDate COLUMN_VALUE_TO_DATE_UNSPECIFIED = LocalDate.of(9999, 1, 1);
+
+    // ------------------------------------------------------------------------------------------ STATIC FACTORY METHODS
+
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    // ------------------------------------------------------------------------------------------------ java.lang.Object
 
     @Override
     public boolean equals(final Object obj) {
@@ -63,12 +101,64 @@ public class DeptEmp extends BaseEntity<DeptEmpId> {
         return Objects.hash(empNo, deptNo);
     }
 
-    // -------------------------------------------------------------------------------------------------------- employee
+    // --------------------------------------------------------------------------------------------- Jakarta Persistence
+    @jakarta.persistence.PrePersist
+    private void onPrePersist() {
+        if (toDate == null) {
+            toDate = COLUMN_VALUE_TO_DATE_UNSPECIFIED;
+        }
+    }
 
+    // ----------------------------------------------------------------------------------------- Jakarta Bean Validation
+
+    /**
+     * Asserts current value of {@link DeptEmp_#fromDate fromDate} attribute <em>is not after</em> current value of
+     * {@link DeptEmp_#toDate toDate} attribute.
+     *
+     * @return {@code true} if current value of the {@link DeptEmp_#fromDate fromDate} attribute <em>is after</em>
+     * current value of the {@link DeptEmp_#toDate toDate} attribute; {@code false} otherwise.
+     */
+//    @jakarta.validation.constraints.AssertFalse(message = "fromDate shouldn't be after the toDate")
+    private boolean isFromDateAfterToDate() {
+        if (fromDate == null || toDate == null) {
+            return false;
+        }
+        return fromDate.isAfter(toDate);
+    }
+
+    /**
+     * Asserts current value of {@link DeptEmp_#toDate toDate} attribute <em>is not after</em>
+     * {@link #COLUMN_VALUE_TO_DATE_UNSPECIFIED}.
+     *
+     * @return {@code true} if current value of the {@link DeptEmp_#toDate toDate} attribute <em>is after</em> the
+     * {@link #COLUMN_VALUE_TO_DATE_UNSPECIFIED}; {@code false} otherwise.
+     */
+    //    @jakarta.validation.constraints.AssertFalse
+    private boolean isToDateAfterTheUnspecified() {
+        if (toDate == null) {
+            return false;
+        }
+        return toDate.isAfter(COLUMN_VALUE_TO_DATE_UNSPECIFIED);
+    }
+
+    // ------------------------------------------------------------------------------------------------- emp_no/employee
+
+    /**
+     * Returns current value of {@link DeptEmp_#employee employee} attribute.
+     *
+     * @return current value of the {@link DeptEmp_#employee employee} attribute.
+     */
     public Employee getEmployee() {
         return employee;
     }
 
+    /**
+     * Replaces current value of {@link DeptEmp_#employee employee} attribute with specified value.
+     *
+     * @param employee new value for the {@link DeptEmp_#employee employee} attribute.
+     * @implSpec This method also replaces current value of {@link DeptEmp_#empNo empNo} attribute with
+     * {@code employee?.empNo}.
+     */
     public void setEmployee(final Employee employee) {
         this.employee = employee;
         setEmpNo(
@@ -78,7 +168,7 @@ public class DeptEmp extends BaseEntity<DeptEmpId> {
         );
     }
 
-    // ------------------------------------------------------------------------------------------------------ department
+    // ---------------------------------------------------------------------------------------------- dept_no/department
     public Department getDepartment() {
         return department;
     }
@@ -86,16 +176,22 @@ public class DeptEmp extends BaseEntity<DeptEmpId> {
     public void setDepartment(final Department department) {
         this.department = department;
         setDeptNo(
-                Optional.ofNullable(department)
+                Optional.ofNullable(this.department)
                         .map(Department::getDeptNo)
                         .orElse(null)
         );
     }
 
+    // -------------------------------------------------------------------------------------------------------- fromDate
+
+    // ---------------------------------------------------------------------------------------------------------- toDate
+
     // -----------------------------------------------------------------------------------------------------------------
     @NotNull
     @Id
     @Column(name = COLUMN_NAME_EMP_NO, nullable = false, insertable = true, updatable = false)
+//    @lombok.Setter(AccessLevel.PACKAGE)
+//    @lombok.Getter(AccessLevel.PACKAGE)
     private Integer empNo;
 
     @Valid
@@ -111,6 +207,8 @@ public class DeptEmp extends BaseEntity<DeptEmpId> {
     @Id
     @Column(name = COLUMN_NAME_DEPT_NO, length = COLUMN_LENGTH_DEPT_NO, nullable = false, insertable = true,
             updatable = false)
+//    @lombok.Setter(AccessLevel.PACKAGE)
+//    @lombok.Getter(AccessLevel.PACKAGE)
     private String deptNo;
 
     @Valid
@@ -121,6 +219,7 @@ public class DeptEmp extends BaseEntity<DeptEmpId> {
     private Department department;
 
     // -----------------------------------------------------------------------------------------------------------------
+//    @jakarta.validation.constraints.PastOrPresent
     @NotNull
     @Basic(optional = false)
     @Column(name = COLUMN_NAME_FROM_DATE, nullable = false, insertable = true, updatable = true)

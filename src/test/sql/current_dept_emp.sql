@@ -1,7 +1,7 @@
 DESC current_dept_emp;
 
 SHOW
-CREATE VIEW current_dept_emp;
+    CREATE VIEW current_dept_emp;
 
 -- CREATE ALGORITHM = UNDEFINED DEFINER =`root`@`localhost` SQL SECURITY DEFINER VIEW `current_dept_emp` AS
 select `l`.`emp_no`    AS `emp_no`,
@@ -17,8 +17,7 @@ from (`dept_emp` `d` join `dept_emp_latest_date` `l`
          )
 ;
 
-
--- ----------------------------------------------------------------------------------------------------- emp_no, dept_no
+-- ------------------------------------------------------------------------------------------------------ emp_no,dept_no
 SELECT emp_no, dept_no, COUNT(1) AS c
 FROM current_dept_emp
 GROUP BY emp_no, dept_no

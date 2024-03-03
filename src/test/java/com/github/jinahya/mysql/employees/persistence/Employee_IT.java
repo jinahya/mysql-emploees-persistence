@@ -11,29 +11,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Slf4j
 class Employee_IT extends _BaseEntityIT<Employee, Integer> {
 
-//    /**
-//     * Returns the maximum value of {@value Employee#COLUMN_NAME_EMP_NO} column value.
-//     *
-//     * @param entityManager an entity manager.
-//     * @return the maximum value of {@value Employee#COLUMN_NAME_EMP_NO} column value; {@link Optional#empty() empty}
-//     * when the {@value Employee#TABLE_NAME} table is empty.
-//     */
-//    static Optional<Integer> maxEmpNo(final EntityManager entityManager) {
-//        try {
-//            return Optional.of(
-//                    entityManager
-//                            .createQuery("SELECT MAX(e.empNo) FROM Employee AS e", Integer.class)
-//                            .getSingleResult()
-//            );
-//        } catch (final NoResultException nre) {
-//            return Optional.empty();
-//        }
-//    }
-//
-//    static Integer nextEmpNo(final EntityManager entityManager) {
-//        return maxEmpNo(entityManager).orElse(0) + 1;
-//    }
-
     // -----------------------------------------------------------------------------------------------------------------
     Employee_IT() {
         super(Employee.class);
@@ -42,7 +19,7 @@ class Employee_IT extends _BaseEntityIT<Employee, Integer> {
     // -----------------------------------------------------------------------------------------------------------------
     @Test
     void persistFindRemove() {
-        applyEntityManagerInTransactionAndCommit(em -> {
+        applyEntityManagerInTransaction(em -> {
             // --------------------------------------------------------------------------------------------------- given
             final var instance = newEntityInstance();
             instance.setEmpNo(Employee_SelectMaxEmpNo_IT.getNextEmpNo(em));

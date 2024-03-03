@@ -12,7 +12,7 @@ import java.util.Objects;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-abstract class _BaseIdTest<ID extends BaseId> {
+abstract class _BaseIdTest<ID extends _BaseId> {
 
     // -----------------------------------------------------------------------------------------------------------------
     _BaseIdTest(final Class<ID> idClass) {

@@ -20,7 +20,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * An abstract base class for testing subclasses of {@link BaseEntity} class.
+ * An abstract base class for testing subclasses of {@link _BaseEntity} class.
  *
  * @param <ENTITY> entity type parameter
  * @param <ID>     id type parameter
@@ -31,7 +31,7 @@ import java.util.function.Function;
 })
 @ExtendWith(WeldJunit5AutoExtension.class)
 @Slf4j
-abstract class _BaseEntityIT<ENTITY extends BaseEntity<ID>, ID extends Serializable>
+abstract class _BaseEntityIT<ENTITY extends _BaseEntity<ID>, ID extends Serializable>
         extends __BaseEntityTest<ENTITY, ID> {
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -81,11 +81,12 @@ abstract class _BaseEntityIT<ENTITY extends BaseEntity<ID>, ID extends Serializa
         });
     }
 
-    final <R> R applyEntityManagerInTransactionAndCommit(final Function<? super EntityManager, ? extends R> function) {
+    final <R> R applyEntityManagerInTransaction(final Function<? super EntityManager, ? extends R> function) {
         return applyEntityManagerInTransaction(function, EntityTransaction::commit);
     }
 
-    final <R> R applyEntityManagerInTransactionAndRollback(final Function<? super EntityManager, ? extends R> function) {
+    final <R> R applyEntityManagerInTransactionAndRollback(
+            final Function<? super EntityManager, ? extends R> function) {
         return applyEntityManagerInTransaction(function, EntityTransaction::rollback);
     }
 
@@ -95,7 +96,7 @@ abstract class _BaseEntityIT<ENTITY extends BaseEntity<ID>, ID extends Serializa
      * Returns the {@link EntityType#getName() entity name} of the {@link #entityClass}.
      *
      * @return the {@link EntityType#getName() entity name} of the {@link #entityClass}
-     * @see EntityManager#getMetamodel()
+     * @sesee EntityManager#getMetamodel()
      * @see jakarta.persistence.metamodel.Metamodel#entity(Class)
      * @see EntityType#getName()
      */

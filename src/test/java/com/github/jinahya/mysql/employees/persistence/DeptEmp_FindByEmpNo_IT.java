@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManager;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
-class DeptEmpLatestDateIT extends _BaseEntityIT<DeptEmpLatestDate, Integer> {
+class DeptEmp_FindByEmpNo_IT extends _BaseEntityIT<DeptEmpLatestDate, Integer> {
 
     private static DeptEmpLatestDate findByEmpNo1(final EntityManager entityManager, final Integer empNo) {
         final var query = entityManager.createQuery(
@@ -36,7 +36,7 @@ class DeptEmpLatestDateIT extends _BaseEntityIT<DeptEmpLatestDate, Integer> {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    DeptEmpLatestDateIT() {
+    DeptEmp_FindByEmpNo_IT() {
         super(DeptEmpLatestDate.class);
     }
 }

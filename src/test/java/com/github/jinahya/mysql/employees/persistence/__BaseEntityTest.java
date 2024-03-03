@@ -5,13 +5,13 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Objects;
 
 /**
- * An abstract base class for testing subclasses of {@link BaseEntity} class.
+ * An abstract base class for testing subclasses of {@link _BaseEntity} class.
  *
- * @param <ENTITY> {@link BaseEntity entity} type parameter
+ * @param <ENTITY> {@link _BaseEntity entity} type parameter
  * @param <ID>     the type of the {@code ID} of {@link ENTITY}.
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
  */
-abstract class __BaseEntityTest<ENTITY extends BaseEntity<ID>, ID extends Serializable> {
+abstract class __BaseEntityTest<ENTITY extends _BaseEntity<ID>, ID extends Serializable> {
 
     @Deprecated(forRemoval = true)
     __BaseEntityTest(final Class<ENTITY> entityClass, final Class<ID> idClass) {

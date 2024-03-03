@@ -10,13 +10,45 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 
+@NamedQuery(
+        name = "DeptManager.selectAllByDepartment",
+        query = """
+                SELECT e
+                FROM DeptManager AS e
+                WHERE e.department = :department
+                ORDER BY e.fromDate DESC"""
+)
+@NamedQuery(
+        name = "DeptManager.selectAllByIdDeptNo",
+        query = """
+                SELECT e
+                FROM DeptManager AS e
+                WHERE e.id.deptNo = :idDeptNo
+                ORDER BY e.fromDate DESC"""
+)
+@NamedQuery(
+        name = "DeptManager.selectAllByEmployee",
+        query = """
+                SELECT e
+                FROM DeptManager AS e
+                WHERE e.employee = :employee
+                ORDER BY e.fromDate DESC"""
+)
+@NamedQuery(
+        name = "DeptManager.selectAllByIdEmpNo",
+        query = """
+                SELECT e
+                FROM DeptManager AS e
+                WHERE e.id.empNo = :idEmpNo
+                ORDER BY e.fromDate DESC"""
+)
 @Entity
 @Table(name = DeptManager.TABLE_NAME)
 @Setter
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor
-public class DeptManager extends BaseEntity<DeptManagerId> {
+public class DeptManager extends _BaseEntity<DeptManagerId> {
 
     @Serial
     private static final long serialVersionUID = 7562801904287742000L;

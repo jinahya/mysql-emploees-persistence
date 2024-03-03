@@ -1,8 +1,8 @@
 package com.github.jinahya.mysql.employees.persistence;
 
-class DeptEmpIT extends _BaseEntityIT<DeptEmp, DeptEmpId> {
+class DeptEmp_IT extends _BaseEntityIT<DeptEmp, DeptEmpId> {
 
-    DeptEmpIT() {
+    DeptEmp_IT() {
         super(DeptEmp.class);
     }
 }

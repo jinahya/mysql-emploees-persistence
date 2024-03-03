@@ -12,6 +12,22 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @NamedQuery(
+        name = "Employee.selectHireYearsAndCounts",
+        query = """
+                SELECT e.gender, COUNT(e.gender) AS c
+                FROM Employee AS e
+                GROUP BY e.gender
+                ORDER BY c DESC"""
+)
+@NamedQuery(
+        name = "Employee.selectGendersAndCounts",
+        query = """
+                SELECT e.gender, COUNT(e.gender) AS c
+                FROM Employee AS e
+                GROUP BY e.gender
+                ORDER BY e.gender"""
+)
+@NamedQuery(
         name = "Employee.selectFirstNamesAndCounts",
         query = """
                 SELECT e.firstName, COUNT(e.firstName) AS c
@@ -44,7 +60,7 @@ import java.util.Objects;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor
-public class Employee extends BaseEntity<Integer> {
+public class Employee extends _BaseEntity<Integer> {
 
     @Serial
     private static final long serialVersionUID = -6603383818841085999L;

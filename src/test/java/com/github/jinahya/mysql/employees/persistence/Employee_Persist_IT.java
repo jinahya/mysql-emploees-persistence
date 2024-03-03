@@ -19,7 +19,7 @@ class Employee_Persist_IT extends _BaseEntityIT<Employee, Integer> {
     // -----------------------------------------------------------------------------------------------------------------
     @Test
     void persistFindRemove() {
-        applyEntityManagerInTransactionAndCommit(em -> {
+        applyEntityManagerInTransaction(em -> {
             // ----------------------------------------------------------------------------------------------------- new
             final var instance = newEntityInstance();
             instance.setEmpNo(Employee_SelectMaxEmpNo_IT.getNextEmpNo(em));

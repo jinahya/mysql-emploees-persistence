@@ -12,12 +12,27 @@ import java.io.Serial;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@NamedQuery(
+        name = "DeptEmpLatestDate.selectOneByEmployee",
+        query = """
+                SELECT e
+                FROM DeptEmpLatestDate AS e
+                WHERE e.employee = :employee"""
+)
+@NamedQuery(
+        name = "DeptEmpLatestDate.selectOneByEmpNo",
+        query = """
+                SELECT e
+                FROM DeptEmpLatestDate AS e
+                WHERE e.empNo = :empNo"""
+)
 @Entity
 @Table(name = DeptEmpLatestDate.VIEW_NAME)
+//@lombok.Setter // VIEW!
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor
-public class DeptEmpLatestDate extends BaseEntity<Integer> {
+public class DeptEmpLatestDate extends _BaseEntity<Integer> {
 
     @Serial
     private static final long serialVersionUID = 4331323808137781879L;

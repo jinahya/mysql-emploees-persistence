@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 @Slf4j
-abstract class _BaseEntityTest<ENTITY extends BaseEntity<ID>, ID extends Serializable>
+abstract class _BaseEntityTest<ENTITY extends _BaseEntity<ID>, ID extends Serializable>
         extends __BaseEntityTest<ENTITY, ID> {
 
     @Deprecated(forRemoval = true)
