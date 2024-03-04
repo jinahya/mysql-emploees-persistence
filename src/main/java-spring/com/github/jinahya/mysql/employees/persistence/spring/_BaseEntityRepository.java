@@ -7,6 +7,9 @@ import org.springframework.data.repository.NoRepositoryBean;
 import java.io.Serializable;
 
 @NoRepositoryBean
+@SuppressWarnings({
+        "java:S119" // <ENTITY ...>
+})
 public interface _BaseEntityRepository<ENTITY extends _BaseEntity<ID>, ID extends Serializable>
         extends JpaRepository<ENTITY, ID> {
 

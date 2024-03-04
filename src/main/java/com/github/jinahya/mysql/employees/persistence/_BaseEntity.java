@@ -6,6 +6,10 @@ import java.io.Serial;
 import java.io.Serializable;
 
 @MappedSuperclass
+@SuppressWarnings({
+        "java:S101", // class _BaseEntity
+        "java:S119"  // <ID ...>
+})
 public abstract class _BaseEntity<ID extends Serializable> implements Serializable {
 
     @Serial

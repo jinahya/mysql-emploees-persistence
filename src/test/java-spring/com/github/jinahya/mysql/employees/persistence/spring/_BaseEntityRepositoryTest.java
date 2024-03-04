@@ -11,6 +11,7 @@ abstract class _BaseEntityRepositoryTest<
         ID extends Serializable>
         extends __BaseEntityRepositoryTest<REPOSITORY, ENTITY, ID> {
 
+    // -----------------------------------------------------------------------------------------------------------------
     _BaseEntityRepositoryTest(final Class<REPOSITORY> repositoryClass) {
         super(repositoryClass);
     }
