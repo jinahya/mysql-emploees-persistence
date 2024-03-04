@@ -9,6 +9,10 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+@SuppressWarnings({
+        "java:S101", // class _BaseService
+        "java:S119"  // <ENTITY ...>
+})
 abstract class _BaseService<ENTITY extends _BaseEntity<ID>, ID extends Serializable> {
 
     _BaseService(final Class<ENTITY> entityClass) {
