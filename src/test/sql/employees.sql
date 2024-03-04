@@ -29,6 +29,12 @@ FROM employees
 ;
 
 -- ---------------------------------------------------------------------------------------------------------- birth_date
+SELECT birth_date, COUNT(1) AS c
+FROM employees
+GROUP BY birth_date
+HAVING c > 1
+ORDER BY C desc
+;
 SELECT YEAR(birth_date) AS birth_year, COUNT(1) AS count
 FROM employees
 GROUP BY birth_year
@@ -52,6 +58,30 @@ FROM employees
 GROUP BY birth_dayofmonth
 ORDER BY birth_dayofmonth
 ;
+
+select e1_0.emp_no,
+       e1_0.birth_date,
+       e1_0.first_name,
+       e1_0.gender,
+       e1_0.hire_date,
+       e1_0.last_name
+from employees e1_0
+where e1_0.birth_date = '1953-09-02'
+# limit 0, 2
+limit 0, 1
+;
+
+select e1_0.emp_no,
+       e1_0.birth_date,
+       e1_0.first_name,
+       e1_0.gender,
+       e1_0.hire_date,
+       e1_0.last_name
+from employees e1_0
+where e1_0.birth_date = '1958-02-19'
+limit 0, 2
+;
+
 
 -- ---------------------------------------------------------------------------------------------------------- first_name
 SELECT first_name, COUNT(1) AS count
