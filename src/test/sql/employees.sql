@@ -35,76 +35,59 @@ GROUP BY birth_date
 HAVING c > 1
 ORDER BY C desc
 ;
-SELECT YEAR(birth_date) AS birth_year, COUNT(1) AS count
+
+SELECT YEAR(birth_date) AS birth_year, COUNT(1) AS c
 FROM employees
 GROUP BY birth_year
-ORDER BY count DESC
+ORDER BY birth_year
 ;
 
-SELECT MONTH(birth_date) AS birth_month, MONTHNAME(birth_date) AS birth_monthname, COUNT(1) AS count
+SELECT YEAR(birth_date) AS birth_year, MONTH(birth_date) AS birth_month, COUNT(1) AS c
 FROM employees
-GROUP BY birth_month, birth_monthname
-ORDER BY birth_month
+GROUP BY birth_year, birth_month
+ORDER BY birth_year, birth_month
 ;
 
-SELECT DAYOFWEEK(birth_date) AS birth_dayofweek, DAYNAME(birth_date) AS birth_dayname, COUNT(1) AS count
+SELECT DAYOFWEEK(birth_date) AS birth_dayofweek, DAYNAME(birth_date) AS birth_dayname, COUNT(1) AS c
 FROM employees
 GROUP BY birth_dayofweek, birth_dayname
 ORDER BY birth_dayofweek
 ;
 
-SELECT DAYOFMONTH(birth_date) AS birth_dayofmonth, COUNT(1) AS count
+SELECT MONTH(birth_date) AS birth_month, COUNT(1) AS c
+FROM employees
+GROUP BY birth_month
+ORDER BY birth_month
+;
+
+SELECT DAYOFMONTH(birth_date) AS birth_dayofmonth, COUNT(1) AS c
 FROM employees
 GROUP BY birth_dayofmonth
 ORDER BY birth_dayofmonth
 ;
 
-select e1_0.emp_no,
-       e1_0.birth_date,
-       e1_0.first_name,
-       e1_0.gender,
-       e1_0.hire_date,
-       e1_0.last_name
-from employees e1_0
-where e1_0.birth_date = '1953-09-02'
-# limit 0, 2
-limit 0, 1
-;
-
-select e1_0.emp_no,
-       e1_0.birth_date,
-       e1_0.first_name,
-       e1_0.gender,
-       e1_0.hire_date,
-       e1_0.last_name
-from employees e1_0
-where e1_0.birth_date = '1958-02-19'
-limit 0, 2
-;
-
-
 -- ---------------------------------------------------------------------------------------------------------- first_name
-SELECT first_name, COUNT(1) AS count
+SELECT first_name, COUNT(1) AS c
 FROM employees
 GROUP BY first_name
-HAVING count > 1
-ORDER BY count DESC
+HAVING c > 1
+ORDER BY c DESC
 ;
 
 -- ----------------------------------------------------------------------------------------------------------- last_name
-SELECT last_name, COUNT(1) AS count
+SELECT last_name, COUNT(1) AS c
 FROM employees
 GROUP BY last_name
-HAVING count > 1
-ORDER BY count DESC
+HAVING c > 1
+ORDER BY c DESC
 ;
 
 -- ------------------------------------------------------------------------------------------------ first_name/last_name
-SELECT first_name, last_name, COUNT(1) AS count
+SELECT first_name, last_name, COUNT(1) AS c
 FROM employees
 GROUP BY first_name, last_name
-HAVING count > 1
-ORDER BY count DESC
+HAVING c > 1
+ORDER BY c DESC
 ;
 
 -- -------------------------------------------------------------------------------------------------------------- gender
@@ -136,7 +119,7 @@ GROUP BY hire_month
 ORDER BY hire_month
 ;
 
-SELECT DISTINCT DAYOFWEEK(hire_date) AS hire_weekday, COUNT(1)
+SELECT DISTINCT DAYOFWEEK(hire_date) AS hire_weekday, COUNT(1) AS c
 FROM employees
 GROUP BY hire_weekday
 ORDER BY hire_weekday

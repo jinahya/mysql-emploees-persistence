@@ -10,10 +10,27 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 
-//@NamedQuery(
-//        name ="Salary.selectLatestByEmpNo",
-//        query = "SELECT e FROM Salary AS e WHERE e.empNo = (SELECT )"
-//)
+/**
+ * An entity class maps {@value Salary#TABLE_NAME} table.
+ *
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ */
+@NamedQuery(
+        name = "Salary.selectAllByEmployee",
+        query = """
+                SELECT e
+                FROM Salary As e
+                WHERE e.employee = :employee
+                ORDER BY e.fromDate DESC"""
+)
+@NamedQuery(
+        name = "Salary.selectAllByEmpNo",
+        query = """
+                SELECT e
+                FROM Salary As e
+                WHERE e.empNo = :empNo
+                ORDER BY e.fromDate DESC"""
+)
 @IdClass(SalaryId.class)
 @Entity
 @Table(name = Salary.TABLE_NAME)
@@ -22,7 +39,7 @@ import java.util.Optional;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuppressWarnings({
-        "java:S1700" // ... salary;
+        "java:S1700" // Integer salary -> class Salary
 })
 public class Salary extends _BaseEntity<SalaryId> {
 
@@ -106,13 +123,14 @@ public class Salary extends _BaseEntity<SalaryId> {
     private Employee employee;
 
     // -----------------------------------------------------------------------------------------------------------------
-    //@Positive
+//    @jakarta.validation.constraints.Positive
     @NotNull
     @Basic(optional = false)
     @Column(name = COLUMN_NAME_SALARY, nullable = false, insertable = true, updatable = true)
     private Integer salary;
 
     // -----------------------------------------------------------------------------------------------------------------
+//    @jakarta.validation.constraints.PastOrPresent
     @NotNull
     @Id
     @Basic(optional = false)

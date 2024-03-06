@@ -1,8 +1,8 @@
 package com.github.jinahya.mysql.employees.persistence;
 
-class TitleIT extends _BaseEntityIT<Title, TitleId> {
+class Title_IT extends _BaseEntityIT<Title, TitleId> {
 
-    TitleIT() {
+    Title_IT() {
         super(Title.class);
     }
 }

@@ -9,7 +9,6 @@
 
 spring:
   datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
     password: ${mysql.password}
     username: ${mysql.user}
     url: jdbc:mysql://${mysql.host}:${mysql.port}/${mysql.database}
@@ -18,7 +17,7 @@ spring:
       ddl-auto: none
     properties:
       hibernate:
-#        dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
+#        show_sql: true
   main:
     banner-mode: off

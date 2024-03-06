@@ -1,14 +1,19 @@
 package com.github.jinahya.mysql.employees.persistence.spring;
 
 import com.github.jinahya.mysql.employees.persistence.Employee;
+import com.github.jinahya.mysql.employees.persistence.Employee_;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Tuple;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.query.internal.QueryOptionsImpl;
+import org.hibernate.type.descriptor.JdbcBindingLogging;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.lang.Nullable;
 
 import java.time.LocalDate;
@@ -53,7 +58,11 @@ class EmployeeRepository_FindAllByBirthDate_Test
 
     // -----------------------------------------------------------------------------------------------------------------
     private List<LocalDate> getBirthDateList() {
-        return selectDistinctBirthDateList(entityManager(), 8);
+        try {
+            return selectDistinctBirthDateList(entityManager(), 8);
+        } finally {
+            entityManager().clear();
+        }
     }
 
     @MethodSource({"getBirthDateList"})
@@ -62,7 +71,6 @@ class EmployeeRepository_FindAllByBirthDate_Test
 //        final int size = ThreadLocalRandom.current().nextInt(16);
         final int size = 1;
         final var all = repositoryInstance().findAllByBirthDate(birthDate, Pageable.ofSize(size));
-        log.debug("all({}): {}", all.getContent().size(), all.getContent());
         assertThat(all)
                 .hasSizeLessThanOrEqualTo(size)
                 .extracting(Employee::getBirthDate)
@@ -71,22 +79,33 @@ class EmployeeRepository_FindAllByBirthDate_Test
 
     // -----------------------------------------------------------------------------------------------------------------
     private List<Arguments> getBirthDateAndCountArgumentsList() {
-        return selectBirthDateAndCountTupleList(entityManager(), 8)
-                .stream()
-                .map(Tuple::toArray)
-                .map(Arguments::of)
-                .toList();
+        try {
+            return selectBirthDateAndCountTupleList(entityManager(), 8)
+                    .stream()
+                    .map(Tuple::toArray)
+                    .map(Arguments::of)
+                    .toList();
+        } finally {
+            entityManager().clear();
+        }
     }
 
     @MethodSource({"getBirthDateAndCountArgumentsList"})
     @ParameterizedTest
     void __(final LocalDate birthDate, final long count) {
-        final int size = Math.toIntExact(count);
-        final var all = repositoryInstance().findAllByBirthDate(birthDate, Pageable.ofSize(size + 1));
-        assertThat(all)
-                .hasSizeLessThanOrEqualTo(size)
-                .extracting(Employee::getBirthDate)
-                .containsOnly(birthDate);
-    }
 
+        final int page = 0;
+        final int size = Math.toIntExact(count);
+        final var sort = Sort.by(Sort.Order.asc(Employee_.birthDate.getName()));
+        final var pageable = PageRequest.of(page, size, sort);
+        // -------------------------------------------------------------------------------------------------------- when
+        final var all = repositoryInstance().findAllByBirthDate(birthDate, pageable);
+        // -------------------------------------------------------------------------------------------------------- then
+        assertThat(all)
+                .hasSize(size)
+                .extracting(Employee::getBirthDate)
+                .isSorted()
+                .containsOnly(birthDate)
+        ;
+    }
 }

@@ -54,6 +54,8 @@
     <mysql.password>root</mysql.password>
     <sonar.organization>jinahya-github</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    <groupId.querydsl>com.querydsl</groupId.querydsl>
+    <version.com.querydsl>5.1.0</version.com.querydsl>
     <version.lombok>1.18.30</version.lombok>
     <version.maven-failsafe>${version.maven-surefire}</version.maven-failsafe>
     <version.maven-surefire>3.2.5</version.maven-surefire>
@@ -67,11 +69,60 @@
     <version.org.mockito>5.10.0</version.org.mockito>
   </properties>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>jakarta.platform</groupId>
+        <artifactId>jakarta.jakartaee-bom</artifactId>
+        <version>11.0.0-M1</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>${groupId.querydsl}</groupId>
+        <artifactId>querydsl-apt</artifactId>
+        <version>${version.com.querydsl}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-bom</artifactId>
+        <version>2.1.0-alpha1</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
+<!--    <dependency>-->
+<!--      <groupId>${groupId.querydsl}</groupId>-->
+<!--      <artifactId>querydsl-core</artifactId>-->
+<!--      <version>${version.com.querydsl}</version>-->
+<!--      <scope>provided</scope>-->
+<!--    </dependency>-->
     <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>${version.lombok}</version>
+      <groupId>jakarta.annotation</groupId>
+      <artifactId>jakarta.annotation-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.enterprise</groupId>
+      <artifactId>jakarta.enterprise.cdi-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.inject</groupId>
+      <artifactId>jakarta.inject-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.persistence</groupId>
+      <artifactId>jakarta.persistence-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.validation</groupId>
+      <artifactId>jakarta.validation-api</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -79,6 +130,35 @@
       <artifactId>equalsverifier-nodep</artifactId>
       <version>3.15.7</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>3.25.3</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${version.org.junit.jupiter}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <version>${version.org.mockito}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${version.lombok}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 
@@ -177,6 +257,12 @@
               <artifactId>hibernate-jpamodelgen</artifactId>
               <version>${version.org.hibernate.orm}</version>
             </path>
+<!--            <path>-->
+<!--              <groupId>${groupId.querydsl}</groupId>-->
+<!--              <artifactId>querydsl-apt</artifactId>-->
+<!--              <version>${version.com.querydsl}</version>-->
+<!--              <classifier>jakarta</classifier>-->
+<!--            </path>-->
           </annotationProcessorPaths>
           <compilerArgs>
             <arg>-Xlint</arg>
@@ -379,18 +465,11 @@
 
     <profile>
       <id>persistence</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
+      <!--      <activation>-->
+      <!--        <activeByDefault>true</activeByDefault>-->
+      <!--      </activation>-->
       <dependencyManagement>
         <dependencies>
-          <dependency>
-            <groupId>jakarta.platform</groupId>
-            <artifactId>jakarta.jakartaee-bom</artifactId>
-            <version>11.0.0-M1</version>
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
           <!-- https://www.datanucleus.org/products/accessplatform_6_0/jakarta/tools.html#maven -->
           <!-- https://www.datanucleus.org/products/accessplatform_6_0/ -->
           <dependency><!-- https://search.maven.org/artifact/org.datanucleus/datanucleus-accessplatform-jakarta-rdbms -->
@@ -437,37 +516,6 @@
           <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>jakarta.annotation</groupId>
-          <artifactId>jakarta.annotation-api</artifactId>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
-          <groupId>jakarta.enterprise</groupId>
-          <artifactId>jakarta.enterprise.cdi-api</artifactId>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
-          <groupId>jakarta.inject</groupId>
-          <artifactId>jakarta.inject-api</artifactId>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
-          <groupId>jakarta.persistence</groupId>
-          <artifactId>jakarta.persistence-api</artifactId>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
-          <groupId>jakarta.validation</groupId>
-          <artifactId>jakarta.validation-api</artifactId>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.assertj</groupId>
-          <artifactId>assertj-core</artifactId>
-          <version>3.25.3</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
           <groupId>org.glassfish.expressly</groupId>
           <artifactId>expressly</artifactId>
           <version>5.0.0</version>
@@ -491,18 +539,6 @@
           <version>${version.org.jboss.weld}</version>
           <scope>test</scope>
         </dependency>
-        <dependency>
-          <groupId>org.junit.jupiter</groupId>
-          <artifactId>junit-jupiter</artifactId>
-          <version>${version.org.junit.jupiter}</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.mockito</groupId>
-          <artifactId>mockito-junit-jupiter</artifactId>
-          <version>${version.org.mockito}</version>
-          <scope>test</scope>
-        </dependency>
         <!--        <dependency>-->
         <!--          <groupId>org.projectlombok</groupId>-->
         <!--          <artifactId>lombok</artifactId>-->
@@ -523,7 +559,33 @@
             <artifactId>build-helper-maven-plugin</artifactId>
             <executions>
               <execution>
-                <id>add-test-source</id>
+                <id>add-source-persistence</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>add-source</goal>
+                </goals>
+                <configuration>
+                  <sources>
+                    <source>${project.basedir}/src/main/java-persistence</source>
+                  </sources>
+                </configuration>
+              </execution>
+              <execution>
+                <id>add-resource-persistence</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>add-resource</goal>
+                </goals>
+                <configuration>
+                  <resources>
+                    <resource>
+                      <directory>${project.basedir}/src/main/resources-persistence</directory>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+              <execution>
+                <id>add-test-source-persistence</id>
                 <phase>generate-test-sources</phase>
                 <goals>
                   <goal>add-test-source</goal>
@@ -535,7 +597,7 @@
                 </configuration>
               </execution>
               <execution>
-                <id>add-test-resource</id>
+                <id>add-test-resource-persistence</id>
                 <phase>generate-test-resources</phase>
                 <goals>
                   <goal>add-test-resource</goal>
@@ -554,7 +616,7 @@
       </build>
     </profile>
     <profile>
-      <id>persistence-provider-datanucleus</id>
+      <id>persistence-datanucleus</id>
       <properties>
         <persistence.provider>org.datanucleus.api.jpa.PersistenceProviderImpl</persistence.provider>
       </properties>
@@ -568,10 +630,7 @@
       </dependencies>
     </profile>
     <profile>
-      <id>persistence-provider-eclipselink</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
+      <id>persistence-eclipselink</id>
       <properties>
         <persistence.provider>org.eclipse.persistence.jpa.PersistenceProvider</persistence.provider>
         <!-- https://stackoverflow.com/a/65283669/330457 -->
@@ -592,7 +651,7 @@
       </dependencies>
     </profile>
     <profile>
-      <id>persistence-provider-hibernate</id>
+      <id>persistence-hibernate</id>
       <properties>
         <persistence.provider>org.hibernate.jpa.HibernatePersistenceProvider</persistence.provider>
       </properties>
@@ -605,7 +664,166 @@
       </dependencies>
     </profile>
     <profile>
-      <id>application-framework-spring</id>
+      <id>querydsl</id>
+      <dependencies>
+        <dependency>
+          <groupId>${groupId.querydsl}</groupId>
+          <artifactId>querydsl-jpa</artifactId>
+          <version>${version.com.querydsl}</version>
+          <classifier>jakarta</classifier>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.jboss.weld</groupId>
+          <artifactId>weld-junit5</artifactId>
+          <version>${version.org.jboss.weld}</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>add-source</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>add-source</goal>
+                </goals>
+                <configuration>
+                  <sources>
+                    <source>${project.basedir}/src/main/java-querydsl</source>
+                  </sources>
+                </configuration>
+              </execution>
+              <execution>
+                <id>add-resource</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>add-resource</goal>
+                </goals>
+                <configuration>
+                  <resources>
+                    <resource>
+                      <directory>${project.basedir}/src/main/resources-querydsl</directory>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+              <execution>
+                <id>add-test-source</id>
+                <phase>generate-test-sources</phase>
+                <goals>
+                  <goal>add-test-source</goal>
+                </goals>
+                <configuration>
+                  <sources>
+                    <source>${project.basedir}/src/test/java-querydsl</source>
+                  </sources>
+                </configuration>
+              </execution>
+              <execution>
+                <id>add-test-resource</id>
+                <phase>generate-test-resources</phase>
+                <goals>
+                  <goal>add-test-resource</goal>
+                </goals>
+                <configuration>
+                  <resources>
+                    <resource>
+                      <directory>${project.basedir}/src/test/resources-querydsl</directory>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <!-- https://github.com/querydsl/querydsl -->
+      <id>querydsl-5</id>
+      <properties>
+        <groupId.querydsl>com.querydsl</groupId.querydsl>
+      </properties>
+    </profile>
+    <profile>
+      <!-- https://github.com/OpenFeign/querydsl -->
+      <id>querydsl-6</id>
+      <properties>
+        <groupId.querydsl>io.github.openfeign.querydsl</groupId.querydsl>
+      </properties>
+    </profile>
+    <profile>
+      <id>framework</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>add-source-framework</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>add-source</goal>
+                </goals>
+                <configuration>
+                  <sources>
+                    <source>${project.basedir}/src/main/java-framework</source>
+                  </sources>
+                </configuration>
+              </execution>
+              <execution>
+                <id>add-resource-framework</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>add-resource</goal>
+                </goals>
+                <configuration>
+                  <resources>
+                    <resource>
+                      <directory>${project.basedir}/src/main/resources-framework</directory>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+              <execution>
+                <id>add-test-source-framework</id>
+                <phase>generate-test-sources</phase>
+                <goals>
+                  <goal>add-test-source</goal>
+                </goals>
+                <configuration>
+                  <sources>
+                    <source>${project.basedir}/src/test/java-framework</source>
+                  </sources>
+                </configuration>
+              </execution>
+              <execution>
+                <id>add-test-resource-framework</id>
+                <phase>generate-test-resources</phase>
+                <goals>
+                  <goal>add-test-resource</goal>
+                </goals>
+                <configuration>
+                  <resources>
+                    <resource>
+                      <directory>${project.basedir}/src/test/resources-framework</directory>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>framework-spring</id>
       <properties>
         <failsafe.includes>**/spring/*IT.java</failsafe.includes>
         <surefire.includes>**/spring/*Test.java</surefire.includes>
@@ -646,16 +864,6 @@
           </testResource>
         </testResources>
         <plugins>
-<!--          <plugin>-->
-<!--            <groupId>org.apache.maven.plugins</groupId>-->
-<!--            <artifactId>maven-compiler-plugin</artifactId>-->
-<!--            <configuration>-->
-<!--              <excludes>-->
-<!--                <exclude>**/persistence/*.java</exclude>-->
-<!--              </excludes>-->
-<!--            </configuration>-->
-
-<!--          </plugin>-->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-failsafe-plugin</artifactId>
@@ -669,7 +877,7 @@
             <artifactId>build-helper-maven-plugin</artifactId>
             <executions>
               <execution>
-                <id>add-source</id>
+                <id>add-source-spring</id>
                 <phase>generate-sources</phase>
                 <goals>
                   <goal>add-source</goal>
@@ -681,7 +889,7 @@
                 </configuration>
               </execution>
               <execution>
-                <id>add-resource</id>
+                <id>add-resource-spring</id>
                 <phase>generate-resources</phase>
                 <goals>
                   <goal>add-resource</goal>
@@ -695,7 +903,7 @@
                 </configuration>
               </execution>
               <execution>
-                <id>add-test-source</id>
+                <id>add-test-source-spring</id>
                 <phase>generate-test-sources</phase>
                 <goals>
                   <goal>add-test-source</goal>
@@ -707,7 +915,7 @@
                 </configuration>
               </execution>
               <execution>
-                <id>add-test-resource</id>
+                <id>add-test-resource-spring</id>
                 <phase>generate-test-resources</phase>
                 <goals>
                   <goal>add-test-resource</goal>
@@ -726,7 +934,7 @@
       </build>
     </profile>
     <profile>
-      <id>application-framework-quarkus</id>
+      <id>framework-quarkus</id>
       <build>
         <plugins>
           <plugin>
@@ -734,7 +942,7 @@
             <artifactId>build-helper-maven-plugin</artifactId>
             <executions>
               <execution>
-                <id>add-source</id>
+                <id>add-source-quarkus</id>
                 <phase>generate-sources</phase>
                 <goals>
                   <goal>add-source</goal>

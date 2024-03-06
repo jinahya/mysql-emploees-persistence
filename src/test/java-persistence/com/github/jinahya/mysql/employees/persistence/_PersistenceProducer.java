@@ -8,7 +8,7 @@ import jakarta.persistence.Persistence;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-class _PersistenceProducer {
+public class _PersistenceProducer {
 
     // -----------------------------------------------------------------------------------------------------------------
 
@@ -27,12 +27,12 @@ class _PersistenceProducer {
     @Produces
     EntityManager produceEntityManager() {
         final var entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        log.debug("producing {}", entityManager);
+        log.debug("producing entityManager: {}", entityManager);
         return entityManager;
     }
 
     void disposeEntityManager(final @Disposes EntityManager entityManager) {
-        log.debug("disposing {}", entityManager);
+        log.debug("disposing entityManager: {}", entityManager);
         entityManager.close();
     }
 }

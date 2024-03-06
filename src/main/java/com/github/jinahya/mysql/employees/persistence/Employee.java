@@ -11,6 +11,13 @@ import java.io.Serial;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * An entity class maps {@value Employee#TABLE_NAME} table.
+ *
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ * @see <a href="https://jakarta.ee/specifications/persistence/3.2/jakarta-persistence-spec-3.2-m1#a5538">4.8.5.
+ * Aggregate Functions in the SELECT Clause</a>
+ */
 @NamedQuery(
         name = "Employee.selectHireYearsAndCounts",
         query = """
@@ -44,15 +51,22 @@ import java.util.Objects;
 )
 @NamedQuery(
         name = "Employee.selectMinMaxBirthDate",
-        query = "SELECT MIN(e.birthDate), MAX(e.birthDate) FROM Employee AS e"
+        query = """
+                SELECT MIN(e.birthDate), MAX(e.birthDate)
+                FROM Employee AS e"""
 )
 @NamedQuery(
         name = "Employee.selectMaxEmpNo",
-        query = "SELECT MAX(e.empNo) FROM Employee AS e"
+        query = """
+                SELECT MAX(e.empNo)
+                FROM Employee AS e"""
 )
 @NamedQuery(
         name = "Employee.selectAll",
-        query = "SELECT e FROM Employee AS e"
+        query = """
+                SELECT e
+                FROM Employee AS e
+                ORDER BY e.empNo"""
 )
 @Entity
 @Table(name = Employee.TABLE_NAME)
@@ -66,9 +80,17 @@ public class Employee extends _BaseEntity<Integer> {
     private static final long serialVersionUID = -6603383818841085999L;
 
     // -----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * The name of the database table to which this entity class maps. The value is {@value}.
+     */
     public static final String TABLE_NAME = "employees";
 
     // -----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * The name of the table column to which the {@link Employee_#empNo empNo} attribute maps. The value is {@value}.
+     */
     public static final String COLUMN_NAME_EMP_NO = "emp_no";
 
     // ------------------------------------------------------------------------------------------------------ birth_date
@@ -77,7 +99,12 @@ public class Employee extends _BaseEntity<Integer> {
     // ------------------------------------------------------------------------------------------------------ first_name
     public static final String COLUMN_NAME_FIRST_NAME = "first_name";
 
+    /**
+     * The length of the {@value #COLUMN_NAME_FIRST_NAME} column. The value is {@value}.
+     */
     public static final int COLUMN_LENGTH_FIRST_NAME = 14;
+
+    public static final int SIZE_MAX_FIRST_NAME = COLUMN_LENGTH_FIRST_NAME;
 
     // ------------------------------------------------------------------------------------------------------- last_name
     public static final String COLUMN_NAME_LAST_NAME = "last_name";
@@ -171,7 +198,16 @@ public class Employee extends _BaseEntity<Integer> {
      */
     public static final String COLUMN_NAME_HIRE_DATE = "hire_date";
 
-    // -----------------------------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------ STATIC FACTORY METHODS
+    static Employee of(final Integer empNo) {
+        final Employee instance = new Employee();
+        instance.setEmpNo(empNo);
+        return instance;
+    }
+
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    // ------------------------------------------------------------------------------------------------ java.lang.Object
 
     @Override
     public boolean equals(final Object obj) {
