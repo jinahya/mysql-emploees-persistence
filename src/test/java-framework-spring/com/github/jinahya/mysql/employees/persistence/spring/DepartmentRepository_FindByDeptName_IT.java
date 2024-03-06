@@ -37,8 +37,9 @@ class DepartmentRepository_FindByDeptName_IT extends _BaseEntityRepositoryIT<Dep
         // -------------------------------------------------------------------------------------------------------- when
         final var found = repositoryInstance().findByDeptName(deptName);
         // -------------------------------------------------------------------------------------------------------- then
-        assertThat(found).hasValueSatisfying(v -> {
-            assertThat(v.getDeptName()).isEqualTo(deptName);
-        });
+        assertThat(found)
+                .hasValueSatisfying(v -> {
+                    assertThat(v.getDeptName()).isEqualTo(deptName);
+                });
     }
 }
