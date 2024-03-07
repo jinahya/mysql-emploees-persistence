@@ -56,3 +56,69 @@ WHERE s1.emp_no = 10001
 ORDER BY s1.emp_no,
          s1.from_date
 ;
+
+-- ---------------------------------------------------------------------------------------------------------------------
+EXPLAIN
+SELECT emp_no, from_date
+FROM salaries
+WHERE to_date = '9999-01-01'
+;
+
+EXPLAIN
+SELECT emp_no, MAX(from_date) AS max_from_date
+FROM (SELECT emp_no, from_date
+      FROM salaries
+      WHERE to_date = '9999-01-01') AS s
+GROUP BY emp_no
+;
+
+EXPLAIN
+SELECT s.emp_no, s.max_from_date, s2.salary
+FROM (SELECT emp_no, MAX(from_date) AS max_from_date
+      FROM (SELECT emp_no, from_date
+            FROM salaries
+            WHERE to_date = '9999-01-01') AS s
+      GROUP BY emp_no) AS s
+         JOIN salaries AS s2 ON s.emp_no = s2.emp_no AND s.max_from_date = s2.from_date
+;
+
+EXPLAIN
+SELECT s.emp_no, s.max_from_date, s.salary, e.gender
+FROM (SELECT s.emp_no, s.max_from_date, s2.salary
+      FROM (SELECT emp_no, MAX(from_date) AS max_from_date
+            FROM (SELECT emp_no, from_date
+                  FROM salaries
+                  WHERE to_date = '9999-01-01') AS s
+            GROUP BY emp_no) AS s
+               JOIN salaries AS s2 ON s.emp_no = s2.emp_no AND s.max_from_date = s2.from_date) AS s
+         JOIN employees AS e ON s.emp_no = e.emp_no
+;
+
+EXPLAIN
+SELECT e.gender, AVG(s.salary)
+FROM (SELECT s.emp_no, s.max_from_date, s2.salary
+      FROM (SELECT emp_no, MAX(from_date) AS max_from_date
+            FROM (SELECT emp_no, from_date
+                  FROM salaries
+                  WHERE to_date = '9999-01-01') AS s
+            GROUP BY emp_no) AS s
+               JOIN salaries AS s2 ON s.emp_no = s2.emp_no AND s.max_from_date = s2.from_date) AS s
+         JOIN employees AS e ON s.emp_no = e.emp_no
+GROUP BY e.gender
+;
+
+EXPLAIN
+SELECT s.*, e.gender
+FROM salaries AS s
+         JOIN employees e on s.emp_no = e.emp_no
+;
+
+EXPLAIN
+SELECT AVG(s.salary), e.gender
+FROM (SELECT emp_no, salary, MAX(from_date)
+      FROM salaries
+      WHERE to_date = '9999-01-01'
+      GROUP BY emp_no, salary) AS s
+         JOIN employees AS e ON s.emp_no = e.emp_no
+GROUP BY e.gender
+;
