@@ -31,6 +31,20 @@ import java.util.Optional;
                 WHERE e.empNo = :empNo
                 ORDER BY e.fromDate DESC"""
 )
+@NamedQuery(
+        name = "Salary.selectAllFetchEmployee",
+        query = """
+                SELECT e
+                FROM Salary As e JOIN FETCH e.employee
+                ORDER BY e.empNo, e.fromDate"""
+)
+@NamedQuery(
+        name = "Salary.selectAll",
+        query = """
+                SELECT e
+                FROM Salary As e
+                ORDER BY e.empNo, e.fromDate"""
+)
 @IdClass(SalaryId.class)
 @Entity
 @Table(name = Salary.TABLE_NAME)

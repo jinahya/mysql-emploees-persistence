@@ -122,3 +122,37 @@ FROM (SELECT emp_no, salary, MAX(from_date)
          JOIN employees AS e ON s.emp_no = e.emp_no
 GROUP BY e.gender
 ;
+
+EXPLAIN
+SELECT emp_no, MAX(from_date)
+FROM salaries
+WHERE to_date = '9999-01-01'
+GROUP BY emp_no
+;
+
+EXPLAIN
+SELECT AVG(s.salary), e.gender
+FROM salaries AS s
+         JOIN (SELECT emp_no, MAX(from_date) AS max_from_date
+               FROM salaries
+               WHERE to_date = '9999-01-01'
+               GROUP BY emp_no) AS s2 ON s.emp_no = s2.emp_no AND s.from_date = s2.max_from_date
+         JOIN employees AS e ON s.emp_no = e.emp_no
+GROUP BY e.gender
+;
+
+-- ------------------------------------------------------------------------------------------------------- salary/emp_no
+SELECT *
+FROM salaries
+WHERE emp_no = 10001
+ORDER BY from_date DESC
+;
+
+EXPLAIN
+SELECT e.gender, AVG(s.salary)
+FROM salaries AS s
+         JOIN employees AS e ON s.emp_no = e.emp_no
+# WHERE s.to_date = '9999-01-01'
+GROUP BY e.gender
+ORDER BY e.gender
+;
