@@ -1,14 +1,13 @@
 package com.github.jinahya.mysql.employees.persistence;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serial;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -66,7 +65,7 @@ import java.util.Objects;
         query = """
                 SELECT e
                 FROM Employee AS e
-                ORDER BY e.empNo"""
+                ORDER BY e.empNo ASC"""
 )
 @Entity
 @Table(name = Employee.TABLE_NAME)
@@ -268,4 +267,36 @@ public class Employee extends _BaseEntity<Integer> {
     @Basic(optional = false)
     @Column(name = COLUMN_NAME_HIRE_DATE, nullable = false, insertable = true, updatable = true)
     private LocalDate hireDate;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @OrderBy(DeptEmp.ATTRIBUTE_NAME_DEPT_NO + " ASC")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = DeptEmp.TABLE_NAME,
+            joinColumns = {
+                    @JoinColumn(
+                            name = DeptEmp.COLUMN_NAME_EMP_NO,
+                            referencedColumnName = COLUMN_NAME_EMP_NO
+                    )
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(
+                            name = DeptEmp.COLUMN_NAME_DEPT_NO,
+                            referencedColumnName = Department.COLUMN_NAME_DEPT_NO
+                    )
+            }
+    )
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<@Valid @NotNull Department> departments;
+
+    @OrderBy(Salary.ATTRIBUTE_NAME_FROM_DATE + " ASC")
+    @OneToMany(mappedBy = Salary.ATTRIBUTE_NAME_EMPLOYEE, fetch = FetchType.LAZY)
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<@Valid @NotNull Salary> salaries;
 }

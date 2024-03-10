@@ -5,6 +5,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
@@ -37,6 +38,8 @@ class Department_SelectOneByDeptName_IT extends _BaseEntityIT<Department, String
     }
 
     static Department selectOneByDeptName(final EntityManager entityManager, final String deptName) {
+        Objects.requireNonNull(entityManager, "entityManager is null");
+        Objects.requireNonNull(deptName, "deptName is null");
         return switch (ThreadLocalRandom.current().nextInt(3)) {
             case 1 -> selectOneByDeptName2(entityManager, deptName);
             case 0 -> selectOneByDeptName1(entityManager, deptName);
@@ -51,48 +54,39 @@ class Department_SelectOneByDeptName_IT extends _BaseEntityIT<Department, String
 
     // -----------------------------------------------------------------------------------------------------------------
     private Stream<String> getDeptNameStream() {
-        return applyEntityManager(
-                em -> Department_SelectAll_IT.selectAll(em)
-                        .stream()
-                        .map(Department::getDeptName)
-        );
+        return applyEntityManager(em -> {
+            return Department_SelectAll_IT.selectAll(em, 8).stream().map(Department::getDeptName);
+        });
     }
 
     @MethodSource({"getDeptNameStream"})
     @ParameterizedTest
     void selectOneByDeptName1__(final String deptName) {
-        applyEntityManager(em -> {
-            final var one = em.createNamedQuery("Department.selectOneByDeptName", Department.class)
-                    .setParameter("deptName", deptName)
-                    .getSingleResult();
-            assertThat(one).isNotNull().satisfies(d -> {
-                assertThat(d.getDeptName()).isEqualTo(deptName);
-            });
-            return null;
+        // -------------------------------------------------------------------------------------------------------- when
+        final var one = applyEntityManager(em -> selectOneByDeptName1(em, deptName));
+        // -------------------------------------------------------------------------------------------------------- then
+        assertThat(one).isNotNull().satisfies(d -> {
+            assertThat(d.getDeptName()).isEqualTo(deptName);
         });
     }
 
     @MethodSource({"getDeptNameStream"})
     @ParameterizedTest
     void selectOneByDeptName2__(final String deptName) {
-        applyEntityManager(em -> {
-            final var one = selectOneByDeptName2(em, deptName);
-            assertThat(one).isNotNull().satisfies(d -> {
-                assertThat(d.getDeptName()).isEqualTo(deptName);
-            });
-            return null;
+        // -------------------------------------------------------------------------------------------------------- when
+        final var one = applyEntityManager(em -> selectOneByDeptName2(em, deptName));
+        // -------------------------------------------------------------------------------------------------------- then
+        assertThat(one).isNotNull().satisfies(d -> {
+            assertThat(d.getDeptName()).isEqualTo(deptName);
         });
     }
 
     @MethodSource({"getDeptNameStream"})
     @ParameterizedTest
     void selectOneByDeptName3__(final String deptName) {
-        applyEntityManager(em -> {
-            final var one = selectOneByDeptName3(em, deptName);
-            assertThat(one).isNotNull().satisfies(d -> {
-                assertThat(d.getDeptName()).isEqualTo(deptName);
-            });
-            return null;
+        final var one = applyEntityManager(em -> selectOneByDeptName3(em, deptName));
+        assertThat(one).isNotNull().satisfies(d -> {
+            assertThat(d.getDeptName()).isEqualTo(deptName);
         });
     }
 }

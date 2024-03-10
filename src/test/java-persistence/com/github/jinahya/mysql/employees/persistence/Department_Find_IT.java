@@ -18,7 +18,7 @@ class Department_Find_IT extends _BaseEntityIT<Department, String> {
     // -----------------------------------------------------------------------------------------------------------------
     private Stream<String> getDeptNoStream() {
         return applyEntityManager(em -> {
-            final var all = Department_SelectAll_IT.selectAll(em);
+            final var all = Department_SelectAll_IT.selectAll(em, 8);
             em.clear();
             return all.stream().map(Department::getDeptNo);
         });

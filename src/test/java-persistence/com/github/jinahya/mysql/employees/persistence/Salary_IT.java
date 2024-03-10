@@ -19,6 +19,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class Salary_IT extends _BaseEntityIT<Salary, SalaryId> {
 
+    @Test
+    void ATTRIBUTE_NAME_EMPLOYEE__() {
+        assertThat(Salary.ATTRIBUTE_NAME_EMPLOYEE).isEqualTo(Salary_.employee.getName());
+    }
+
+    @Test
+    void ATTRIBUTE_NAME_FROM_DATE__() {
+        assertThat(Salary.ATTRIBUTE_NAME_FROM_DATE).isEqualTo(Salary_.fromDate.getName());
+    }
+
     private static List<Salary> selectAllByEmpNo1(final EntityManager entityManager, final int empNo,
                                                   final Integer maxResults) {
         Objects.requireNonNull(entityManager, "entityManager is null");

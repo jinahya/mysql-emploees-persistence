@@ -35,12 +35,12 @@ import java.util.Optional;
                 ORDER BY e.fromDate DESC"""
 )
 @NamedQuery(
-        name = "DeptManager.selectAllByIdEmpNo",
+        name = "DeptManager.selectAll",
         query = """
                 SELECT e
                 FROM DeptManager AS e
                 WHERE e.id.empNo = :idEmpNo
-                ORDER BY e.fromDate DESC"""
+                ORDER BY e.id.empNo ASC, e.id.deptNo DESC"""
 )
 @Entity
 @Table(name = DeptManager.TABLE_NAME)
@@ -70,6 +70,8 @@ public class DeptManager extends _BaseEntity<DeptManagerId> {
 
     // ------------------------------------------------------------------------------------------------------- from_date
     public static final String COLUMN_NAME_FROM_DATE = "from_date";
+
+    public static final String ATTRIBUTE_NAME_FROM_DATE = "fromDate";
 
     // --------------------------------------------------------------------------------------------------------- to_date
     public static final String COLUMN_NAME_TO_DATE = "to_date";

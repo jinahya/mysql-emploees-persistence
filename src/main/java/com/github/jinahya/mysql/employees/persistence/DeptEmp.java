@@ -17,7 +17,7 @@ import java.util.Optional;
                 SELECT e
                 FROM DeptEmp AS e
                 WHERE e.department = :department
-                order by e.empNo"""
+                order by e.fromDate DESC"""
 )
 @NamedQuery(
         name = "DeptEmp.selectAllByDeptNo",
@@ -25,7 +25,7 @@ import java.util.Optional;
                 SELECT e
                 FROM DeptEmp AS e
                 WHERE e.deptNo = :deptNo
-                ORDER BY e.empNo"""
+                ORDER BY e.fromDate DESC"""
 )
 @NamedQuery(
         name = "DeptEmp.selectAllByEmployee",
@@ -42,6 +42,13 @@ import java.util.Optional;
                 FROM DeptEmp AS e
                 WHERE e.empNo = :empNo
                 ORDER BY e.fromDate DESC"""
+)
+@NamedQuery(
+        name = "DeptEmp.selectAll",
+        query = """
+                SELECT e
+                FROM DeptEmp AS e
+                ORDER BY e.empNo ASC, e.deptNo ASC"""
 )
 @IdClass(DeptEmpId.class)
 @Entity
@@ -66,6 +73,8 @@ public class DeptEmp extends _BaseEntity<DeptEmpId> {
 
     public static final int COLUMN_LENGTH_DEPT_NO = Department.COLUMN_LENGTH_DEPT_NO;
 
+    public static final String ATTRIBUTE_NAME_DEPT_NO = "deptNo";
+
     public static final int SIZE_MIN_DEPT_NO = Department.SIZE_MIN_DEPT_NO;
 
     public static final int SIZE_MAX_DEPT_NO = Department.SIZE_MAX_DEPT_NO;
@@ -79,6 +88,12 @@ public class DeptEmp extends _BaseEntity<DeptEmpId> {
     public static final LocalDate COLUMN_VALUE_TO_DATE_UNSPECIFIED = LocalDate.of(9999, 1, 1);
 
     // ------------------------------------------------------------------------------------------ STATIC FACTORY METHODS
+    static DeptEmp of(final Integer empNo, final String deptNo) {
+        final var instance = new DeptEmp();
+        instance.setEmpNo(empNo);
+        instance.setDeptNo(deptNo);
+        return instance;
+    }
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 

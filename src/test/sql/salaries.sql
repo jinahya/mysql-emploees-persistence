@@ -13,20 +13,26 @@ FROM salaries
 -- -------------------------------------------------------------------------------------------------------------- emp_no
 
 -- ---------------------------------------------------------------------------------------------------- emp_no/from_date
+SELECT COUNT(1)
+FROM employees
+;
+SELECT COUNT(distinct emp_no)
+FROM salaries
+;
 SELECT MAX(to_date)
 FROM salaries
 ;
-SELECT emp_no, MAX(from_date) AS latest_from_date
+SELECT emp_no, MAX(from_date) AS max_from_date
 FROM salaries
 GROUP BY emp_no
 ORDER BY emp_no
 ;
-SELECT s.emp_no, s.salary, l.latest_from_date
+SELECT s.emp_no, s.salary, s2.max_from_date
 FROM salaries AS s
-         JOIN (SELECT emp_no, MAX(from_date) AS latest_from_date
+         JOIN (SELECT emp_no, MAX(from_date) AS max_from_date
                FROM salaries
-               GROUP BY emp_no) AS l
-              ON s.emp_no = l.emp_no AND s.from_date = l.latest_from_date
+               GROUP BY emp_no) AS s2
+              ON s.emp_no = s2.emp_no AND s.from_date = s2.max_from_date
 ORDER BY s.salary DESC
 ;
 
@@ -141,13 +147,33 @@ FROM salaries AS s
 GROUP BY e.gender
 ;
 
--- ------------------------------------------------------------------------------------------------------- salary/emp_no
+-- ------------------------------------------------------------------------------------------------------- emp_no/salary
 SELECT *
 FROM salaries
 WHERE emp_no = 10001
 ORDER BY from_date DESC
 ;
+SELECT *
+FROM salaries
+WHERE emp_no = 10001
+ORDER BY to_date DESC
+;
+SELECT *
+FROM salaries
+WHERE emp_no = 10001
+  AND to_date = '9999-01-01'
+ORDER BY to_date DESC
+;
 
+-- -------------------------------------------------------------------------------------------------- AVG(salary)/emp_no
+EXPLAIN
+SELECT s.emp_no, AVG(s.salary) AS avg_salary
+FROM salaries AS s
+GROUP BY s.emp_no
+ORDER BY avg_salary DESC
+;
+
+-- ---------------------------------------------------------------------------------------- AVG(salary)/employees.gender
 EXPLAIN
 SELECT e.gender, AVG(s.salary)
 FROM salaries AS s
@@ -155,4 +181,40 @@ FROM salaries AS s
 # WHERE s.to_date = '9999-01-01'
 GROUP BY e.gender
 ORDER BY e.gender
+;
+-- selectAllAvgSalaryByEmployeeGender1__eclipselink
+SELECT t0.gender, AVG(t1.salary)
+FROM employees t0,
+     salaries t1
+WHERE (t0.emp_no = t1.emp_no)
+GROUP BY t0.gender
+ORDER BY t0.gender
+;
+-- selectAllAvgSalaryByEmployeeGender1__hibernate
+select e1_0.gender,
+       avg(s1_0.salary)
+from salaries s1_0
+         join
+     employees e1_0
+     on e1_0.emp_no = s1_0.emp_no
+group by e1_0.gender
+order by e1_0.gender
+;
+-- selectAllAvgSalaryByEmployeeGender3__eclipselink
+SELECT t0.gender, AVG(t1.salary)
+FROM employees t0,
+     salaries t1
+WHERE (t0.emp_no = t1.emp_no)
+GROUP BY t0.gender
+ORDER BY t0.gender ASC
+;
+-- selectAllAvgSalaryByEmployeeGender3__hibernate
+select e1_0.gender,
+       avg(s1_0.salary)
+from salaries s1_0
+         join
+     employees e1_0
+     on e1_0.emp_no = s1_0.emp_no
+group by 1
+order by 1
 ;

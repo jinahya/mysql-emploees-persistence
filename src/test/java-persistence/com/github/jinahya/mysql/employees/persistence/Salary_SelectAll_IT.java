@@ -76,7 +76,7 @@ class Salary_SelectAll_IT extends _BaseEntityIT<Salary, SalaryId> {
         // -------------------------------------------------------------------------------------------------------- when
         final var all = applyEntityManager(em -> {
             final var result = selectAll1(em, maxResults);
-            assertThat(result).extracting(super::identifier).isSorted();
+            assertThat(result).extracting(super::id).isSorted();
             return result;
         });
         // -------------------------------------------------------------------------------------------------------- then
@@ -92,7 +92,7 @@ class Salary_SelectAll_IT extends _BaseEntityIT<Salary, SalaryId> {
         // -------------------------------------------------------------------------------------------------------- when
         final var all = applyEntityManager(em -> {
             final var result = selectAll2(em, maxResults);
-            assertThat(result).extracting(super::identifier).isSorted();
+            assertThat(result).extracting(super::id).isSorted();
             return result;
         });
         // -------------------------------------------------------------------------------------------------------- then
@@ -106,13 +106,17 @@ class Salary_SelectAll_IT extends _BaseEntityIT<Salary, SalaryId> {
     void selectAll3__() {
 //        final var maxResults = ThreadLocalRandom.current().nextInt(8) + 1;
         final var maxResults = 32;
+        final var access = false;
         // -------------------------------------------------------------------------------------------------------- when
         final var all = applyEntityManager(em -> {
             final var result = selectAll3(em, maxResults);
-            assertThat(result).extracting(super::identifier).isSorted();
-            result.forEach(s -> {
-                final var string = s.getEmployee().toString();
-            });
+            assertThat(result).extracting(super::id).isSorted();
+            if (access) {
+                result.forEach(s -> {
+                    final var string = s.getEmployee().toString();
+                });
+            }
+            em.clear();
             return result;
         });
         // -------------------------------------------------------------------------------------------------------- then
@@ -120,8 +124,10 @@ class Salary_SelectAll_IT extends _BaseEntityIT<Salary, SalaryId> {
                 Comparator.comparing(Salary::getEmpNo)
                         .thenComparing(Salary::getFromDate)
         );
-        for (var salary : all) {
-            log.debug("employee: {}", salary.getEmployee());
+        if (!access) {
+            for (var salary : all) {
+                final var string = salary.getEmployee().toString();
+            }
         }
     }
 }

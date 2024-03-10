@@ -13,6 +13,8 @@ class DeptManagerTest extends _BaseEntityTest<DeptManager, DeptManagerId> {
     @Override
     SingleTypeEqualsVerifierApi<DeptManager> equals__(final SingleTypeEqualsVerifierApi<DeptManager> verifierApi) {
         return super.equals__(verifierApi)
-                .suppress(Warning.SURROGATE_KEY);
+                .suppress(Warning.SURROGATE_KEY)
+                .withPrefabValues(Employee.class, Employee.of(0), Employee.of(1))
+                ;
     }
 }

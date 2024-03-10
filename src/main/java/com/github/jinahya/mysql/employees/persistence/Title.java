@@ -73,7 +73,7 @@ public class Title extends _BaseEntity<TitleId> {
     @Valid
     @NotNull
     @EmbeddedId
-    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private TitleId id = new TitleId();
 
     @Valid

@@ -78,7 +78,7 @@ class Salary_SelectAllFetchEmployee_IT extends _BaseEntityIT<Salary, SalaryId> {
         final var all = applyEntityManager(em -> {
             final var result = selectAllFetchEmployee1(em, maxResults);
             assertThat(result).extracting(Salary::getEmployee).doesNotContainNull();
-            assertThat(result).extracting(super::identifier).isSorted();
+            assertThat(result).extracting(super::id).isSorted();
             return result;
         });
         // -------------------------------------------------------------------------------------------------------- then
@@ -96,7 +96,7 @@ class Salary_SelectAllFetchEmployee_IT extends _BaseEntityIT<Salary, SalaryId> {
         final var all = applyEntityManager(em -> {
             final var result = selectAllFetchEmployee1(em, maxResults);
             assertThat(result).extracting(Salary::getEmployee).doesNotContainNull();
-            assertThat(result).extracting(super::identifier).isSorted();
+            assertThat(result).extracting(super::id).isSorted();
             return result;
         });
         // -------------------------------------------------------------------------------------------------------- then
@@ -115,8 +115,8 @@ class Salary_SelectAllFetchEmployee_IT extends _BaseEntityIT<Salary, SalaryId> {
         final var all = applyEntityManager(em -> {
             final var result = selectAllFetchEmployee1(em, maxResults);
             assertThat(result).extracting(Salary::getEmployee).doesNotContainNull();
-            assertThat(result).extracting(super::identifier).isSorted();
-            assertThat(result).extracting(super::identifier).isSorted();
+            assertThat(result).extracting(super::id).isSorted();
+            assertThat(result).extracting(super::id).isSorted();
             result.forEach(s -> {
                 final var employee = s.getEmployee();
             });

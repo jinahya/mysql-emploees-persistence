@@ -100,6 +100,8 @@ class Employee_Test extends _BaseEntityTest<Employee, Integer> {
     @Override
     SingleTypeEqualsVerifierApi<Employee> equals__(final SingleTypeEqualsVerifierApi<Employee> verifierApi) {
         return super.equals__(verifierApi)
-                .suppress(Warning.SURROGATE_KEY);
+                .suppress(Warning.SURROGATE_KEY)
+                .withPrefabValues(Employee.class, Employee.of(0), Employee.of(1))
+                ;
     }
 }

@@ -16,10 +16,18 @@ import java.util.Optional;
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
  */
 @NamedQuery(
+        name = "Salary.selectAllAvgSalaryByEmployeeGender",
+        query = """
+                SELECT e.gender, AVG(s.salary)
+                FROM Salary AS s JOIN s.employee AS e
+                GROUP BY e.gender
+                ORDER BY e.gender"""
+)
+@NamedQuery(
         name = "Salary.selectAllByEmployee",
         query = """
                 SELECT e
-                FROM Salary As e
+                FROM Salary AS e
                 WHERE e.employee = :employee
                 ORDER BY e.fromDate DESC"""
 )
@@ -27,7 +35,7 @@ import java.util.Optional;
         name = "Salary.selectAllByEmpNo",
         query = """
                 SELECT e
-                FROM Salary As e
+                FROM Salary AS e
                 WHERE e.empNo = :empNo
                 ORDER BY e.fromDate DESC"""
 )
@@ -35,14 +43,14 @@ import java.util.Optional;
         name = "Salary.selectAllFetchEmployee",
         query = """
                 SELECT e
-                FROM Salary As e JOIN FETCH e.employee
+                FROM Salary AS e JOIN FETCH e.employee
                 ORDER BY e.empNo, e.fromDate"""
 )
 @NamedQuery(
         name = "Salary.selectAll",
         query = """
                 SELECT e
-                FROM Salary As e
+                FROM Salary AS e
                 ORDER BY e.empNo, e.fromDate"""
 )
 @IdClass(SalaryId.class)
@@ -66,11 +74,15 @@ public class Salary extends _BaseEntity<SalaryId> {
     // -----------------------------------------------------------------------------------------------------------------
     public static final String COLUMN_NAME_EMP_NO = Employee.COLUMN_NAME_EMP_NO;
 
+    public static final String ATTRIBUTE_NAME_EMPLOYEE = "employee";
+
     // ---------------------------------------------------------------------------------------------------------- salary
     public static final String COLUMN_NAME_SALARY = "salary";
 
     // ------------------------------------------------------------------------------------------------------- from_date
     public static final String COLUMN_NAME_FROM_DATE = "from_date";
+
+    public static final String ATTRIBUTE_NAME_FROM_DATE = "fromDate";
 
     // --------------------------------------------------------------------------------------------------------- to_date
     public static final String COLUMN_NAME_TO_DATE = "to_date";
@@ -96,7 +108,7 @@ public class Salary extends _BaseEntity<SalaryId> {
 
     // ------------------------------------------------------------------------------------------------- Bean-Validation
     //@AssertTrue
-    private boolean isFromDateLessThanOrEqualToToDate() {
+    private boolean isFromDateNotAfterToDate() {
         if (fromDate == null || toDate == null) {
             return true;
         }
@@ -104,6 +116,17 @@ public class Salary extends _BaseEntity<SalaryId> {
     }
 
     // -------------------------------------------------------------------------------------------------- empNo/employee
+
+    // TODO: narrow the scope!
+    public Integer getEmpNo() {
+        return empNo;
+    }
+
+    // TODO: narrow the scope!
+    public void setEmpNo(final Integer empNo) {
+        this.empNo = empNo;
+    }
+
     public Employee getEmployee() {
         return employee;
     }

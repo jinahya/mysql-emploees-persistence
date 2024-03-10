@@ -1,11 +1,20 @@
 package com.github.jinahya.mysql.employees.persistence;
 
 import jakarta.persistence.EntityManager;
+import org.junit.jupiter.api.Test;
 
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 class DeptManager_IT extends _BaseEntityIT<DeptManager, DeptManagerId> {
+
+    @Test
+    void ATTRIBUTE_NAME_FROM_DATE__() {
+        assertThat(DeptManager.ATTRIBUTE_NAME_FROM_DATE)
+                .isEqualTo(DeptManager_.fromDate.getName());
+    }
 
     private static Department findByDeptNo1(final EntityManager entityManager, final String deptNo) {
         final var query = entityManager.createQuery(
