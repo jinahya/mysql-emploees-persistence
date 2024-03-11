@@ -1,5 +1,7 @@
 # mysql-employees-persistence
 
+[![Java CI with Maven](https://github.com/jinahya/mysql-emploees-persistence/actions/workflows/maven.yml/badge.svg)](https://github.com/jinahya/mysql-emploees-persistence/actions/workflows/maven.yml)
+
 Persistence unit for the [Employees Sample Database](https://dev.mysql.com/doc/employee/en/).
 
 ## Links
