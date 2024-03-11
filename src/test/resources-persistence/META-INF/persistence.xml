@@ -27,6 +27,7 @@
       <property name="eclipselink.logging.parameters" value="true"/>
       <!-- hibernate -->
       <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.show_sql" value="true"/>
     </properties>
   </persistence-unit>
 </persistence>

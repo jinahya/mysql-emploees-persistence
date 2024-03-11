@@ -11,6 +11,7 @@ import lombok.ToString;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Objects;
 
 @Embeddable
@@ -18,10 +19,18 @@ import java.util.Objects;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor//(access = AccessLevel.PROTECTED)
-public class DeptManagerId implements Serializable {
+public class DeptManagerId implements Serializable, Comparable<DeptManagerId> {
 
     @Serial
     private static final long serialVersionUID = 3570976925092865329L;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    static final Comparator<DeptManagerId> COMPARING_EMP_NO = Comparator.comparing(DeptManagerId::getEmpNo);
+
+    static final Comparator<DeptManagerId> COMPARING_DEPT_NO = Comparator.comparing(DeptManagerId::getDeptNo);
+
+    private static final Comparator<DeptManagerId> COMPARING_EMP_NO_THEN_COMPARING_DEPT_NO =
+            COMPARING_EMP_NO.thenComparing(COMPARING_DEPT_NO);
 
     // -----------------------------------------------------------------------------------------------------------------
     @Override
@@ -39,6 +48,11 @@ public class DeptManagerId implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(empNo, deptNo);
+    }
+
+    @Override
+    public int compareTo(final DeptManagerId o) {
+        return COMPARING_EMP_NO_THEN_COMPARING_DEPT_NO.compare(this, o);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

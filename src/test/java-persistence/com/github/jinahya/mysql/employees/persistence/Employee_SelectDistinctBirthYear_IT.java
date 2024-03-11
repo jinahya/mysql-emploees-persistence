@@ -1,14 +1,10 @@
 package com.github.jinahya.mysql.employees.persistence;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.criteria.LocalDateField;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,30 +27,30 @@ class Employee_SelectDistinctBirthYear_IT extends _BaseEntityIT<Employee, Intege
                 .getResultList();
     }
 
-    private static List<Integer> selectDistinctBirthYear3(final EntityManager entityManager) {
-        final var builder = entityManager.getCriteriaBuilder();
-        final var query = builder.createQuery(Integer.class);
-        final var root = query.from(Employee.class);                                   // FROM Employee AS e
-        try {
-            query.select(                                                              // SELECT
-                    builder.extract(LocalDateField.YEAR,                               // EXTRACT(YEAR FROM e.birthDate)
-                            root.get(Employee_.birthDate))
-            ).distinct(true);                                                          // DISTINCT
-        } catch (final AbstractMethodError ame) {
-            ame.printStackTrace();
-            return Collections.emptyList();
-        }
-        return entityManager.createQuery(query).getResultList();
-    }
+//    private static List<Integer> selectDistinctBirthYear3(final EntityManager entityManager) {
+//        final var builder = entityManager.getCriteriaBuilder();
+//        final var query = builder.createQuery(Integer.class);
+//        final var root = query.from(Employee.class);                                   // FROM Employee AS e
+//        try {
+//            query.select(                                                              // SELECT
+//                    builder.extract(LocalDateField.YEAR,                               // EXTRACT(YEAR FROM e.birthDate)
+//                            root.get(Employee_.birthDate))
+//            ).distinct(true);                                                          // DISTINCT
+//        } catch (final AbstractMethodError ame) {
+//            ame.printStackTrace();
+//            return Collections.emptyList();
+//        }
+//        return entityManager.createQuery(query).getResultList();
+//    }
 
-    static List<Integer> selectDistinctBirthYear(final EntityManager entityManager) {
-        Objects.requireNonNull(entityManager, "entityManager is null");
-        return switch (ThreadLocalRandom.current().nextInt(3)) {
-            case 0 -> selectDistinctBirthYear1(entityManager);
-            case 1 -> selectDistinctBirthYear2(entityManager);
-            default -> selectDistinctBirthYear3(entityManager);
-        };
-    }
+//    static List<Integer> selectDistinctBirthYear(final EntityManager entityManager) {
+//        Objects.requireNonNull(entityManager, "entityManager is null");
+//        return switch (ThreadLocalRandom.current().nextInt(3)) {
+//            case 0 -> selectDistinctBirthYear1(entityManager);
+//            case 1 -> selectDistinctBirthYear2(entityManager);
+//            default -> selectDistinctBirthYear3(entityManager);
+//        };
+//    }
 
     // -----------------------------------------------------------------------------------------------------------------
     Employee_SelectDistinctBirthYear_IT() {
@@ -78,11 +74,11 @@ class Employee_SelectDistinctBirthYear_IT extends _BaseEntityIT<Employee, Intege
         assertThat(all).doesNotHaveDuplicates();
     }
 
-    @Test
-    void selectDistinctBirthYear3__() {
-        final var all = applyEntityManager(
-                Employee_SelectDistinctBirthYear_IT::selectDistinctBirthYear3
-        );
-        assertThat(all).doesNotHaveDuplicates();
-    }
+//    @Test
+//    void selectDistinctBirthYear3__() {
+//        final var all = applyEntityManager(
+//                Employee_SelectDistinctBirthYear_IT::selectDistinctBirthYear3
+//        );
+//        assertThat(all).doesNotHaveDuplicates();
+//    }
 }

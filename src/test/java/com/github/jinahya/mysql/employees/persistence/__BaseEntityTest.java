@@ -59,6 +59,9 @@ abstract class __BaseEntityTest<ENTITY extends _BaseEntity<ID>, ID extends Seria
     // https://stackoverflow.com/a/28209213/330457
     @SuppressWarnings({"unchecked"})
     final Class<ID> idClass() {
+        if (true) {
+            return _BaseEntityTestUtils.idClass(entityClass);
+        }
         if (idClass == null) {
             var genericSuperclass = entityClass.getGenericSuperclass();
             ParameterizedType parameterizedType = null;

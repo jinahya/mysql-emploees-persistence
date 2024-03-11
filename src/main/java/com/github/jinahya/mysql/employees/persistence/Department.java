@@ -1,28 +1,28 @@
 package com.github.jinahya.mysql.employees.persistence;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serial;
+import java.util.List;
 import java.util.Objects;
 
 @NamedQuery(
         name = "Department.selectOneByDeptName",
         query = """
-                SELECT e
-                FROM Department AS e
-                WHERE e.deptName = :deptName"""
+                SELECT d
+                FROM Department AS d
+                WHERE d.deptName = :deptName"""
 )
 @NamedQuery(
         name = "Department.selectAll",
         query = """
-                SELECT e
-                FROM Department AS e"""
+                SELECT d
+                FROM Department AS d
+                ORDER BY d.deptNo ASC"""
 )
 @Entity
 @Table(name = Department.TABLE_NAME)
@@ -42,6 +42,8 @@ public class Department extends _BaseEntity<String> {
     public static final String COLUMN_NAME_DEPT_NO = "dept_no";
 
     public static final int COLUMN_LENGTH_DEPT_NO = 4;
+
+    public static final String ATTRIBUTE_NAME_DEPT_NO = "deptNo";
 
     public static final int SIZE_MIN_DEPT_NO = COLUMN_LENGTH_DEPT_NO;
 
@@ -87,4 +89,50 @@ public class Department extends _BaseEntity<String> {
     @Basic(optional = false)
     @Column(name = COLUMN_NAME_DEPT_NAME, length = COLUMN_LENGTH_DEPT_NAME, nullable = false)
     private String deptName;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @OrderBy(DeptManager.ATTRIBUTE_NAME_FROM_DATE + " ASC")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = DeptManager.TABLE_NAME,
+            joinColumns = {
+                    @JoinColumn(
+                            name = DeptManager.COLUMN_NAME_DEPT_NO,
+                            referencedColumnName = COLUMN_NAME_DEPT_NO
+                    )
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(
+                            name = DeptManager.COLUMN_NAME_EMP_NO,
+                            referencedColumnName = Employee.COLUMN_NAME_EMP_NO
+                    )
+            }
+    )
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<@Valid @NotNull Employee> managers;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = DeptEmp.TABLE_NAME,
+            joinColumns = {
+                    @JoinColumn(
+                            name = DeptEmp.COLUMN_NAME_DEPT_NO,
+                            referencedColumnName = COLUMN_NAME_DEPT_NO
+                    )
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(
+                            name = DeptEmp.COLUMN_NAME_EMP_NO,
+                            referencedColumnName = Employee.COLUMN_NAME_EMP_NO
+                    )
+            }
+    )
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<@Valid @NotNull Employee> employees;
 }

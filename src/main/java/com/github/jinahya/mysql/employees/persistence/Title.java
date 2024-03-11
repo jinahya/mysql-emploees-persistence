@@ -10,6 +10,29 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 
+@NamedQuery(
+        name = "Title.selectAllByEmployee",
+        query = """
+                SELECT e
+                FROM Title AS e
+                WHERE e.employee = :employee
+                ORDER BY e.id.title ASC, e.id.fromDate ASC"""
+)
+@NamedQuery(
+        name = "Title.selectAllByIdEmpNo",
+        query = """
+                SELECT e
+                FROM Title AS e
+                WHERE e.id.empNo = :idEmpNo
+                ORDER BY e.id.title ASC, e.id.fromDate ASC"""
+)
+@NamedQuery(
+        name = "Title.selectAll",
+        query = """
+                SELECT e
+                FROM Title AS e
+                ORDER BY e.id.empNo ASC, e.id.title ASC, e.id.fromDate ASC"""
+)
 @Entity
 @Table(name = Title.TABLE_NAME)
 @Setter
@@ -73,7 +96,7 @@ public class Title extends _BaseEntity<TitleId> {
     @Valid
     @NotNull
     @EmbeddedId
-    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private TitleId id = new TitleId();
 
     @Valid

@@ -36,7 +36,7 @@ class Employee_Persist_IT extends _BaseEntityIT<Employee, Integer> {
             em.flush();
             em.clear();
             // ---------------------------------------------------------------------------------------------------- find
-            final var found = em.find(Employee.class, identifier(instance));
+            final var found = em.find(Employee.class, id(instance));
             log.debug("found: {}", found);
             assertThat(found).isNotNull().satisfies(f -> {
                 assertThat(f.getEmpNo()).isEqualTo(instance.getEmpNo());
@@ -52,7 +52,7 @@ class Employee_Persist_IT extends _BaseEntityIT<Employee, Integer> {
             em.flush();
             // --------------------------------------------------------------------------------------------- find, again
             log.debug("finding, again...");
-            assertThat(em.find(Employee.class, identifier(instance))).isNull();
+            assertThat(em.find(Employee.class, id(instance))).isNull();
             return null;
         });
     }

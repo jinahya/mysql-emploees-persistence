@@ -116,7 +116,7 @@ abstract class _BaseEntityIT<ENTITY extends _BaseEntity<ID>, ID extends Serializ
      * @return the identifier of the {@code entity}.
      * @see jakarta.persistence.PersistenceUnitUtil#getIdentifier(Object)
      */
-    final ID identifier(final ENTITY entity) {
+    final ID id(final ENTITY entity) {
         return idClass().cast(
                 entityManager.getEntityManagerFactory().getPersistenceUnitUtil().getIdentifier(entity)
         );
