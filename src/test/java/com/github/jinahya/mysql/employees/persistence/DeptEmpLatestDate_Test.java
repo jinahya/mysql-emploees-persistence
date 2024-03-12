@@ -3,9 +3,9 @@ package com.github.jinahya.mysql.employees.persistence;
 import nl.jqno.equalsverifier.Warning;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 
-class DeptEmpLatestDateTest extends _BaseEntityTest<DeptEmpLatestDate, Integer> {
+class DeptEmpLatestDate_Test extends _BaseEntityTest<DeptEmpLatestDate, Integer> {
 
-    DeptEmpLatestDateTest() {
+    DeptEmpLatestDate_Test() {
         super(DeptEmpLatestDate.class);
     }
 

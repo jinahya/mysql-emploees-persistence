@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Disabled
-class Salary_SelectOneByEmpNo_IT extends _BaseEntityIT<Salary, SalaryId> {
+class Salary_SelectOneByEmpNo_IT extends Salary_IT {
 
     private static List<Salary> selectAllByEmpNo1(final EntityManager entityManager, final int empNo,
                                                   final Integer maxResults) {
@@ -63,11 +63,6 @@ class Salary_SelectOneByEmpNo_IT extends _BaseEntityIT<Salary, SalaryId> {
             case 1 -> selectAllByEmpNo2(entityManager, empNo, maxResults);
             default -> selectAllByEmpNo3(entityManager, empNo, maxResults);
         };
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    Salary_SelectOneByEmpNo_IT() {
-        super(Salary.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

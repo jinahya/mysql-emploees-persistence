@@ -13,6 +13,11 @@ import java.io.Serial;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * An id class for {@link Title} entity.
+ *
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ */
 @Embeddable
 @Setter
 @Getter

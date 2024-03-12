@@ -10,13 +10,38 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * An entity class maps {@value Title#TABLE_NAME} table.
+ *
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ * @see TitleId
+ */
+@NamedQuery(
+        name = "Title.selectAllByEmployeeAndIdTitle",
+        query = """
+                SELECT e
+                FROM Title AS e
+                WHERE e.employee = :employee
+                  AND e.id.title = :IdTitle
+                ORDER BY e.id.fromDate ASC"""
+)
+@NamedQuery(
+        name = "Title.selectAllByIdEmpNoAndIdTitle",
+        query = """
+                SELECT e
+                FROM Title AS e
+                WHERE e.id.empNo = :idEmpNo
+                  AND e.id.title = :IdTitle
+                ORDER BY e.id.fromDate ASC"""
+)
 @NamedQuery(
         name = "Title.selectAllByEmployee",
         query = """
                 SELECT e
                 FROM Title AS e
                 WHERE e.employee = :employee
-                ORDER BY e.id.title ASC, e.id.fromDate ASC"""
+                ORDER BY e.id.title ASC,
+                         e.id.fromDate ASC"""
 )
 @NamedQuery(
         name = "Title.selectAllByIdEmpNo",
@@ -24,14 +49,17 @@ import java.util.Optional;
                 SELECT e
                 FROM Title AS e
                 WHERE e.id.empNo = :idEmpNo
-                ORDER BY e.id.title ASC, e.id.fromDate ASC"""
+                ORDER BY e.id.title ASC,
+                         e.id.fromDate ASC"""
 )
 @NamedQuery(
         name = "Title.selectAll",
         query = """
                 SELECT e
                 FROM Title AS e
-                ORDER BY e.id.empNo ASC, e.id.title ASC, e.id.fromDate ASC"""
+                ORDER BY e.id.empNo ASC,
+                         e.id.title ASC,
+                         e.id.fromDate ASC"""
 )
 @Entity
 @Table(name = Title.TABLE_NAME)
@@ -45,6 +73,10 @@ public class Title extends _BaseEntity<TitleId> {
     private static final long serialVersionUID = -6271293641555396755L;
 
     // -----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * The name of the database table to which this entity maps. The value is {@value}.
+     */
     public static final String TABLE_NAME = "titles";
 
     // -----------------------------------------------------------------------------------------------------------------
