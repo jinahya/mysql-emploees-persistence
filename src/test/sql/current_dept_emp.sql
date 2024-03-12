@@ -1,8 +1,8 @@
 DESC current_dept_emp;
 
 SHOW
-    CREATE VIEW current_dept_emp;
-
+    CREATE VIEW current_dept_emp
+;
 -- CREATE ALGORITHM = UNDEFINED DEFINER =`root`@`localhost` SQL SECURITY DEFINER VIEW `current_dept_emp` AS
 select `l`.`emp_no`    AS `emp_no`,
        `d`.`dept_no`   AS `dept_no`,
@@ -22,4 +22,12 @@ SELECT emp_no, dept_no, COUNT(1) AS c
 FROM current_dept_emp
 GROUP BY emp_no, dept_no
 HAVING c > 1
+;
+
+
+-- ------------------------------------------------------------------------------------------------------------- to_date
+SELECT COUNT(1)
+FROM current_dept_emp
+# WHERE to_date <> '9999-01-01'
+WHERE to_date = '9999-01-01'
 ;

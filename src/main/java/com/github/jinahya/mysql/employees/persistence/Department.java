@@ -36,9 +36,17 @@ public class Department extends _BaseEntity<String> {
     private static final long serialVersionUID = 3430343752363795141L;
 
     // -----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * The name of the database table to which this entity maps. The value is {@value}.
+     */
     public static final String TABLE_NAME = "departments";
 
     // -----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * The name the table column to which the {@link Department_#deptNo deptNo} attribute maps. The value is {@value}.
+     */
     public static final String COLUMN_NAME_DEPT_NO = "dept_no";
 
     public static final int COLUMN_LENGTH_DEPT_NO = 4;
@@ -58,7 +66,11 @@ public class Department extends _BaseEntity<String> {
 
     public static final int SIZE_MAX_DEPT_NAME = COLUMN_LENGTH_DEPT_NAME;
 
-    // -----------------------------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------ STATIC-FACTORY_METHODS
+
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    // ------------------------------------------------------------------------------------------------ java.lang.Object
 
     @Override
     public boolean equals(final Object obj) {
@@ -91,28 +103,6 @@ public class Department extends _BaseEntity<String> {
     private String deptName;
 
     // -----------------------------------------------------------------------------------------------------------------
-    @OrderBy(DeptManager.ATTRIBUTE_NAME_FROM_DATE + " ASC")
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = DeptManager.TABLE_NAME,
-            joinColumns = {
-                    @JoinColumn(
-                            name = DeptManager.COLUMN_NAME_DEPT_NO,
-                            referencedColumnName = COLUMN_NAME_DEPT_NO
-                    )
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(
-                            name = DeptManager.COLUMN_NAME_EMP_NO,
-                            referencedColumnName = Employee.COLUMN_NAME_EMP_NO
-                    )
-            }
-    )
-    @Setter(AccessLevel.NONE)
-    @Getter(AccessLevel.NONE)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private List<@Valid @NotNull Employee> managers;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -135,4 +125,27 @@ public class Department extends _BaseEntity<String> {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<@Valid @NotNull Employee> employees;
+
+//    @OrderBy(DeptManager.ATTRIBUTE_NAME_FROM_DATE + " ASC")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = DeptManager.TABLE_NAME,
+            joinColumns = {
+                    @JoinColumn(
+                            name = DeptManager.COLUMN_NAME_DEPT_NO,
+                            referencedColumnName = COLUMN_NAME_DEPT_NO
+                    )
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(
+                            name = DeptManager.COLUMN_NAME_EMP_NO,
+                            referencedColumnName = Employee.COLUMN_NAME_EMP_NO
+                    )
+            }
+    )
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<@Valid @NotNull Employee> managers;
 }

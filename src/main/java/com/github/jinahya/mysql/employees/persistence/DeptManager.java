@@ -10,13 +10,19 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * An entity class maps {@value DeptManager#TABLE_NAME} table.
+ *
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ * @see DeptManagerId
+ */
 @NamedQuery(
         name = "DeptManager.selectAllByDepartment",
         query = """
                 SELECT e
                 FROM DeptManager AS e
                 WHERE e.department = :department
-                ORDER BY e.fromDate DESC"""
+                ORDER BY e.id.empNo ASC"""
 )
 @NamedQuery(
         name = "DeptManager.selectAllByIdDeptNo",
@@ -24,7 +30,7 @@ import java.util.Optional;
                 SELECT e
                 FROM DeptManager AS e
                 WHERE e.id.deptNo = :idDeptNo
-                ORDER BY e.fromDate DESC"""
+                ORDER BY e.id.empNo ASC"""
 )
 @NamedQuery(
         name = "DeptManager.selectAllByEmployee",
@@ -32,15 +38,23 @@ import java.util.Optional;
                 SELECT e
                 FROM DeptManager AS e
                 WHERE e.employee = :employee
-                ORDER BY e.fromDate DESC"""
+                ORDER BY e.id.deptNo ASC"""
+)
+@NamedQuery(
+        name = "DeptManager.selectAllByIdEmpNo",
+        query = """
+                SELECT e
+                FROM DeptManager AS e
+                WHERE e.id.empNo = :idEmpNo
+                ORDER BY e.id.deptNo ASC"""
 )
 @NamedQuery(
         name = "DeptManager.selectAll",
         query = """
                 SELECT e
                 FROM DeptManager AS e
-                WHERE e.id.empNo = :idEmpNo
-                ORDER BY e.id.empNo ASC, e.id.deptNo DESC"""
+                ORDER BY e.id.empNo ASC,
+                         e.id.deptNo ASC"""
 )
 @Entity
 @Table(name = DeptManager.TABLE_NAME)
@@ -54,6 +68,10 @@ public class DeptManager extends _BaseEntity<DeptManagerId> {
     private static final long serialVersionUID = 7562801904287742000L;
 
     // -----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * The name of the database table to which this entity maps. The value is {@value}.
+     */
     public static final String TABLE_NAME = "dept_manager";
 
     // -----------------------------------------------------------------------------------------------------------------

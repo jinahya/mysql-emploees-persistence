@@ -12,5 +12,5 @@ Persistence unit for the [Employees Sample Database](https://dev.mysql.com/doc/e
 
 ### Hibernate
 
-### Spring Data Jpa
+### Spring Data JPA
 * [Slice leads to an invalid parameter binding value for maxResults](https://github.com/spring-projects/spring-data-jpa/issues/3392)
