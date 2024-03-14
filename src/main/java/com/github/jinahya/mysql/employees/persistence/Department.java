@@ -13,16 +13,16 @@ import java.util.Objects;
 @NamedQuery(
         name = "Department.selectOneByDeptName",
         query = """
-                SELECT d
-                FROM Department AS d
-                WHERE d.deptName = :deptName"""
+                SELECT e
+                FROM Department AS e
+                WHERE e.deptName = :deptName"""
 )
 @NamedQuery(
         name = "Department.selectAll",
         query = """
-                SELECT d
-                FROM Department AS d
-                ORDER BY d.deptNo ASC"""
+                SELECT e
+                FROM Department AS e
+                ORDER BY e.deptNo ASC"""
 )
 @Entity
 @Table(name = Department.TABLE_NAME)
@@ -105,20 +105,15 @@ public class Department extends _BaseEntity<String> {
     // -----------------------------------------------------------------------------------------------------------------
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = DeptEmp.TABLE_NAME,
-            joinColumns = {
-                    @JoinColumn(
-                            name = DeptEmp.COLUMN_NAME_DEPT_NO,
-                            referencedColumnName = COLUMN_NAME_DEPT_NO
-                    )
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(
-                            name = DeptEmp.COLUMN_NAME_EMP_NO,
-                            referencedColumnName = Employee.COLUMN_NAME_EMP_NO
-                    )
-            }
+    @JoinTable(name = DeptEmp.TABLE_NAME,
+               joinColumns = {
+                       @JoinColumn(name = DeptEmp.COLUMN_NAME_DEPT_NO,
+                                   referencedColumnName = COLUMN_NAME_DEPT_NO)
+               },
+               inverseJoinColumns = {
+                       @JoinColumn(name = DeptEmp.COLUMN_NAME_EMP_NO,
+                                   referencedColumnName = Employee.COLUMN_NAME_EMP_NO)
+               }
     )
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
@@ -126,22 +121,17 @@ public class Department extends _BaseEntity<String> {
     @ToString.Exclude
     private List<@Valid @NotNull Employee> employees;
 
-//    @OrderBy(DeptManager.ATTRIBUTE_NAME_FROM_DATE + " ASC")
+    //    @OrderBy(DeptManager.ATTRIBUTE_NAME_FROM_DATE + " ASC")
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = DeptManager.TABLE_NAME,
-            joinColumns = {
-                    @JoinColumn(
-                            name = DeptManager.COLUMN_NAME_DEPT_NO,
-                            referencedColumnName = COLUMN_NAME_DEPT_NO
-                    )
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(
-                            name = DeptManager.COLUMN_NAME_EMP_NO,
-                            referencedColumnName = Employee.COLUMN_NAME_EMP_NO
-                    )
-            }
+    @JoinTable(name = DeptManager.TABLE_NAME,
+               joinColumns = {
+                       @JoinColumn(name = DeptManager.COLUMN_NAME_DEPT_NO,
+                                   referencedColumnName = COLUMN_NAME_DEPT_NO)
+               },
+               inverseJoinColumns = {
+                       @JoinColumn(name = DeptManager.COLUMN_NAME_EMP_NO,
+                                   referencedColumnName = Employee.COLUMN_NAME_EMP_NO)
+               }
     )
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)

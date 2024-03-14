@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.Serializable;
@@ -17,7 +16,7 @@ abstract class _BaseEntityRepositoryIT<
         REPOSITORY extends _BaseEntityRepository<ENTITY, ID>,
         ENTITY extends _BaseEntity<ID>,
         ID extends Serializable>
-        extends __BaseEntityRepositoryTest<REPOSITORY, ENTITY, ID> {
+        extends __BaseEntityRepositoryTestBase<REPOSITORY, ENTITY, ID> {
 
     // -----------------------------------------------------------------------------------------------------------------
     _BaseEntityRepositoryIT(final Class<REPOSITORY> repositoryClass) {

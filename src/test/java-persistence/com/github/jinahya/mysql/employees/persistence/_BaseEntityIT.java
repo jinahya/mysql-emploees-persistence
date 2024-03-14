@@ -34,12 +34,9 @@ import java.util.function.Function;
 abstract class _BaseEntityIT<ENTITY extends _BaseEntity<ID>, ID extends Serializable>
         extends __BaseEntityTest<ENTITY, ID> {
 
-    // -----------------------------------------------------------------------------------------------------------------
-    @Deprecated(forRemoval = true)
-    _BaseEntityIT(final Class<ENTITY> entityClass, final Class<ID> idClass) {
-        super(entityClass, idClass);
-    }
+    // ------------------------------------------------------------------------------------------ STATIC-FACTORY_METHODS
 
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
     /**
      * Creates a new instance for testing specified entity class.
      *
@@ -47,7 +44,7 @@ abstract class _BaseEntityIT<ENTITY extends _BaseEntity<ID>, ID extends Serializ
      * @see #entityClass
      */
     _BaseEntityIT(final Class<ENTITY> entityClass) {
-        this(entityClass, null);
+        super(entityClass);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

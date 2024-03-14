@@ -1,7 +1,6 @@
 package com.github.jinahya.mysql.employees.persistence;
 
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
 import java.util.Objects;
 
 /**
@@ -13,13 +12,6 @@ import java.util.Objects;
  */
 abstract class __BaseEntityTest<ENTITY extends _BaseEntity<ID>, ID extends Serializable> {
 
-    @Deprecated(forRemoval = true)
-    __BaseEntityTest(final Class<ENTITY> entityClass, final Class<ID> idClass) {
-        super();
-        this.entityClass = Objects.requireNonNull(entityClass, "entityClass is null");
-        this.idClass = idClass;
-    }
-
     /**
      * Creates a new instance for testing specified entity instance.
      *
@@ -27,7 +19,8 @@ abstract class __BaseEntityTest<ENTITY extends _BaseEntity<ID>, ID extends Seria
      * @see #entityClass
      */
     __BaseEntityTest(final Class<ENTITY> entityClass) {
-        this(entityClass, null);
+        super();
+        this.entityClass = Objects.requireNonNull(entityClass, "entityClass is null");
     }
 
     // ----------------------------------------------------------------------------------------------------- entityClass
@@ -59,22 +52,7 @@ abstract class __BaseEntityTest<ENTITY extends _BaseEntity<ID>, ID extends Seria
     // https://stackoverflow.com/a/28209213/330457
     @SuppressWarnings({"unchecked"})
     final Class<ID> idClass() {
-        if (true) {
-            return _BaseEntityTestUtils.idClass(entityClass);
-        }
-        if (idClass == null) {
-            var genericSuperclass = entityClass.getGenericSuperclass();
-            ParameterizedType parameterizedType = null;
-            while (parameterizedType == null) {
-                if (genericSuperclass instanceof ParameterizedType) {
-                    parameterizedType = (ParameterizedType) genericSuperclass;
-                } else {
-                    genericSuperclass = ((Class<?>) genericSuperclass).getGenericSuperclass();
-                }
-            }
-            idClass = (Class<ID>) parameterizedType.getActualTypeArguments()[0];
-        }
-        return idClass;
+        return _BaseEntityTestUtils.idClass(entityClass);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

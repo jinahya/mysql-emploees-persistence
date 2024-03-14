@@ -9,7 +9,10 @@ class DeptEmp_FindByEmpNo_IT extends _BaseEntityIT<DeptEmpLatestDate, Integer> {
 
     private static DeptEmpLatestDate findByEmpNo1(final EntityManager entityManager, final Integer empNo) {
         final var query = entityManager.createQuery(
-                "SELECT e FROM DeptEmpLatestDate AS e WHERE e.empNo = :empNo",
+                """
+                        SELECT e
+                        FROM DeptEmpLatestDate AS e
+                        WHERE e.empNo = :empNo""",
                 DeptEmpLatestDate.class
         );
         query.setParameter("empNo", empNo);

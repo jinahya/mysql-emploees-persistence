@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
-class Salary_SelectAll_IT extends Salary_IT {
+class Salary_SelectAll_IT extends Salary__IT {
 
     private static List<Salary> selectAll1(final @Nonnull EntityManager entityManager,
                                            final @Nullable Integer maxResults) {

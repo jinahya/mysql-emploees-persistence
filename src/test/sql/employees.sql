@@ -29,38 +29,48 @@ FROM employees
 ;
 
 -- ---------------------------------------------------------------------------------------------------------- birth_date
-SELECT birth_date, COUNT(1) AS c
+SELECT MIN(birth_date) AS min_birth_date,
+       MAX(birth_date) AS min_birth_date
 FROM employees
-GROUP BY birth_date
-HAVING c > 1
-ORDER BY C desc
 ;
 
-SELECT YEAR(birth_date) AS birth_year, COUNT(1) AS c
+-- birth_year
+SELECT YEAR(birth_date) AS birth_year,
+       COUNT(1)         AS c
 FROM employees
 GROUP BY birth_year
 ORDER BY birth_year
 ;
 
-SELECT YEAR(birth_date) AS birth_year, MONTH(birth_date) AS birth_month, COUNT(1) AS c
+-- birth_year, birth_month
+SELECT YEAR(birth_date)  AS birth_year,
+       MONTH(birth_date) AS birth_month,
+       COUNT(1)          AS c
 FROM employees
 GROUP BY birth_year, birth_month
 ORDER BY birth_year, birth_month
 ;
 
-SELECT DAYOFWEEK(birth_date) AS birth_dayofweek, DAYNAME(birth_date) AS birth_dayname, COUNT(1) AS c
+-- birth_dayofweek
+SELECT DAYOFWEEK(birth_date) AS birth_dayofweek,
+       DAYNAME(birth_date)   AS birth_dayname,
+       COUNT(1)              AS c
 FROM employees
 GROUP BY birth_dayofweek, birth_dayname
 ORDER BY birth_dayofweek
 ;
 
-SELECT MONTH(birth_date) AS birth_month, COUNT(1) AS c
+-- birth_month
+SELECT MONTH(birth_date) AS birth_month,
+       COUNT(1)          AS c
 FROM employees
 GROUP BY birth_month
 ORDER BY birth_month
 ;
 
-SELECT DAYOFMONTH(birth_date) AS birth_dayofmonth, COUNT(1) AS c
+-- birth_dayofmonth
+SELECT DAYOFMONTH(birth_date) AS birth_dayofmonth,
+       COUNT(1)               AS c
 FROM employees
 GROUP BY birth_dayofmonth
 ORDER BY birth_dayofmonth
@@ -71,7 +81,7 @@ SELECT first_name, COUNT(1) AS c
 FROM employees
 GROUP BY first_name
 HAVING c > 1
-ORDER BY c DESC
+ORDER BY c DESC, first_name
 ;
 
 -- ----------------------------------------------------------------------------------------------------------- last_name
@@ -79,7 +89,7 @@ SELECT last_name, COUNT(1) AS c
 FROM employees
 GROUP BY last_name
 HAVING c > 1
-ORDER BY c DESC
+ORDER BY c DESC, last_name
 ;
 
 -- ------------------------------------------------------------------------------------------------ first_name/last_name
@@ -87,7 +97,7 @@ SELECT first_name, last_name, COUNT(1) AS c
 FROM employees
 GROUP BY first_name, last_name
 HAVING c > 1
-ORDER BY c DESC
+ORDER BY c DESC, first_name, last_name
 ;
 
 -- -------------------------------------------------------------------------------------------------------------- gender
@@ -97,30 +107,3 @@ GROUP BY gender
 ;
 
 -- ----------------------------------------------------------------------------------------------------------- hire_date
-SELECT MIN(hire_date), MAX(hire_date)
-FROM employees
-;
-
-SELECT DISTINCT YEAR(hire_date) AS hire_year, COUNT(1) AS c
-FROM employees
-GROUP BY hire_year
-ORDER BY hire_year
-;
-
-SELECT DISTINCT YEAR(hire_date) AS hire_year, MONTH(hire_date) AS hire_month, COUNT(1) AS c
-FROM employees
-GROUP BY hire_year, hire_month
-ORDER BY hire_year, hire_month
-;
-
-SELECT DISTINCT MONTH(hire_date) AS hire_month, COUNT(1) AS c
-FROM employees
-GROUP BY hire_month
-ORDER BY hire_month
-;
-
-SELECT DISTINCT DAYOFWEEK(hire_date) AS hire_weekday, COUNT(1) AS c
-FROM employees
-GROUP BY hire_weekday
-ORDER BY hire_weekday
-;

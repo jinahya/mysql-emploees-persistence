@@ -2,6 +2,7 @@ package com.github.jinahya.mysql.employees.persistence;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.EntityManager;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
@@ -11,7 +12,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class Department_SelectAll_IT extends _BaseEntityIT<Department, String> {
+@DisplayName("selectAll")
+class Department_SelectAll_IT extends Department__IT {
 
     private static List<Department> selectAll1(final EntityManager entityManager, final @Nullable Integer maxResults) {
         return entityManager
@@ -36,9 +38,9 @@ class Department_SelectAll_IT extends _BaseEntityIT<Department, String> {
     private static List<Department> selectAll3(final EntityManager entityManager, final @Nullable Integer maxResults) {
         final var builder = entityManager.getCriteriaBuilder();
         final var query = builder.createQuery(Department.class);
-        final var department = query.from(Department.class);                                     // FROM Department AS d
-        query.select(department);                                                                // SELECT d
-        query.orderBy(builder.asc(department.get(Department_.deptNo)));                          // ORDER BY d.deptNo
+        final var root = query.from(Department.class);                                          // FROM Department AS e
+        query.select(root);                                                                     // SELECT e
+        query.orderBy(builder.asc(root.get(Department_.deptNo)));                               // ORDER BY e.deptNo ASC
         return entityManager.createQuery(query)
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
                 .getResultList();
@@ -50,11 +52,6 @@ class Department_SelectAll_IT extends _BaseEntityIT<Department, String> {
             case 1 -> selectAll2(entityManager, maxResults);
             default -> selectAll3(entityManager, maxResults);
         };
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    Department_SelectAll_IT() {
-        super(Department.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

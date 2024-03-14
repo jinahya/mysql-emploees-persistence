@@ -22,7 +22,7 @@ import java.util.Optional;
                 SELECT e
                 FROM Title AS e
                 WHERE e.employee = :employee
-                  AND e.id.title = :IdTitle
+                  AND e.id.title = :idTitle
                 ORDER BY e.id.fromDate ASC"""
 )
 @NamedQuery(
@@ -31,7 +31,7 @@ import java.util.Optional;
                 SELECT e
                 FROM Title AS e
                 WHERE e.id.empNo = :idEmpNo
-                  AND e.id.title = :IdTitle
+                  AND e.id.title = :idTitle
                 ORDER BY e.id.fromDate ASC"""
 )
 @NamedQuery(

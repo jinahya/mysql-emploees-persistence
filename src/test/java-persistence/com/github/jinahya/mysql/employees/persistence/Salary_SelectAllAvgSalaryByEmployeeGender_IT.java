@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
-class Salary_SelectAllAvgSalaryByEmployeeGender_IT extends Salary_IT {
+class Salary_SelectAllAvgSalaryByEmployeeGender_IT extends Salary__IT {
 
     private static List<Object[]> selectAllAvgSalaryByEmployeeGender1(final EntityManager entityManager) {
         Objects.requireNonNull(entityManager, "entityManager is null");

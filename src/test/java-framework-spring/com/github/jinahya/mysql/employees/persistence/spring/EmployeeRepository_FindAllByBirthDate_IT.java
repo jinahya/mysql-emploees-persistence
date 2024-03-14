@@ -5,8 +5,6 @@ import com.github.jinahya.mysql.employees.persistence.Employee_;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Tuple;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.query.internal.QueryOptionsImpl;
-import org.hibernate.type.descriptor.JdbcBindingLogging;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -24,8 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Slf4j
-class EmployeeRepository_FindAllByBirthDate_Test
-        extends _BaseEntityRepositoryIT<EmployeeRepository, Employee, Integer> {
+class EmployeeRepository_FindAllByBirthDate_IT extends EmployeeRepository__IT {
 
     static List<LocalDate> selectDistinctBirthDateList(final EntityManager entityManager,
                                                        final @Nullable Integer maxResults) {
@@ -49,11 +46,6 @@ class EmployeeRepository_FindAllByBirthDate_Test
                 )
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
                 .getResultList();
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    EmployeeRepository_FindAllByBirthDate_Test() {
-        super(EmployeeRepository.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

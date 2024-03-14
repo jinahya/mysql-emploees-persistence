@@ -1,8 +1,9 @@
-package com.github.jinahya.mysql.employees.persistence.querydsl;
+package com.github.jinahya.mysql.employees.querydsl;
 
 import com.github.jinahya.mysql.employees.persistence._BaseEntity;
 import com.github.jinahya.mysql.employees.persistence._BaseEntityTestUtils;
 import com.github.jinahya.mysql.employees.persistence._PersistenceProducer;
+import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -43,9 +44,6 @@ abstract class _BaseEntity_Querydsl_IT<ENTITY extends _BaseEntity<ID>, ID extend
         return _BaseEntityTestUtils.idClass(entityClass);
     }
 
-    // -----------------------------------------------------------------------------------------------------------------
-    final Class<ENTITY> entityClass;
-
     // --------------------------------------------------------------------------------------------------- entityManager
 
     /**
@@ -72,7 +70,7 @@ abstract class _BaseEntity_Querydsl_IT<ENTITY extends _BaseEntity<ID>, ID extend
         });
     }
 
-    final <R> R applyEntityManagerInTransaction(final Function<? super EntityManager, ? extends R> function) {
+    final <R> R applyEntityManagerInTransactionAndCommit(final Function<? super EntityManager, ? extends R> function) {
         return applyEntityManagerInTransaction(function, EntityTransaction::commit);
     }
 
@@ -81,13 +79,42 @@ abstract class _BaseEntity_Querydsl_IT<ENTITY extends _BaseEntity<ID>, ID extend
         return applyEntityManagerInTransaction(function, EntityTransaction::rollback);
     }
 
+    final <R> R applyQuery(final Function<? super JPAQuery<ENTITY>, ? extends R> function) {
+        Objects.requireNonNull(function, "function is null");
+        return applyEntityManager(
+                em -> function.apply(new JPAQuery<>(em))
+        );
+    }
+
+    final <R> R applyQueryInTransaction(final Function<? super JPAQuery<ENTITY>, ? extends R> function,
+                                        final Consumer<? super EntityTransaction> consumer) {
+        return applyEntityManagerInTransaction(
+                em -> function.apply(new JPAQuery<>(em)),
+                consumer
+        );
+    }
+
+    final <R> R applyQueryInTransactionAndCommit(final Function<? super JPAQuery<ENTITY>, ? extends R> function) {
+        return applyEntityManagerInTransaction(
+                em -> function.apply(new JPAQuery<>(em)),
+                EntityTransaction::commit
+        );
+    }
+
+    final <R> R applyQueryInTransactionAndRollback(final Function<? super JPAQuery<ENTITY>, ? extends R> function) {
+        return applyEntityManagerInTransaction(
+                em -> function.apply(new JPAQuery<>(em)),
+                EntityTransaction::rollback
+        );
+    }
+
     // ------------------------------------------------------------------------------------------------------ entityName
 
     /**
      * Returns the {@link EntityType#getName() entity name} of the {@link #entityClass}.
      *
      * @return the {@link EntityType#getName() entity name} of the {@link #entityClass}
-     * @sesee EntityManager#getMetamodel()
+     * @see EntityManager#getMetamodel()
      * @see jakarta.persistence.metamodel.Metamodel#entity(Class)
      * @see EntityType#getName()
      */
@@ -112,6 +139,9 @@ abstract class _BaseEntity_Querydsl_IT<ENTITY extends _BaseEntity<ID>, ID extend
                 entityManager.getEntityManagerFactory().getPersistenceUnitUtil().getIdentifier(entity)
         );
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    final Class<ENTITY> entityClass;
 
     // -----------------------------------------------------------------------------------------------------------------
 

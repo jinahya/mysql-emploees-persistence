@@ -1,6 +1,5 @@
 package com.github.jinahya.mysql.employees.persistence.spring;
 
-import com.github.jinahya.mysql.employees.persistence.Employee;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Tuple;
 import lombok.extern.slf4j.Slf4j;
@@ -13,16 +12,15 @@ import java.util.Optional;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Slf4j
-class EmployeeRepository_FindAllBornInYear_Test
-        extends _BaseEntityRepositoryIT<EmployeeRepository, Employee, Integer> {
+class EmployeeRepository_FindAllBornInYear_IT extends EmployeeRepository__IT {
 
     static List<LocalDate> selectDistinctBirthYearMonthList(final EntityManager entityManager,
                                                             final @Nullable Integer maxResults) {
         return entityManager
                 .createQuery("""
-                                SELECT DISTINCT EXTRACT(YEAR FROM e.birthDate), EXTRACT(MONTH FROM e.birthDate)
-                                FROM Employee AS e""",
-                        LocalDate.class)
+                                     SELECT DISTINCT EXTRACT(YEAR FROM e.birthDate), EXTRACT(MONTH FROM e.birthDate)
+                                     FROM Employee AS e""",
+                             LocalDate.class)
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
                 .getResultList();
     }
@@ -41,10 +39,5 @@ class EmployeeRepository_FindAllBornInYear_Test
                 )
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
                 .getResultList();
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    EmployeeRepository_FindAllBornInYear_Test() {
-        super(EmployeeRepository.class);
     }
 }

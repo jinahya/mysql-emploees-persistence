@@ -17,13 +17,14 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 abstract class _BaseEntityTest<ENTITY extends _BaseEntity<ID>, ID extends Serializable>
         extends __BaseEntityTest<ENTITY, ID> {
 
-    @Deprecated(forRemoval = true)
-    _BaseEntityTest(final Class<ENTITY> entityClass, final Class<ID> idClass) {
-        super(entityClass, idClass);
-    }
-
+    /**
+     * Creates a new instance for testing specified entity class.
+     *
+     * @param entityClass the entity class to test
+     * @see #entityClass
+     */
     _BaseEntityTest(final Class<ENTITY> entityClass) {
-        this(entityClass, null);
+        super(entityClass);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

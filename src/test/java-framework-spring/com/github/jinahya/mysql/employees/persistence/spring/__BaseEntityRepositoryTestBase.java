@@ -7,13 +7,13 @@ import org.springframework.core.ResolvableType;
 import java.io.Serializable;
 import java.util.Objects;
 
-abstract class __BaseEntityRepositoryTest<
+abstract class __BaseEntityRepositoryTestBase<
         REPOSITORY extends _BaseEntityRepository<ENTITY, ID>,
         ENTITY extends _BaseEntity<ID>,
         ID extends Serializable> {
 
     // -----------------------------------------------------------------------------------------------------------------
-    __BaseEntityRepositoryTest(final Class<REPOSITORY> repositoryClass) {
+    __BaseEntityRepositoryTestBase(final Class<REPOSITORY> repositoryClass) {
         super();
         this.repositoryClass = Objects.requireNonNull(repositoryClass, "repositoryClass is null");
     }

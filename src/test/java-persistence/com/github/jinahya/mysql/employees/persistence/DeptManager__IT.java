@@ -8,7 +8,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DeptManager_IT extends _BaseEntityIT<DeptManager, DeptManagerId> {
+class DeptManager__IT extends _BaseEntityIT<DeptManager, DeptManagerId> {
 
     @Test
     void ATTRIBUTE_NAME_FROM_DATE__() {
@@ -44,7 +44,7 @@ class DeptManager_IT extends _BaseEntityIT<DeptManager, DeptManagerId> {
         return findByDeptNo2(entityManager, deptNo);
     }
 
-    DeptManager_IT() {
+    DeptManager__IT() {
         super(DeptManager.class);
     }
 }

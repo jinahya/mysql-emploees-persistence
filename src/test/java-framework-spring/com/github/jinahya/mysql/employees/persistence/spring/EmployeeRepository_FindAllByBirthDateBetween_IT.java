@@ -22,23 +22,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Slf4j
-class EmployeeRepository_FindAllByBirthDateBetween_Test
-        extends _BaseEntityRepositoryIT<EmployeeRepository, Employee, Integer> {
+class EmployeeRepository_FindAllByBirthDateBetween_IT
+        extends EmployeeRepository__IT {
 
     static Optional<Tuple> selectMinMaxBirthDateTuple(final EntityManager entityManager) {
         try {
             return Optional.of(
                     entityManager.createNamedQuery("Employee.selectMinMaxBirthDate", Tuple.class)
-                            .getSingleResult() // NoResultException
+                                 .getSingleResult() // NoResultException
             );
         } catch (final NoResultException nre) {
             return Optional.empty();
         }
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    EmployeeRepository_FindAllByBirthDateBetween_Test() {
-        super(EmployeeRepository.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

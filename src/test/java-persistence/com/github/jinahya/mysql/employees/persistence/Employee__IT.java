@@ -9,10 +9,10 @@ import java.util.concurrent.ThreadLocalRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
-class Employee_IT extends _BaseEntityIT<Employee, Integer> {
+class Employee__IT extends _BaseEntityIT<Employee, Integer> {
 
     // -----------------------------------------------------------------------------------------------------------------
-    Employee_IT() {
+    Employee__IT() {
         super(Employee.class);
     }
 

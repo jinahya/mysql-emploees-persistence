@@ -15,14 +15,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Slf4j
-class DepartmentRepository_FindAll_IT extends _BaseEntityRepositoryIT<DepartmentRepository, Department, String> {
+class DepartmentRepository_FindAll_IT extends DepartmentRepository__IT {
 
-    // -----------------------------------------------------------------------------------------------------------------
-    DepartmentRepository_FindAll_IT() {
-        super(DepartmentRepository.class);
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
     @Test
     void __() {
         // ------------------------------------------------------------------------------------------------------- given
@@ -30,13 +24,13 @@ class DepartmentRepository_FindAll_IT extends _BaseEntityRepositoryIT<Department
         final var sort = Sort.by(Sort.Order.asc(Department_.deptNo.getName()));
         for (var p = PageRequest.of(0, size, sort); ; p = p.next()) {
             // ---------------------------------------------------------------------------------------------------- when
-            final var found = repositoryInstance().findAll(p);
+            final var all = repositoryInstance().findAll(p);
             // ---------------------------------------------------------------------------------------------------- then
-            assertThat(found)
+            assertThat(all)
                     .hasSizeLessThanOrEqualTo(size);
-            assertThat(found.getContent())
+            assertThat(all.getContent())
                     .isSortedAccordingTo(Comparator.comparing(Department::getDeptNo));
-            if (found.isEmpty()) {
+            if (all.isEmpty()) {
                 break;
             }
         }

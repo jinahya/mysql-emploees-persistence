@@ -2,9 +2,9 @@ package com.github.jinahya.mysql.employees.persistence.spring;
 
 import com.github.jinahya.mysql.employees.persistence.Department;
 
-class DepartmentRepository_IT extends _BaseEntityRepositoryIT<DepartmentRepository, Department, String> {
+abstract class DepartmentRepository__IT extends _BaseEntityRepositoryIT<DepartmentRepository, Department, String> {
 
-    DepartmentRepository_IT() {
+    DepartmentRepository__IT() {
         super(DepartmentRepository.class);
     }
 }

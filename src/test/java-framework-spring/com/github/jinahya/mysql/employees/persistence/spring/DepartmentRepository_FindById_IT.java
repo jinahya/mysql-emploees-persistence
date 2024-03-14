@@ -10,44 +10,47 @@ import org.springframework.lang.Nullable;
 import java.util.List;
 import java.util.Optional;
 
+import static com.github.jinahya.mysql.employees.persistence._BaseEntityAssertions.assertBaseEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class DepartmentRepository_FindByDeptName_IT extends DepartmentRepository__IT {
+class DepartmentRepository_FindById_IT extends DepartmentRepository__IT {
 
-    private static List<String> selectDeptNameList(final EntityManager entityManager, final @Nullable Integer maxResults) {
+    static List<String> selectDeptNoList(final EntityManager entityManager, final @Nullable Integer maxResults) {
         return entityManager
-                .createQuery("SELECT e.deptName FROM Department AS e ORDER BY e.deptName ASC", String.class)
+                .createQuery("SELECT e.deptNo FROM Department AS e ORDER BY e.deptNo ASC", String.class)
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
                 .getResultList();
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private List<String> getDeptNameList() {
-        return selectDeptNameList(entityManager(), 32);
+    private List<String> getDeptNoList() {
+        return selectDeptNoList(entityManager(), 32);
     }
 
-    @MethodSource({"getDeptNameList"})
+    @MethodSource({"getDeptNoList"})
     @ParameterizedTest
-    void findByDeptName__(final String deptName) {
+    void findById__(final String deptNo) {
         // -------------------------------------------------------------------------------------------------------- when
-        final var found = repositoryInstance().findByDeptName(deptName);
+        final var found = repositoryInstance().findById(deptNo);
         // -------------------------------------------------------------------------------------------------------- then
         assertThat(found)
                 .hasValueSatisfying(v -> {
-                    assertThat(v.getDeptName()).isEqualTo(deptName);
+                    assertThat(v.getDeptNo()).isEqualTo(deptNo);
+                    assertBaseEntity(v).hasId(deptNo);
                 });
     }
 
-    @MethodSource({"getDeptNameList"})
+    @MethodSource({"getDeptNoList"})
     @ParameterizedTest
-    void findOne__(final String deptName) {
+    void findOne__(final String deptNo) {
         // -------------------------------------------------------------------------------------------------------- when
-        final var found = repositoryInstance().findOne(QDepartment.department.deptName.eq(deptName));
+        final var found = repositoryInstance().findOne(QDepartment.department.deptNo.eq(deptNo));
         // -------------------------------------------------------------------------------------------------------- then
         assertThat(found)
                 .hasValueSatisfying(v -> {
-                    assertThat(v.getDeptName()).isEqualTo(deptName);
+                    assertThat(v.getDeptNo()).isEqualTo(deptNo);
+                    assertBaseEntity(v).hasId(deptNo);
                 });
     }
 }

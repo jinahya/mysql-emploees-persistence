@@ -9,7 +9,7 @@ abstract class _BaseEntityRepositoryTest<
         REPOSITORY extends _BaseEntityRepository<ENTITY, ID>,
         ENTITY extends _BaseEntity<ID>,
         ID extends Serializable>
-        extends __BaseEntityRepositoryTest<REPOSITORY, ENTITY, ID> {
+        extends __BaseEntityRepositoryTestBase<REPOSITORY, ENTITY, ID> {
 
     // -----------------------------------------------------------------------------------------------------------------
     _BaseEntityRepositoryTest(final Class<REPOSITORY> repositoryClass) {
