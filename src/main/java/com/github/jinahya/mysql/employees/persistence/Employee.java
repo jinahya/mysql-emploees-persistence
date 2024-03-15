@@ -4,11 +4,16 @@ import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 import java.io.Serial;
-import java.time.LocalDate;
+import java.time.*;
+import java.time.temporal.TemporalAccessor;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * An entity class maps {@value Employee#TABLE_NAME} table.
@@ -228,11 +233,62 @@ public class Employee extends _BaseEntity<Integer> {
 
     // ------------------------------------------------------------------------------------------------------- birthDate
 
+    /**
+     * Applies current value of {@link Employee_#birthDate birthDate} attribute to specified function, and returns the
+     * result.
+     *
+     * @param function the function to be applied with the current value of {@link Employee_#birthDate birthDate}.
+     * @param <R>      result type parameter.
+     * @return the result of the {@code function}; {@code null} when current value of
+     * {@link Employee_#birthDate birthDate} is {@code null}.
+     */
+    public <R> @Nullable R applyBirthDate(final @NonNull Function<? super LocalDate, ? extends R> function) {
+        Objects.requireNonNull(function, "function is null");
+        return Optional.ofNullable(getBirthDate())
+                       .map(function)
+                       .orElse(null);
+    }
+
+    /**
+     * Returns the {@link Year#from(TemporalAccessor) year} of current value of {@link Employee_#birthDate birthDate}
+     * attribute.
+     *
+     * @return the {@link Year#from(TemporalAccessor) year} of current value of {@link Employee_#birthDate birthDate}
+     * attribute; {@code null} when current value of {@link Employee_#birthDate birthDate} attribute is {@code null}.
+     * @see #applyBirthDate(Function)
+     * @see Year#from(TemporalAccessor)
+     */
+    public @Nullable Year getBirthYear() {
+        return applyBirthDate(Year::from);
+    }
+
+    public @Nullable YearMonth getBirthYearMonth() {
+        return applyBirthDate(YearMonth::from);
+    }
+
+    public @Nullable Month getBirthMonth() {
+        return applyBirthDate(Month::from);
+    }
+
+    public @Nullable MonthDay getBirthMonthDay() {
+        return applyBirthDate(MonthDay::from);
+    }
+
+    public @Nullable DayOfWeek getBirthDayOfWeek() {
+        return applyBirthDate(DayOfWeek::from);
+    }
+
     // ------------------------------------------------------------------------------------------------------- firstName
 
     // -------------------------------------------------------------------------------------------------------- lastName
 
     // -------------------------------------------------------------------------------------------------------- hireDate
+    public <R> R applyHireDate(final @NonNull Function<? super LocalDate, ? extends R> function) {
+        Objects.requireNonNull(function, "function is null");
+        return Optional.ofNullable(getHireDate())
+                       .map(function)
+                       .orElse(null);
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotNull
@@ -259,6 +315,7 @@ public class Employee extends _BaseEntity<Integer> {
     private String lastName;
 
     @NotNull
+//    @Convert(converter = GenderConverter.class)
     @Enumerated(EnumType.STRING)
     @Column(name = COLUMN_NAME_GENDER, nullable = false, insertable = true, updatable = true)
     private Gender gender;
@@ -268,23 +325,17 @@ public class Employee extends _BaseEntity<Integer> {
     @Column(name = COLUMN_NAME_HIRE_DATE, nullable = false, insertable = true, updatable = true)
     private LocalDate hireDate;
 
-    // -----------------------------------------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------------------------------- dept_emp
     @OrderBy(DeptEmp.ATTRIBUTE_NAME_DEPT_NO + " ASC")
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = DeptEmp.TABLE_NAME,
-            joinColumns = {
-                    @JoinColumn(
-                            name = DeptEmp.COLUMN_NAME_EMP_NO,
-                            referencedColumnName = COLUMN_NAME_EMP_NO
-                    )
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(
-                            name = DeptEmp.COLUMN_NAME_DEPT_NO,
-                            referencedColumnName = Department.COLUMN_NAME_DEPT_NO
-                    )
-            }
+    @JoinTable(name = DeptEmp.TABLE_NAME,
+               joinColumns = {
+                       @JoinColumn(name = DeptEmp.COLUMN_NAME_EMP_NO, referencedColumnName = COLUMN_NAME_EMP_NO)
+               },
+               inverseJoinColumns = {
+                       @JoinColumn(name = DeptEmp.COLUMN_NAME_DEPT_NO,
+                                   referencedColumnName = Department.COLUMN_NAME_DEPT_NO)
+               }
     )
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
@@ -292,6 +343,7 @@ public class Employee extends _BaseEntity<Integer> {
     @ToString.Exclude
     private List<@Valid @NotNull Department> departments;
 
+    // ---------------------------------------------------------------------------------------------------------- salary
     @OrderBy(Salary.ATTRIBUTE_NAME_FROM_DATE + " ASC")
     @OneToMany(mappedBy = Salary.ATTRIBUTE_NAME_EMPLOYEE, fetch = FetchType.LAZY)
     @Setter(AccessLevel.NONE)

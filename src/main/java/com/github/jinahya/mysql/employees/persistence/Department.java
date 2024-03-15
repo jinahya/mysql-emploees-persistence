@@ -107,8 +107,7 @@ public class Department extends _BaseEntity<String> {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = DeptEmp.TABLE_NAME,
                joinColumns = {
-                       @JoinColumn(name = DeptEmp.COLUMN_NAME_DEPT_NO,
-                                   referencedColumnName = COLUMN_NAME_DEPT_NO)
+                       @JoinColumn(name = DeptEmp.COLUMN_NAME_DEPT_NO, referencedColumnName = COLUMN_NAME_DEPT_NO)
                },
                inverseJoinColumns = {
                        @JoinColumn(name = DeptEmp.COLUMN_NAME_EMP_NO,
@@ -125,8 +124,7 @@ public class Department extends _BaseEntity<String> {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = DeptManager.TABLE_NAME,
                joinColumns = {
-                       @JoinColumn(name = DeptManager.COLUMN_NAME_DEPT_NO,
-                                   referencedColumnName = COLUMN_NAME_DEPT_NO)
+                       @JoinColumn(name = DeptManager.COLUMN_NAME_DEPT_NO, referencedColumnName = COLUMN_NAME_DEPT_NO)
                },
                inverseJoinColumns = {
                        @JoinColumn(name = DeptManager.COLUMN_NAME_EMP_NO,
