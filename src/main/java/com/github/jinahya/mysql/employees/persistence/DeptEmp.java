@@ -48,7 +48,8 @@ import java.util.Optional;
         query = """
                 SELECT e
                 FROM DeptEmp AS e
-                ORDER BY e.empNo ASC, e.deptNo ASC"""
+                ORDER BY e.empNo ASC,
+                         e.deptNo ASC"""
 )
 @IdClass(DeptEmpId.class)
 @Entity

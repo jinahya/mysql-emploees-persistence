@@ -22,6 +22,14 @@ public class Department_Assert extends _BaseEntityAssert<Department_Assert, Depa
     }
 
     // ---------------------------------------------------------------------------------------------------------- deptNo
+
+    /**
+     * Verifies that {@link #actual value}'s {@link Department#getDeptNo() deptNo} is equal to specified value.
+     *
+     * @param expectedDeptNo the expected value of {@link Department#getDeptNo() deptNo}.
+     * @return this assertion object.
+     * @see #hasId(String)
+     */
     public Department_Assert hasDeptNo(final String expectedDeptNo) {
         return hasId(expectedDeptNo);
     }
@@ -35,6 +43,12 @@ public class Department_Assert extends _BaseEntityAssert<Department_Assert, Depa
         return this;
     }
 
+    /**
+     * Verifies that {@link #actual value}'s {@link Department#getDeptName() deptName} is equal to specified value.
+     *
+     * @param expectedDeptName the expected value of {@link Department#getDeptName() deptName}.
+     * @return this assertion object.
+     */
     public Department_Assert hasDeptName(final String expectedDeptName) {
         return hasDeptNameSatisfies(dn -> {
             assertThat(dn).isEqualTo(expectedDeptName);
