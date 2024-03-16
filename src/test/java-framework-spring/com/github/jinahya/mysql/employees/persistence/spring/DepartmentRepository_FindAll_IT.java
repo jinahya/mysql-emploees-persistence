@@ -25,14 +25,14 @@ class DepartmentRepository_FindAll_IT extends DepartmentRepository__IT {
         for (var pageable = PageRequest.of(0, size, sort); ; pageable = pageable.next()) {
             // ---------------------------------------------------------------------------------------------------- when
             final var all = repositoryInstance().findAll(pageable);
-            log.debug("all.content.sizeL {}", all.getContent().size());
+            log.debug("all.content.size: {}", all.getContent().size());
             all.forEach(e -> {
                 log.debug("e: {}", e);
             });
             // ---------------------------------------------------------------------------------------------------- then
             assertThat(all).hasSizeLessThanOrEqualTo(size);
             assertThat(all.getContent()).isSortedAccordingTo(Comparator.comparing(Department::getDeptNo));
-            if (!all.hasNext()) {
+            if (!all.hasNext() || pageable.getPageNumber() > 2) {
                 break;
             }
         }

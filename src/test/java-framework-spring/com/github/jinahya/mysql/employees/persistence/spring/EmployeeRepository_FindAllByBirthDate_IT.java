@@ -27,7 +27,13 @@ class EmployeeRepository_FindAllByBirthDate_IT extends EmployeeRepository__IT {
     static List<LocalDate> selectDistinctBirthDateList(final EntityManager entityManager,
                                                        final @Nullable Integer maxResults) {
         return entityManager
-                .createQuery("SELECT DISTINCT e.birthDate FROM Employee AS e", LocalDate.class)
+                .createQuery(
+                        """
+                                SELECT DISTINCT e.birthDate AS distinctBirthDate
+                                FROM Employee AS e
+                                ORDER BY distinctBirthDate ASC""",
+                        LocalDate.class
+                )
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
                 .getResultList();
     }

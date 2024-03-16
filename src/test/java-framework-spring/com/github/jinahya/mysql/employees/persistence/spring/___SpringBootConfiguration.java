@@ -20,6 +20,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 )
 @EnableAutoConfiguration
 @SpringBootConfiguration
-class ___SpringConfiguration {
+class ___SpringBootConfiguration {
 
 }

@@ -7,6 +7,18 @@ Persistence unit for the [Employees Sample Database](https://dev.mysql.com/doc/e
 
 ## Links
 
+### Jakarta Persistence
+
+#### Jakarta Persistence 3.2
+
+* [Jakarta Persistence 3.2 Specification Document](https://jakarta.ee/specifications/persistence/3.2/jakarta-persistence-spec-3.2-m2)
+* [Jakarta Persistence 3.2 Javadoc](https://jakarta.ee/specifications/persistence/3.2/apidocs/jakarta.persistence/module-summary.html)
+
+#### Jakarta Persistence 3.1
+
+* [Jakarta Persistence 3.1 Specification Document](https://jakarta.ee/specifications/persistence/3.1/jakarta-persistence-spec-3.1)
+* [Jakarta Persistence 3.1 Javadoc](https://jakarta.ee/specifications/persistence/3.1/apidocs)
+
 ### [EclipseLink](https://eclipse.dev/eclipselink/)
 
 #### [EclipseLink JPA](https://eclipse.dev/eclipselink/#jpa) 

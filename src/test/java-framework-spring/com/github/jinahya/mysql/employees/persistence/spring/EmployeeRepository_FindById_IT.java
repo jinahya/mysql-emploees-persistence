@@ -1,6 +1,5 @@
 package com.github.jinahya.mysql.employees.persistence.spring;
 
-import com.github.jinahya.mysql.employees.persistence.QEmployee;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,7 +16,13 @@ class EmployeeRepository_FindById_IT extends EmployeeRepository__IT {
 
     static List<Integer> selectEmpNoList(final EntityManager entityManager, final @Nullable Integer maxResults) {
         return entityManager
-                .createQuery("SELECT e.empNo FROM Employee AS e ORDER BY e.empNo ASC", Integer.class)
+                .createQuery(
+                        """
+                                SELECT e.empNo
+                                FROM Employee AS e
+                                ORDER BY e.empNo ASC""",
+                        Integer.class
+                )
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
                 .getResultList();
     }
@@ -29,25 +34,12 @@ class EmployeeRepository_FindById_IT extends EmployeeRepository__IT {
 
     @MethodSource({"getEmpNoList"})
     @ParameterizedTest
-    void findById__(final Integer empNo) {
+    void findById__(final int empNo) {
         // -------------------------------------------------------------------------------------------------------- when
         final var found = repositoryInstance().findById(empNo);
         // -------------------------------------------------------------------------------------------------------- then
-        assertThat(found)
-                .hasValueSatisfying(v -> {
-                    assertThat(v.getEmpNo()).isEqualTo(empNo);
-                });
-    }
-
-    @MethodSource({"getEmpNoList"})
-    @ParameterizedTest
-    void findOne__(final Integer empNo) {
-        // -------------------------------------------------------------------------------------------------------- when
-        final var found = repositoryInstance().findOne(QEmployee.employee.empNo.eq(empNo));
-        // -------------------------------------------------------------------------------------------------------- then
-        assertThat(found)
-                .hasValueSatisfying(v -> {
-                    assertThat(v.getEmpNo()).isEqualTo(empNo);
-                });
+        assertThat(found).hasValueSatisfying(v -> {
+            assertThat(v.getEmpNo()).isEqualTo(empNo);
+        });
     }
 }

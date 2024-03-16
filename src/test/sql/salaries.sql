@@ -8,6 +8,7 @@ WHERE from_date > to_date
 
 SELECT *
 FROM salaries
+ORDER BY emp_no ASC, from_date ASC
 ;
 
 -- -------------------------------------------------------------------------------------------------------------- emp_no
@@ -22,10 +23,11 @@ FROM salaries
 SELECT MAX(to_date)
 FROM salaries
 ;
-SELECT emp_no, MAX(from_date) AS max_from_date
+SELECT emp_no,
+       MAX(from_date) AS max_from_date
 FROM salaries
 GROUP BY emp_no
-ORDER BY emp_no
+ORDER BY emp_no ASC
 ;
 SELECT s.emp_no, s.salary, s2.max_from_date
 FROM salaries AS s
@@ -34,6 +36,18 @@ FROM salaries AS s
                GROUP BY emp_no) AS s2
               ON s.emp_no = s2.emp_no AND s.from_date = s2.max_from_date
 ORDER BY s.salary DESC
+;
+
+-- ---------------------------------------------------------------------------------------------------- emp_no/from_date
+SELECT emp_no, MAX(to_date)
+FROM salaries
+GROUP BY emp_no
+ORDER BY emp_no ASC
+;
+SELECT *
+FROM salaries
+WHERE emp_no = 10008
+ORDER BY from_date ASC
 ;
 
 -- -------------------------------------------------------------------------------------------------------------- salary
