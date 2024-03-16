@@ -37,6 +37,7 @@ abstract class _BaseEntityIT<ENTITY extends _BaseEntity<ID>, ID extends Serializ
     // ------------------------------------------------------------------------------------------ STATIC-FACTORY_METHODS
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
     /**
      * Creates a new instance for testing specified entity class.
      *

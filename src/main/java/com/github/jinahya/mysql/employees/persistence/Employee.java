@@ -1,14 +1,39 @@
 package com.github.jinahya.mysql.employees.persistence;
 
-import jakarta.persistence.*;
+import jakarta.annotation.Nullable;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Converter;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serial;
-import java.time.*;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.MonthDay;
+import java.time.Year;
+import java.time.YearMonth;
 import java.time.temporal.TemporalAccessor;
 import java.util.List;
 import java.util.Objects;
@@ -245,8 +270,8 @@ public class Employee extends _BaseEntity<Integer> {
     public <R> @Nullable R applyBirthDate(final @NonNull Function<? super LocalDate, ? extends R> function) {
         Objects.requireNonNull(function, "function is null");
         return Optional.ofNullable(getBirthDate())
-                       .map(function)
-                       .orElse(null);
+                .map(function)
+                .orElse(null);
     }
 
     /**
@@ -286,8 +311,8 @@ public class Employee extends _BaseEntity<Integer> {
     public <R> R applyHireDate(final @NonNull Function<? super LocalDate, ? extends R> function) {
         Objects.requireNonNull(function, "function is null");
         return Optional.ofNullable(getHireDate())
-                       .map(function)
-                       .orElse(null);
+                .map(function)
+                .orElse(null);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

@@ -177,8 +177,8 @@ ORDER BY avg_salary DESC
 EXPLAIN
 SELECT e.gender, AVG(s.salary)
 FROM salaries AS s
-         JOIN employees AS e ON s.emp_no = e.emp_no
-# WHERE s.to_date = '9999-01-01'
+         JOIN employees AS e ON s.emp_no = e.emp_no #
+WHERE s.to_date = '9999-01-01'
 GROUP BY e.gender
 ORDER BY e.gender
 ;

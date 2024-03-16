@@ -17,10 +17,10 @@ class Employee_Querydsl_SelectOneByEmpNo_IT extends Employee_Querydsl__IT {
 
     static List<Integer> getEmpNoList(final JPAQuery<Employee> query, final Long limit) {
         return query.select(QEmployee.employee.empNo)                                             // SELECT emp_no
-                    .from(QEmployee.employee)                                                     // FROM employees
-                    .orderBy(QEmployee.employee.empNo.asc())                                      // ORDER BY emp_no ASC
-                    .limit(Optional.ofNullable(limit).orElse((long) Integer.MAX_VALUE))           // LIMIT ?, ?
-                    .fetch();
+                .from(QEmployee.employee)                                                     // FROM employees
+                .orderBy(QEmployee.employee.empNo.asc())                                      // ORDER BY emp_no ASC
+                .limit(Optional.ofNullable(limit).orElse((long) Integer.MAX_VALUE))           // LIMIT ?, ?
+                .fetch();
     }
 
     // -----------------------------------------------------------------------------------------------------------------

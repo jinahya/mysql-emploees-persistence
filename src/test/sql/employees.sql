@@ -1,19 +1,45 @@
 DESC employees;
 
-SHOW CREATE TABLE employees;
-# CREATE TABLE `employees`
-# (
-#     `emp_no`     int            NOT NULL,
-#     `birth_date` date           NOT NULL,
-#     `first_name` varchar(14)    NOT NULL,
-#     `last_name`  varchar(16)    NOT NULL,
-#     `gender`     enum ('M','F') NOT NULL,
-#     `hire_date`  date           NOT NULL,
-#     PRIMARY KEY (`emp_no`)
-# ) ENGINE = InnoDB
-#   DEFAULT CHARSET = utf8mb4
-#   COLLATE = utf8mb4_0900_ai_ci
-# ;
+SHOW
+CREATE TABLE employees;
+#
+CREATE TABLE `employees`
+    #
+(
+    #
+    `emp_no`
+    int
+    NOT
+    NULL,
+    #
+    `birth_date`
+    date
+    NOT
+    NULL,
+    #
+    `first_name`
+    varchar
+(
+    14
+) NOT NULL,
+    # `last_name` varchar
+(
+    16
+) NOT NULL,
+    # `gender` enum
+(
+    'M',
+    'F'
+) NOT NULL,
+    # `hire_date` date NOT NULL,
+    # PRIMARY KEY
+(
+    `emp_no`
+)
+    # ) ENGINE = InnoDB
+    # DEFAULT CHARSET = utf8mb4
+    # COLLATE = utf8mb4_0900_ai_ci
+    #;
 
 SELECT COUNT(1)
 FROM employees
@@ -35,17 +61,14 @@ FROM employees
 ;
 
 -- birth_year
-SELECT YEAR(birth_date) AS birth_year,
-       COUNT(1)         AS c
+SELECT YEAR (birth_date) AS birth_year, COUNT (1) AS c
 FROM employees
 GROUP BY birth_year
 ORDER BY birth_year
 ;
 
 -- birth_year, birth_month
-SELECT YEAR(birth_date)  AS birth_year,
-       MONTH(birth_date) AS birth_month,
-       COUNT(1)          AS c
+SELECT YEAR (birth_date) AS birth_year, MONTH (birth_date) AS birth_month, COUNT (1) AS c
 FROM employees
 GROUP BY birth_year, birth_month
 ORDER BY birth_year, birth_month
@@ -61,8 +84,7 @@ ORDER BY birth_dayofweek
 ;
 
 -- birth_month
-SELECT MONTH(birth_date) AS birth_month,
-       COUNT(1)          AS c
+SELECT MONTH (birth_date) AS birth_month, COUNT (1) AS c
 FROM employees
 GROUP BY birth_month
 ORDER BY birth_month

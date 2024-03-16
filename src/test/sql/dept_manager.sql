@@ -71,8 +71,8 @@ WHERE from_date < CURDATE()
 SELECT d.dept_no
 FROM departments AS d
          LEFT JOIN (SELECT *
-               FROM dept_manager
-               WHERE from_date < CURDATE()
-                 AND to_date = '9999-01-01') AS dm ON d.dept_no = dm.dept_no
+                    FROM dept_manager
+                    WHERE from_date < CURDATE()
+                      AND to_date = '9999-01-01') AS dm ON d.dept_no = dm.dept_no
 WHERE dm.dept_no IS NULL
 ;

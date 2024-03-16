@@ -29,7 +29,7 @@ class EmployeeRepository_FindAllByBirthDateBetween_IT
         try {
             return Optional.of(
                     entityManager.createNamedQuery("Employee.selectMinMaxBirthDate", Tuple.class)
-                                 .getSingleResult() // NoResultException
+                            .getSingleResult() // NoResultException
             );
         } catch (final NoResultException nre) {
             return Optional.empty();

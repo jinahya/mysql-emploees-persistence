@@ -15,7 +15,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DepartmentRepository_FindByDeptName_IT extends DepartmentRepository__IT {
 
-    private static List<String> selectDeptNameList(final EntityManager entityManager, final @Nullable Integer maxResults) {
+    private static List<String> selectDeptNameList(final EntityManager entityManager,
+                                                   final @Nullable Integer maxResults) {
         return entityManager
                 .createQuery("SELECT e.deptName FROM Department AS e ORDER BY e.deptName ASC", String.class)
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))

@@ -18,9 +18,9 @@ class EmployeeRepository_FindAllBornInYear_IT extends EmployeeRepository__IT {
                                                             final @Nullable Integer maxResults) {
         return entityManager
                 .createQuery("""
-                                     SELECT DISTINCT EXTRACT(YEAR FROM e.birthDate), EXTRACT(MONTH FROM e.birthDate)
-                                     FROM Employee AS e""",
-                             LocalDate.class)
+                                SELECT DISTINCT EXTRACT(YEAR FROM e.birthDate), EXTRACT(MONTH FROM e.birthDate)
+                                FROM Employee AS e""",
+                        LocalDate.class)
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
                 .getResultList();
     }

@@ -4,7 +4,7 @@ import org.assertj.core.api.AbstractAssert;
 
 import java.io.Serializable;
 
-public  abstract class _BaseEntityAssert<
+public abstract class _BaseEntityAssert<
         SELF extends _BaseEntityAssert<SELF, ENTITY, ID>,
         ENTITY extends _BaseEntity<ID>,
         ID extends Serializable>

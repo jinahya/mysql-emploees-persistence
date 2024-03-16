@@ -13,6 +13,6 @@ import java.io.Serializable;
 })
 public interface _BaseEntityRepository<ENTITY extends _BaseEntity<ID>, ID extends Serializable>
         extends JpaRepository<ENTITY, ID>,
-                QuerydslPredicateExecutor<ENTITY> {
+        QuerydslPredicateExecutor<ENTITY> {
 
 }
