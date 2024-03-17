@@ -10,7 +10,8 @@ import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class Employee_Assert extends _BaseEntityAssert<Employee_Assert, Employee, Integer> {
+public class Employee_Assert
+        extends _BaseEntityAssert<Employee_Assert, Employee, Integer> {
 
     Employee_Assert(final Employee actual) {
         super(actual, Employee_Assert.class);

@@ -17,7 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Slf4j
-class EmployeeRepository_FindAllBornInYear2_IT extends EmployeeRepository_FindAllBornInYear$_IT {
+class EmployeeRepository_FindAllBornInYear2_IT
+        extends EmployeeRepository_FindAllBornInYear$_IT {
 
     private List<Integer> getBirthYearList() {
         return selectDistinctBirthYearList(entityManager(), 8);

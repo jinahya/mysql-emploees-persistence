@@ -26,7 +26,8 @@ import java.time.temporal.TemporalAdjusters;
  * (3.2)
  */
 @Repository
-public interface EmployeeRepository extends _BaseEntityRepository<Employee, Integer> {
+public interface EmployeeRepository
+        extends _BaseEntityRepository<Employee, Integer> {
 
     String PARAM_YEAR = "year";
 

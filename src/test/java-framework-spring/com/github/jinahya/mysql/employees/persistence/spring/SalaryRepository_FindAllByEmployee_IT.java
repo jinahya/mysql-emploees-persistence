@@ -21,7 +21,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Slf4j
-class SalaryRepository_FindAllByEmployee_IT extends SalaryRepository__IT {
+class SalaryRepository_FindAllByEmployee_IT
+        extends SalaryRepository__IT {
 
     private Page<Employee> getEmployeeList() {
         return employeeRepository.findAll(

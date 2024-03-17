@@ -15,7 +15,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("EntityManager#find(entityClass, primaryKey)")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class Department_Find_IT extends Department__IT {
+class Department_Find_IT
+        extends Department__IT {
 
     private static List<String> selectDeptNoList1(final EntityManager entityManager, final Integer maxResults) {
         return entityManager

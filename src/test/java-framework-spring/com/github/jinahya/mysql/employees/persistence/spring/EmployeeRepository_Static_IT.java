@@ -7,7 +7,8 @@ import java.time.Month;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class EmployeeRepository_Static_IT extends EmployeeRepository__IT {
+class EmployeeRepository_Static_IT
+        extends EmployeeRepository__IT {
 
     @DisplayName("PARAM_MIN_MONTH == Month.JANUARY.value")
     @Test

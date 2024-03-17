@@ -8,7 +8,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DeptManager__IT extends _BaseEntityIT<DeptManager, DeptManagerId> {
+class DeptManager__IT
+        extends _BaseEntityIT<DeptManager, DeptManagerId> {
 
     @Test
     void ATTRIBUTE_NAME_FROM_DATE__() {

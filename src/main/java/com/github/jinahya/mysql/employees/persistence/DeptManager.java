@@ -1,27 +1,16 @@
 package com.github.jinahya.mysql.employees.persistence;
 
-import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serial;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * An entity class maps {@value DeptManager#TABLE_NAME} table.
@@ -75,7 +64,8 @@ import java.util.Optional;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor
-public class DeptManager extends _BaseEntity<DeptManagerId> {
+public class DeptManager
+        extends _BaseEntity<DeptManagerId> {
 
     @Serial
     private static final long serialVersionUID = 7562801904287742000L;
@@ -107,6 +97,8 @@ public class DeptManager extends _BaseEntity<DeptManagerId> {
     // --------------------------------------------------------------------------------------------------------- to_date
     public static final String COLUMN_NAME_TO_DATE = "to_date";
 
+    public static final LocalDate COLUMN_VALUE_TO_DATE_UNSPECIFIED = _DomainConstants.ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED;
+
     // -----------------------------------------------------------------------------------------------------------------
 
     @Override
@@ -123,6 +115,19 @@ public class DeptManager extends _BaseEntity<DeptManagerId> {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    // -------------------------------------------------------------------------------------------------------------- id
+    public <R> R applyId(final Function<? super DeptManagerId, ? extends R> function) {
+        return Objects.requireNonNull(function, "function is null").apply(getId());
+    }
+
+    public DeptManager acceptId(final Consumer<? super DeptManagerId> consumer) {
+        Objects.requireNonNull(consumer, "consumer is null");
+        return applyId(v -> {
+            consumer.accept(v);
+            return this;
+        });
     }
 
     // -------------------------------------------------------------------------------------------------------- employee

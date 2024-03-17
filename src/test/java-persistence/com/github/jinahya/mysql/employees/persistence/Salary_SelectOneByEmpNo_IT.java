@@ -15,7 +15,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Disabled
-class Salary_SelectOneByEmpNo_IT extends Salary__IT {
+class Salary_SelectOneByEmpNo_IT
+        extends Salary__IT {
 
     private static List<Salary> selectAllByEmpNo1(final EntityManager entityManager, final int empNo,
                                                   final Integer maxResults) {
@@ -32,11 +33,11 @@ class Salary_SelectOneByEmpNo_IT extends Salary__IT {
         Objects.requireNonNull(entityManager, "entityManager is null");
         return entityManager
                 .createQuery("""
-                                SELECT e
-                                FROM Salary AS e
-                                WHERE e.empNo = :empNo
-                                ORDER BY e.fromDate DESC""",
-                        Salary.class)
+                                     SELECT e
+                                     FROM Salary AS e
+                                     WHERE e.empNo = :empNo
+                                     ORDER BY e.fromDate DESC""",
+                             Salary.class)
                 .setParameter("empNo", empNo)
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
                 .getResultList();
@@ -90,9 +91,9 @@ class Salary_SelectOneByEmpNo_IT extends Salary__IT {
             final var all = applyEntityManager(em -> selectAllByEmpNo1(em, empNo, 8));
             // ---------------------------------------------------------------------------------------------------- then
             assertThat(all).isNotEmpty()
-                    .isSortedAccordingTo(Comparator.comparing(Salary::getFromDate).reversed())
-                    .extracting(Salary::getEmpNo)
-                    .containsOnly(empNo);
+                           .isSortedAccordingTo(Comparator.comparing(Salary::getFromDate).reversed())
+                           .extracting(Salary::getEmpNo)
+                           .containsOnly(empNo);
         }
     }
 
@@ -120,9 +121,9 @@ class Salary_SelectOneByEmpNo_IT extends Salary__IT {
             final var all = applyEntityManager(em -> selectAllByEmpNo2(em, empNo, 8));
             // ---------------------------------------------------------------------------------------------------- then
             assertThat(all).isNotEmpty()
-                    .isSortedAccordingTo(Comparator.comparing(Salary::getFromDate).reversed())
-                    .extracting(Salary::getEmpNo)
-                    .containsOnly(empNo);
+                           .isSortedAccordingTo(Comparator.comparing(Salary::getFromDate).reversed())
+                           .extracting(Salary::getEmpNo)
+                           .containsOnly(empNo);
         }
     }
 
@@ -150,9 +151,9 @@ class Salary_SelectOneByEmpNo_IT extends Salary__IT {
             final var all = applyEntityManager(em -> selectAllByEmpNo3(em, empNo, 8));
             // ---------------------------------------------------------------------------------------------------- then
             assertThat(all).isNotEmpty()
-                    .isSortedAccordingTo(Comparator.comparing(Salary::getFromDate).reversed())
-                    .extracting(Salary::getEmpNo)
-                    .containsOnly(empNo);
+                           .isSortedAccordingTo(Comparator.comparing(Salary::getFromDate).reversed())
+                           .extracting(Salary::getEmpNo)
+                           .containsOnly(empNo);
         }
     }
 }

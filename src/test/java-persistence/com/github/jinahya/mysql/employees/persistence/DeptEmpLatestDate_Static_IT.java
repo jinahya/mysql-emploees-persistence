@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-abstract class DeptEmpLatestDate_Static_IT extends DeptEmpLatestDate__IT {
+abstract class DeptEmpLatestDate_Static_IT
+        extends DeptEmpLatestDate__IT {
 
     @Test
     void ATTRIBUTE_DEPT_NO__() {

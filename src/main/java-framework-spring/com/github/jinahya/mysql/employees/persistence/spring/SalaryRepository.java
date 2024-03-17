@@ -18,7 +18,8 @@ import java.util.Optional;
  * (3.2)
  */
 @Repository
-public interface SalaryRepository extends _BaseEntityRepository<Salary, SalaryId> {
+public interface SalaryRepository
+        extends _BaseEntityRepository<Salary, SalaryId> {
 
     // -------------------------------------------------------------------------------------------------- empNo/employee
     Page<Salary> findAllByEmpNo(Integer empNo, Pageable pageable);

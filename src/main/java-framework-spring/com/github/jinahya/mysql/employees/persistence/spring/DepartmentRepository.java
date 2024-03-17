@@ -7,7 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface DepartmentRepository extends _BaseEntityRepository<Department, String> {
+public interface DepartmentRepository
+        extends _BaseEntityRepository<Department, String> {
 
     /**
      * Finds the entity whose {@link Department_#deptName deptName} attribute matches specified value.

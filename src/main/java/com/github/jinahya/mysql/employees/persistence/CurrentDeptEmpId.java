@@ -14,7 +14,8 @@ import java.util.Objects;
 @ToString(callSuper = true)
 @NoArgsConstructor
 // TODO: Make it extends DeptEmpId
-public class CurrentDeptEmpId implements _BaseId {
+public class CurrentDeptEmpId
+        implements _BaseId {
 
     @Serial
     private static final long serialVersionUID = -1321574687810134588L;

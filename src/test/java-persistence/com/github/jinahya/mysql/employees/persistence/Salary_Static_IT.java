@@ -17,7 +17,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class Salary_Static_IT extends _BaseEntityIT<Salary, SalaryId> {
+class Salary_Static_IT
+        extends _BaseEntityIT<Salary, SalaryId> {
 
     @Test
     void ATTRIBUTE_NAME_EMPLOYEE__() {
@@ -44,11 +45,11 @@ class Salary_Static_IT extends _BaseEntityIT<Salary, SalaryId> {
         Objects.requireNonNull(entityManager, "entityManager is null");
         return entityManager
                 .createQuery("""
-                                SELECT e
-                                FROM Salary AS e
-                                WHERE e.empNo = :empNo
-                                ORDER BY e.fromDate DESC""",
-                        Salary.class)
+                                     SELECT e
+                                     FROM Salary AS e
+                                     WHERE e.empNo = :empNo
+                                     ORDER BY e.fromDate DESC""",
+                             Salary.class)
                 .setParameter("empNo", empNo)
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
                 .getResultList();
@@ -122,9 +123,9 @@ class Salary_Static_IT extends _BaseEntityIT<Salary, SalaryId> {
             final var all = applyEntityManager(em -> selectAllByEmpNo1(em, empNo, 8));
             // ---------------------------------------------------------------------------------------------------- then
             assertThat(all).isNotEmpty()
-                    .isSortedAccordingTo(Comparator.comparing(Salary::getFromDate).reversed())
-                    .extracting(Salary::getEmpNo)
-                    .containsOnly(empNo);
+                           .isSortedAccordingTo(Comparator.comparing(Salary::getFromDate).reversed())
+                           .extracting(Salary::getEmpNo)
+                           .containsOnly(empNo);
         }
     }
 
@@ -162,11 +163,11 @@ class Salary_Static_IT extends _BaseEntityIT<Salary, SalaryId> {
         assertThat(all).satisfiesAnyOf(
                 a -> assertThat(a).isEmpty(),
                 a -> assertThat(a).isNotEmpty()
-                        .extracting(Salary::getEmpNo)
-                        .containsOnly(empNo),
+                                  .extracting(Salary::getEmpNo)
+                                  .containsOnly(empNo),
                 a -> assertThat(a).isNotEmpty()
-                        .extracting(Salary::getEmployee)
-                        .containsOnly(employee)
+                                  .extracting(Salary::getEmployee)
+                                  .containsOnly(employee)
         );
     }
 
@@ -181,12 +182,12 @@ class Salary_Static_IT extends _BaseEntityIT<Salary, SalaryId> {
         assertThat(all).satisfiesAnyOf(
                 a -> assertThat(a).isEmpty(),
                 a -> assertThat(a).isNotEmpty()
-                        .extracting(Salary::getEmpNo)
-                        .containsOnly(empNo),
+                                  .extracting(Salary::getEmpNo)
+                                  .containsOnly(empNo),
                 a -> assertThat(a).isNotEmpty()
-                        .extracting(Salary::getEmployee)
-                        .extracting(Employee::getEmpNo)
-                        .containsOnly(empNo)
+                                  .extracting(Salary::getEmployee)
+                                  .extracting(Employee::getEmpNo)
+                                  .containsOnly(empNo)
         );
     }
 }

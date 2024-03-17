@@ -1,22 +1,9 @@
 package com.github.jinahya.mysql.employees.persistence;
 
-import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serial;
 import java.time.LocalDate;
@@ -76,7 +63,8 @@ import java.util.Optional;
 @SuppressWarnings({
         "java:S1700" // Integer salary -> class Salary
 })
-public class Salary extends _BaseEntity<SalaryId> {
+public class Salary
+        extends _BaseEntity<SalaryId> {
 
     @Serial
     private static final long serialVersionUID = 604718367871825963L;

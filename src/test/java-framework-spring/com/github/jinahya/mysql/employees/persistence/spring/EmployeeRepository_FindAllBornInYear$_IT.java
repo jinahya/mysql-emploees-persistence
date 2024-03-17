@@ -11,7 +11,8 @@ import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Slf4j
-abstract class EmployeeRepository_FindAllBornInYear$_IT extends EmployeeRepository__IT {
+abstract class EmployeeRepository_FindAllBornInYear$_IT
+        extends EmployeeRepository__IT {
 
     static List<Integer> selectDistinctBirthYearList(final EntityManager entityManager,
                                                      final @Nullable Integer maxResults) {

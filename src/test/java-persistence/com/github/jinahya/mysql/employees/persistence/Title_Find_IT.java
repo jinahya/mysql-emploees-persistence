@@ -14,19 +14,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("entityManager.find(entityClass, primaryKey)")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class Title_Find_IT extends Title__IT {
+class Title_Find_IT
+        extends Title__IT {
 
     private static List<TitleId> selectTitleIdList1(final EntityManager entityManager, final Integer maxResults) {
         return entityManager.createQuery("""
-                                SELECT e.id
-                                FROM Title AS e
-                                ORDER BY e.id.empNo ASC,
-                                         e.id.title ASC,
-                                         e.id.fromDate ASC""",
-                        TitleId.class
-                )
-                .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
-                .getResultList();
+                                                 SELECT e.id
+                                                 FROM Title AS e
+                                                 ORDER BY e.id.empNo ASC,
+                                                          e.id.title ASC,
+                                                          e.id.fromDate ASC""",
+                                         TitleId.class
+                            )
+                            .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
+                            .getResultList();
     }
 
     private static List<TitleId> selectTitleIdList2(final EntityManager entityManager, final Integer maxResults) {
@@ -36,13 +37,19 @@ class Title_Find_IT extends Title__IT {
         final var id = title.get(Title_.id);
         query.select(id);                                                                         // SELECT e.id
         query.orderBy(                                                                            // ORDER BY
-                builder.asc(id.get(TitleId_.empNo)),                                              //   e.id.empNo ASC,
-                builder.asc(id.get(TitleId_.title)),                                              //   e.id.title ASC,
-                builder.asc(id.get(TitleId_.fromDate))                                            //   e.id.fromDate ASC
+                                                                                                  builder.asc(
+                                                                                                          id.get(TitleId_.empNo)),
+                                                                                                  //   e.id.empNo ASC,
+                                                                                                  builder.asc(
+                                                                                                          id.get(TitleId_.title)),
+                                                                                                  //   e.id.title ASC,
+                                                                                                  builder.asc(
+                                                                                                          id.get(TitleId_.fromDate))
+                                                                                                  //   e.id.fromDate ASC
         );
         return entityManager.createQuery(query)
-                .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
-                .getResultList();
+                            .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
+                            .getResultList();
     }
 
     private static List<TitleId> selectTitleIdList(final EntityManager entityManager, final Integer maxResults) {

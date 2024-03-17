@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DeptEmp__IT extends _BaseEntityIT<DeptEmp, DeptEmpId> {
+class DeptEmp__IT
+        extends _BaseEntityIT<DeptEmp, DeptEmpId> {
 
     @Test
     void ATTRIBUTE_DEPT_NO__() {

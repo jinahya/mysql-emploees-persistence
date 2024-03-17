@@ -9,7 +9,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class Department_Querydsl_SelectAll_IT extends Department_Querydsl__IT {
+class Department_Querydsl_SelectAll_IT
+        extends Department_Querydsl__IT {
 
     @Test
     void selectAll__() {

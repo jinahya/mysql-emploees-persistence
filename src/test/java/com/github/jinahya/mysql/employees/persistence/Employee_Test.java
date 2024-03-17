@@ -14,7 +14,8 @@ import java.util.HashSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class Employee_Test extends _BaseEntityTest<Employee, Integer> {
+class Employee_Test
+        extends _BaseEntityTest<Employee, Integer> {
 
     @Nested
     class GenderTest {
@@ -100,8 +101,8 @@ class Employee_Test extends _BaseEntityTest<Employee, Integer> {
     @Override
     SingleTypeEqualsVerifierApi<Employee> equals__(final SingleTypeEqualsVerifierApi<Employee> verifierApi) {
         return super.equals__(verifierApi)
-                .suppress(Warning.SURROGATE_KEY)
-                .withPrefabValues(Employee.class, Employee.of(0), Employee.of(1))
+                    .suppress(Warning.SURROGATE_KEY)
+                    .withPrefabValues(Employee.class, Employee.of(0), Employee.of(1))
                 ;
     }
 }

@@ -13,7 +13,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("selectAll")
-class Department_SelectAll_IT extends Department__IT {
+class Department_SelectAll_IT
+        extends Department__IT {
 
     private static List<Department> selectAll1(final EntityManager entityManager, final @Nullable Integer maxResults) {
         return entityManager
@@ -42,8 +43,8 @@ class Department_SelectAll_IT extends Department__IT {
         query.select(root);                                                                     // SELECT e
         query.orderBy(builder.asc(root.get(Department_.deptNo)));                               // ORDER BY e.deptNo ASC
         return entityManager.createQuery(query)
-                .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
-                .getResultList();
+                            .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
+                            .getResultList();
     }
 
     static List<Department> selectAll(final EntityManager entityManager, final Integer maxResults) {

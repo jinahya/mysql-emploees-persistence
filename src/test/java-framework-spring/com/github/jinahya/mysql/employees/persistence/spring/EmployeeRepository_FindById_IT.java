@@ -12,7 +12,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class EmployeeRepository_FindById_IT extends EmployeeRepository__IT {
+class EmployeeRepository_FindById_IT
+        extends EmployeeRepository__IT {
 
     static List<Integer> selectEmpNoList(final EntityManager entityManager, final @Nullable Integer maxResults) {
         return entityManager

@@ -15,7 +15,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Slf4j
-class EmployeeRepository_FindAll_IT extends EmployeeRepository__IT {
+class EmployeeRepository_FindAll_IT
+        extends EmployeeRepository__IT {
 
     @Test
     void __() {

@@ -23,7 +23,8 @@ import java.util.Objects;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor//(access = AccessLevel.PROTECTED)
-public class TitleId implements _BaseId {
+public class TitleId
+        implements _BaseId {
 
     @Serial
     private static final long serialVersionUID = -7452067856104640617L;

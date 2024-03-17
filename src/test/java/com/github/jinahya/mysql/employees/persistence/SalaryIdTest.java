@@ -3,7 +3,8 @@ package com.github.jinahya.mysql.employees.persistence;
 import nl.jqno.equalsverifier.Warning;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 
-class SalaryIdTest extends _BaseIdTest<SalaryId> {
+class SalaryIdTest
+        extends _BaseIdTest<SalaryId> {
 
     SalaryIdTest() {
         super(SalaryId.class);
@@ -12,6 +13,6 @@ class SalaryIdTest extends _BaseIdTest<SalaryId> {
     @Override
     SingleTypeEqualsVerifierApi<SalaryId> equals__(final SingleTypeEqualsVerifierApi<SalaryId> verifierApi) {
         return super.equals__(verifierApi)
-                .suppress(Warning.NONFINAL_FIELDS);
+                    .suppress(Warning.NONFINAL_FIELDS);
     }
 }

@@ -11,7 +11,7 @@ FROM dept_manager
 
 SELECT *
 FROM dept_manager
-ORDER BY dept_no, from_date DESC
+ORDER BY dept_no ASC, from_date DESC
 ;
 
 -- -------------------------------------------------------------------------------------------------------------- emp_no
@@ -75,4 +75,43 @@ FROM departments AS d
                     WHERE from_date < CURDATE()
                       AND to_date = '9999-01-01') AS dm ON d.dept_no = dm.dept_no
 WHERE dm.dept_no IS NULL
+;
+
+-- ----------------------------------------------------------------------------------------------------- dept_no/to_date
+SELECT *
+FROM dept_manager
+WHERE to_date = '9999-01-01'
+;
+
+-- max_to_date per dept_no
+SELECT dept_no,
+       MAX(to_date) AS max_to_date
+FROM dept_manager
+GROUP BY dept_no
+;
+
+-- with no permanent manager
+SELECT dm.dept_no
+FROM (SELECT dept_no,
+             MAX(to_date) AS max_to_date
+      FROM dept_manager
+      GROUP BY dept_no) AS dm
+WHERE max_to_date <> '9999-01-01'
+;
+
+SELECT d.*, dm.emp_no, from_date, e.emp_no, e.first_name, e.last_name
+FROM departments AS d
+         LEFT JOIN (SELECT *
+                    FROM dept_manager
+                    WHERE to_date = '9999-01-01') AS dm ON d.dept_no = dm.dept_no
+         JOIN employees AS e ON dm.emp_no = e.emp_no
+ORDER BY d.dept_no ASC
+;
+
+-- multiple managers per department
+SELECT dept_no, COUNT(emp_no) AS emp_no_count
+FROM dept_manager
+WHERE to_date = '9999-01-01'
+GROUP BY dept_no
+HAVING emp_no_count > 1
 ;

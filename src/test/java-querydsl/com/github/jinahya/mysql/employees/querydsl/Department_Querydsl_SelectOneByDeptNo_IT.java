@@ -13,14 +13,15 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class Department_Querydsl_SelectOneByDeptNo_IT extends Department_Querydsl__IT {
+class Department_Querydsl_SelectOneByDeptNo_IT
+        extends Department_Querydsl__IT {
 
     static List<String> getDeptNoList(final JPAQuery<Department> query, final Long limit) {
         return query.select(QDepartment.department.deptNo)                                       // SELECT dept_no
-                .from(QDepartment.department)                                                // FROM departments
-                .orderBy(QDepartment.department.deptNo.asc())                                // ORDER BY dept_no ASC
-                .limit(Optional.ofNullable(limit).orElse((long) Integer.MAX_VALUE))          // LIMIT ?, ?
-                .fetch();
+                    .from(QDepartment.department)                                                // FROM departments
+                    .orderBy(QDepartment.department.deptNo.asc())                                // ORDER BY dept_no ASC
+                    .limit(Optional.ofNullable(limit).orElse((long) Integer.MAX_VALUE))          // LIMIT ?, ?
+                    .fetch();
     }
 
     // -----------------------------------------------------------------------------------------------------------------

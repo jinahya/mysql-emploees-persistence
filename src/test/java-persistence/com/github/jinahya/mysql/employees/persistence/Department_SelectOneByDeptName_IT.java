@@ -20,7 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("selectOneByDeptName")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Slf4j
-class Department_SelectOneByDeptName_IT extends Department__IT {
+class Department_SelectOneByDeptName_IT
+        extends Department__IT {
 
     private static Optional<Department> selectOneByDeptName1(final EntityManager entityManager, final String deptName) {
         try {

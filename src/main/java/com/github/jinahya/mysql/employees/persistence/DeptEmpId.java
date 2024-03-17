@@ -12,7 +12,8 @@ import java.util.Objects;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor//(access = AccessLevel.PROTECTED) // eclipselink
-public class DeptEmpId implements _BaseId {
+public class DeptEmpId
+        implements _BaseId {
 
     @Serial
     private static final long serialVersionUID = 6356541964725322638L;

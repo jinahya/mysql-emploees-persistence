@@ -9,7 +9,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
-class Employee_Persist_IT extends _BaseEntityIT<Employee, Integer> {
+class Employee_Persist_IT
+        extends _BaseEntityIT<Employee, Integer> {
 
     // -----------------------------------------------------------------------------------------------------------------
     Employee_Persist_IT() {
@@ -27,7 +28,8 @@ class Employee_Persist_IT extends _BaseEntityIT<Employee, Integer> {
             instance.setFirstName("First");                         // TODO: Use your own
             instance.setLastName("Last");                           // TODO: Use your own
             instance.setGender(                                     // TODO: Use your own
-                    ThreadLocalRandom.current().nextBoolean() ? Employee.Gender.M : Employee.Gender.F
+                                                                    ThreadLocalRandom.current()
+                                                                                     .nextBoolean() ? Employee.Gender.M : Employee.Gender.F
             );
             instance.setHireDate(LocalDate.now());
             // ------------------------------------------------------------------------------------------------- persist

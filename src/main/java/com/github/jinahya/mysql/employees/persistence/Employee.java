@@ -1,39 +1,13 @@
 package com.github.jinahya.mysql.employees.persistence;
 
 import jakarta.annotation.Nullable;
-import jakarta.persistence.AttributeConverter;
-import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
-import jakarta.persistence.Converter;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OrderBy;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serial;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.MonthDay;
-import java.time.Year;
-import java.time.YearMonth;
+import java.time.*;
 import java.time.temporal.TemporalAccessor;
 import java.util.List;
 import java.util.Objects;
@@ -103,7 +77,8 @@ import java.util.function.Function;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor
-public class Employee extends _BaseEntity<Integer> {
+public class Employee
+        extends _BaseEntity<Integer> {
 
     @Serial
     private static final long serialVersionUID = -6603383818841085999L;
@@ -200,7 +175,8 @@ public class Employee extends _BaseEntity<Integer> {
      * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
      */
     @Converter(autoApply = false)
-    public static class GenderConverter implements AttributeConverter<Gender, String> {
+    public static class GenderConverter
+            implements AttributeConverter<Gender, String> {
 
         @Override
         public String convertToDatabaseColumn(final Gender attribute) {
@@ -270,8 +246,8 @@ public class Employee extends _BaseEntity<Integer> {
     public <R> @Nullable R applyBirthDate(final @NonNull Function<? super LocalDate, ? extends R> function) {
         Objects.requireNonNull(function, "function is null");
         return Optional.ofNullable(getBirthDate())
-                .map(function)
-                .orElse(null);
+                       .map(function)
+                       .orElse(null);
     }
 
     /**
@@ -311,8 +287,8 @@ public class Employee extends _BaseEntity<Integer> {
     public <R> R applyHireDate(final @NonNull Function<? super LocalDate, ? extends R> function) {
         Objects.requireNonNull(function, "function is null");
         return Optional.ofNullable(getHireDate())
-                .map(function)
-                .orElse(null);
+                       .map(function)
+                       .orElse(null);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

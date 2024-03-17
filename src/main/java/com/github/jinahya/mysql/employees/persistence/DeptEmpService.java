@@ -1,17 +1,26 @@
 package com.github.jinahya.mysql.employees.persistence;
 
-public interface DeptEmpService extends _BaseEntityService<DeptEmp> {
+import jakarta.annotation.Nonnull;
 
-    boolean deploy(Employee employee, Department department);
+import java.time.LocalDate;
+import java.util.Optional;
+
+public interface DeptEmpService
+        extends _BaseEntityService<DeptEmp> {
 
     /**
-     * Un-deploys specified employee from specified department.
+     * Returns current assignment of specified employee.
      *
-     * @param employee   the employ to be un-deployed from the {@code department}.
-     * @param department the department from which the {@code employee} is un-deployed.
-     * @return {@code true} if the {@code employee} has been deployed to the {@code department} (and un-deployed);
-     * {@code false} when the {@code employee} has never been deployed to the {@code department} or already
-     * un-deployed.
+     * @param employee the employee whose current assignment is found.
+     * @return an optional of current assignement.
      */
-    boolean undeploy(Employee employee, Department department);
+    Optional<DeptEmp> current(@Nonnull Employee employee);
+
+    /**
+     * Assigns specified employee to specified department.
+     *
+     * @param employee   the employ to be assigned to the {@code department}.
+     * @param department the department to which the {@code employee} is assigned.
+     */
+    void assign(@Nonnull Employee employee, @Nonnull Department department, @Nonnull LocalDate fromDate);
 }

@@ -15,7 +15,8 @@ import static com.github.jinahya.mysql.employees.persistence._BaseEntityAssertio
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class DepartmentRepository_FindById_IT extends DepartmentRepository__IT {
+class DepartmentRepository_FindById_IT
+        extends DepartmentRepository__IT {
 
     static List<String> selectDeptNoList(final EntityManager entityManager, final @Nullable Integer maxResults) {
         return entityManager

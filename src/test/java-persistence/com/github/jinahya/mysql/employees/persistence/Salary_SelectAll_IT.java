@@ -15,7 +15,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
-class Salary_SelectAll_IT extends Salary__IT {
+class Salary_SelectAll_IT
+        extends Salary__IT {
 
     private static List<Salary> selectAll1(final @Nonnull EntityManager entityManager,
                                            final @Nullable Integer maxResults) {
@@ -31,10 +32,10 @@ class Salary_SelectAll_IT extends Salary__IT {
         Objects.requireNonNull(entityManager, "entityManager is null");
         return entityManager
                 .createQuery("""
-                                SELECT e
-                                FROM Salary AS e
-                                ORDER BY e.empNo, e.fromDate""",
-                        Salary.class)
+                                     SELECT e
+                                     FROM Salary AS e
+                                     ORDER BY e.empNo, e.fromDate""",
+                             Salary.class)
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
                 .getResultList();
     }
@@ -47,8 +48,14 @@ class Salary_SelectAll_IT extends Salary__IT {
         final var root = query.from(Salary.class);                                                   // FROM Salary AS e
         query.select(root);                                                                          // SELECT e
         query.orderBy(                                                                               // ORDER BY
-                builder.asc(root.get(Salary_.empNo)),                                                //   e.empNo
-                builder.asc(root.get(Salary_.fromDate))                                              //   e.fromDate
+                                                                                                     builder.asc(
+                                                                                                             root.get(
+                                                                                                                     Salary_.empNo)),
+                                                                                                     //   e.empNo
+                                                                                                     builder.asc(
+                                                                                                             root.get(
+                                                                                                                     Salary_.fromDate))
+                                                                                                     //   e.fromDate
         );
         return entityManager
                 .createQuery(query)
@@ -77,7 +84,7 @@ class Salary_SelectAll_IT extends Salary__IT {
         // -------------------------------------------------------------------------------------------------------- then
         assertThat(all).isSortedAccordingTo(
                 Comparator.comparing(Salary::getEmpNo)
-                        .thenComparing(Salary::getFromDate)
+                          .thenComparing(Salary::getFromDate)
         );
     }
 
@@ -93,7 +100,7 @@ class Salary_SelectAll_IT extends Salary__IT {
         // -------------------------------------------------------------------------------------------------------- then
         assertThat(all).isSortedAccordingTo(
                 Comparator.comparing(Salary::getEmpNo)
-                        .thenComparing(Salary::getFromDate)
+                          .thenComparing(Salary::getFromDate)
         );
     }
 
@@ -117,7 +124,7 @@ class Salary_SelectAll_IT extends Salary__IT {
         // -------------------------------------------------------------------------------------------------------- then
         assertThat(all).isSortedAccordingTo(
                 Comparator.comparing(Salary::getEmpNo)
-                        .thenComparing(Salary::getFromDate)
+                          .thenComparing(Salary::getFromDate)
         );
         if (!access) {
             for (var salary : all) {

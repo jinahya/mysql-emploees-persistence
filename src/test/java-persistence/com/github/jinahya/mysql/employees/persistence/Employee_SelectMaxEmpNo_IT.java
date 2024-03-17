@@ -12,7 +12,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
-class Employee_SelectMaxEmpNo_IT extends _BaseEntityIT<Employee, Integer> {
+class Employee_SelectMaxEmpNo_IT
+        extends _BaseEntityIT<Employee, Integer> {
 
     private static Optional<Integer> selectMaxEmpNo1(final EntityManager entityManager) {
         try {

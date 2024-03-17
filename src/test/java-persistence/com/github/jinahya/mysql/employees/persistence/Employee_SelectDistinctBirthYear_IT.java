@@ -9,7 +9,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
-class Employee_SelectDistinctBirthYear_IT extends _BaseEntityIT<Employee, Integer> {
+class Employee_SelectDistinctBirthYear_IT
+        extends _BaseEntityIT<Employee, Integer> {
 
     private static List<Integer> selectDistinctBirthYear1(final EntityManager entityManager) {
         return entityManager
@@ -20,9 +21,9 @@ class Employee_SelectDistinctBirthYear_IT extends _BaseEntityIT<Employee, Intege
     private static List<Integer> selectDistinctBirthYear2(final EntityManager entityManager) {
         return entityManager
                 .createQuery("""
-                                SELECT DISTINCT EXTRACT(YEAR FROM e.birthDate) AS birthYear
-                                FROM Employee AS e
-                                ORDER BY birthYear"""
+                                     SELECT DISTINCT EXTRACT(YEAR FROM e.birthDate) AS birthYear
+                                     FROM Employee AS e
+                                     ORDER BY birthYear"""
                         , Integer.class)
                 .getResultList();
     }

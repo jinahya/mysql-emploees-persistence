@@ -8,7 +8,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DeptManager_SelectAll_IT extends _BaseEntityIT<DeptManager, DeptManagerId> {
+class DeptManager_SelectAll_IT
+        extends _BaseEntityIT<DeptManager, DeptManagerId> {
 
     private static List<DeptManager> selectAll1(final EntityManager entityManager, final Integer maxResults) {
         return entityManager
@@ -38,12 +39,16 @@ class DeptManager_SelectAll_IT extends _BaseEntityIT<DeptManager, DeptManagerId>
         final var id = root.get(DeptManager_.id);                                               // FROM DeptManager AS e
         query.select(root);
         query.orderBy(                                                                          // ORDER BY
-                builder.asc(id.get(DeptManagerId_.empNo)),                                      //   e.id.empNo ASC
-                builder.asc(id.get(DeptManagerId_.deptNo))                                      //   e.id.deptNo ASC
+                                                                                                builder.asc(
+                                                                                                        id.get(DeptManagerId_.empNo)),
+                                                                                                //   e.id.empNo ASC
+                                                                                                builder.asc(
+                                                                                                        id.get(DeptManagerId_.deptNo))
+                                                                                                //   e.id.deptNo ASC
         );
         return entityManager.createQuery(query)
-                .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
-                .getResultList();
+                            .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
+                            .getResultList();
     }
 
     // -----------------------------------------------------------------------------------------------------------------

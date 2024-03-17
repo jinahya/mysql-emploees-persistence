@@ -1,14 +1,6 @@
 package com.github.jinahya.mysql.employees.persistence;
 
-import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
@@ -40,7 +32,8 @@ import java.util.Objects;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor
-public class DeptEmpLatestDate extends _BaseEntity<Integer> {
+public class DeptEmpLatestDate
+        extends _BaseEntity<Integer> {
 
     @Serial
     private static final long serialVersionUID = 4331323808137781879L;

@@ -10,7 +10,7 @@ public final class _DomainConstants {
     // --------------------------------------------------------------------------------------------------------- to_date
     public static final String COLUMN_NAME_TO_DATE = "to_date";
 
-    public static final LocalDate COLUMN_VALUE_TO_DATE_UNSPECIFIED = LocalDate.parse("9999-01-01");
+    public static final LocalDate ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED = LocalDate.parse("9999-01-01");
 
     // -----------------------------------------------------------------------------------------------------------------
     private _DomainConstants() {

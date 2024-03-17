@@ -14,7 +14,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class DepartmentRepository_FindByDeptName_IT extends DepartmentRepository__IT {
+class DepartmentRepository_FindByDeptName_IT
+        extends DepartmentRepository__IT {
 
     private static List<String> selectDeptNameList(final EntityManager entityManager,
                                                    final @Nullable Integer maxResults) {

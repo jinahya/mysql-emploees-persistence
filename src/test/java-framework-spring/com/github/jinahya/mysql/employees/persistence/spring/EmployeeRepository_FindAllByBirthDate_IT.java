@@ -22,7 +22,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Slf4j
-class EmployeeRepository_FindAllByBirthDate_IT extends EmployeeRepository__IT {
+class EmployeeRepository_FindAllByBirthDate_IT
+        extends EmployeeRepository__IT {
 
     static List<LocalDate> selectDistinctBirthDateList(final EntityManager entityManager,
                                                        final @Nullable Integer maxResults) {

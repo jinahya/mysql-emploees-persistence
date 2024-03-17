@@ -1,23 +1,10 @@
 package com.github.jinahya.mysql.employees.persistence;
 
-import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serial;
 import java.time.LocalDate;
@@ -71,7 +58,8 @@ import java.util.Optional;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor
-public class DeptEmp extends _BaseEntity<DeptEmpId> {
+public class DeptEmp
+        extends _BaseEntity<DeptEmpId> {
 
     @Serial
     private static final long serialVersionUID = -6772594303267134517L;
@@ -99,7 +87,8 @@ public class DeptEmp extends _BaseEntity<DeptEmpId> {
     // --------------------------------------------------------------------------------------------------------- to_date
     public static final String COLUMN_NAME_TO_DATE = "to_date";
 
-    public static final LocalDate COLUMN_VALUE_TO_DATE_UNSPECIFIED = LocalDate.of(9999, 1, 1);
+    public static final LocalDate ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED =
+            _DomainConstants.ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED;
 
     // ------------------------------------------------------------------------------------------ STATIC FACTORY METHODS
     static DeptEmp of(final Integer empNo, final String deptNo) {
@@ -134,7 +123,7 @@ public class DeptEmp extends _BaseEntity<DeptEmpId> {
     @jakarta.persistence.PrePersist
     private void onPrePersist() {
         if (toDate == null) {
-            toDate = COLUMN_VALUE_TO_DATE_UNSPECIFIED;
+            toDate = ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED;
         }
     }
 
@@ -157,17 +146,17 @@ public class DeptEmp extends _BaseEntity<DeptEmpId> {
 
     /**
      * Asserts current value of {@link DeptEmp_#toDate toDate} attribute <em>is not after</em>
-     * {@link #COLUMN_VALUE_TO_DATE_UNSPECIFIED}.
+     * {@link #ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED}.
      *
      * @return {@code true} if current value of the {@link DeptEmp_#toDate toDate} attribute <em>is after</em> the
-     * {@link #COLUMN_VALUE_TO_DATE_UNSPECIFIED}; {@code false} otherwise.
+     * {@link #ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED}; {@code false} otherwise.
      */
     //    @jakarta.validation.constraints.AssertFalse
     private boolean isToDateAfterTheUnspecified() {
         if (toDate == null) {
             return false;
         }
-        return toDate.isAfter(COLUMN_VALUE_TO_DATE_UNSPECIFIED);
+        return toDate.isAfter(ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED);
     }
 
     // ------------------------------------------------------------------------------------------------- emp_no/employee
