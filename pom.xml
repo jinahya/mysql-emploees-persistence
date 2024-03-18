@@ -90,7 +90,7 @@
         <!-- https://docs.spring.io/spring-boot/docs/current/reference/html/dependency-versions.html -->
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-bom</artifactId>
-<!--        <version>2.1.0-alpha1</version>-->
+        <!--        <version>2.1.0-alpha1</version>-->
         <version>2.0.12</version>
         <type>pom</type>
         <scope>import</scope>
@@ -801,7 +801,7 @@
       </build>
     </profile>
     <profile>
-      <id>framework</id>
+      <id>application</id>
       <build>
         <plugins>
           <plugin>
@@ -866,7 +866,7 @@
       </build>
     </profile>
     <profile>
-      <id>framework-spring</id>
+      <id>application-spring-boot</id>
       <properties>
         <failsafe.includes>**/spring/*IT.java</failsafe.includes>
         <surefire.includes>**/spring/*Test.java</surefire.includes>
@@ -963,6 +963,81 @@
                   <resources>
                     <resource>
                       <directory>${project.basedir}/src/test/resources-framework-spring</directory>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>application-glassfish</id>
+      <build>
+        <testResources>
+          <testResource>
+            <directory>src/test/resources</directory>
+            <filtering>false</filtering>
+          </testResource>
+          <testResource>
+            <directory>src/test/resources-framework-quarkus</directory>
+            <filtering>true</filtering>
+          </testResource>
+        </testResources>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>add-source-framework-quarkus</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>add-source</goal>
+                </goals>
+                <configuration>
+                  <sources>
+                    <source>${project.basedir}/src/main/java-framework-quarkus</source>
+                  </sources>
+                </configuration>
+              </execution>
+              <execution>
+                <id>add-resource-framework-quarkus</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>add-resource</goal>
+                </goals>
+                <configuration>
+                  <resources>
+                    <resource>
+                      <directory>${project.basedir}/src/main/resources-framework-quarkus</directory>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+              <execution>
+                <id>add-test-source-framework-quarkus</id>
+                <phase>generate-test-sources</phase>
+                <goals>
+                  <goal>add-test-source</goal>
+                </goals>
+                <configuration>
+                  <sources>
+                    <source>${project.basedir}/src/test/java-framework-quarkus</source>
+                  </sources>
+                </configuration>
+              </execution>
+              <execution>
+                <id>add-test-resource-framework-quarkus</id>
+                <phase>generate-test-resources</phase>
+                <goals>
+                  <goal>add-test-resource</goal>
+                </goals>
+                <configuration>
+                  <resources>
+                    <resource>
+                      <directory>${project.basedir}/src/test/resources-framework-quarkus</directory>
                     </resource>
                   </resources>
                 </configuration>

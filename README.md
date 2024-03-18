@@ -168,6 +168,7 @@ $ mvn -Pfailsafe,framework,framework-spring clean verify
 
 * [Jakarta Web Profile 10 Specification Document](https://jakarta.ee/specifications/webprofile/10/jakarta-webprofile-spec-10.0)
 * [Jakarta Web Profile 10 Javadoc](Jakarta Web Profile 10 Specification Document)
+* [Jakarta EE 10 Compatible Implementations](https://jakarta.ee/compatibility/certification/10/)
 
 #### [Jakarta EE Core Profile](https://jakarta.ee/specifications/coreprofile/)
 
