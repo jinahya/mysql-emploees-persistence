@@ -10,7 +10,7 @@ import java.util.Objects;
  * @param <ID>     the type of the {@code ID} of {@link ENTITY}.
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
  */
-abstract class __BaseEntityTest<ENTITY extends _BaseEntity<ID>, ID extends Serializable> {
+abstract class __BaseEntity__Test<ENTITY extends _BaseEntity<ID>, ID extends Serializable> {
 
     /**
      * Creates a new instance for testing specified entity instance.
@@ -18,7 +18,7 @@ abstract class __BaseEntityTest<ENTITY extends _BaseEntity<ID>, ID extends Seria
      * @param entityClass the entity instance to test.
      * @see #entityClass
      */
-    __BaseEntityTest(final Class<ENTITY> entityClass) {
+    __BaseEntity__Test(final Class<ENTITY> entityClass) {
         super();
         this.entityClass = Objects.requireNonNull(entityClass, "entityClass is null");
     }
@@ -50,7 +50,6 @@ abstract class __BaseEntityTest<ENTITY extends _BaseEntity<ID>, ID extends Seria
      * @return the class of {@link ID}.
      */
     // https://stackoverflow.com/a/28209213/330457
-    @SuppressWarnings({"unchecked"})
     final Class<ID> idClass() {
         return _BaseEntityTestUtils.idClass(entityClass);
     }

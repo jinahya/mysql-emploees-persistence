@@ -3,10 +3,10 @@ package com.github.jinahya.mysql.employees.persistence;
 import nl.jqno.equalsverifier.Warning;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 
-class SalaryIdTest
-        extends _BaseIdTest<SalaryId> {
+class SalaryId_Test
+        extends _BaseId_Test<SalaryId> {
 
-    SalaryIdTest() {
+    SalaryId_Test() {
         super(SalaryId.class);
     }
 

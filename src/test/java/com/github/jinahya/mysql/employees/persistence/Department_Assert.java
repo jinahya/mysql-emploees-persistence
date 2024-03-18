@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Department_Assert
-        extends _BaseEntityAssert<Department_Assert, Department, String> {
+        extends _BaseEntity_Assert<Department_Assert, Department, String> {
 
     Department_Assert(final Department actual) {
         super(actual, Department_Assert.class);

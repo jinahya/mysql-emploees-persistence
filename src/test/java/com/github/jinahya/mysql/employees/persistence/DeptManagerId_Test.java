@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 class DeptManagerId_Test
-        extends _BaseIdTest<DeptManagerId> {
+        extends _BaseId_Test<DeptManagerId> {
 
     DeptManagerId_Test() {
         super(DeptManagerId.class);

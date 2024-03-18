@@ -1,9 +1,9 @@
 package com.github.jinahya.mysql.employees.persistence;
 
-class TitleIdTest
-        extends _BaseIdTest<TitleId> {
+class TitleId_Test
+        extends _BaseId_Test<TitleId> {
 
-    TitleIdTest() {
+    TitleId_Test() {
         super(TitleId.class);
     }
 }

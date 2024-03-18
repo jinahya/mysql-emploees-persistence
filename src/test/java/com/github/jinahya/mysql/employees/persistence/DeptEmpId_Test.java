@@ -4,7 +4,7 @@ import nl.jqno.equalsverifier.Warning;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 
 class DeptEmpId_Test
-        extends _BaseIdTest<DeptEmpId> {
+        extends _BaseId_Test<DeptEmpId> {
 
     DeptEmpId_Test() {
         super(DeptEmpId.class);

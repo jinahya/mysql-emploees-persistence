@@ -21,7 +21,8 @@ import java.util.Objects;
 @ToString(callSuper = true)
 @NoArgsConstructor//(access = AccessLevel.PROTECTED)
 public class SalaryId
-        implements _BaseId, Comparable<SalaryId> {
+        implements _BaseId,
+                   Comparable<SalaryId> {
 
     @Serial
     private static final long serialVersionUID = -378954798191441067L;

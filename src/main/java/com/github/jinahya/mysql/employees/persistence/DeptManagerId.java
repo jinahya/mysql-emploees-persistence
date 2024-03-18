@@ -22,7 +22,8 @@ import java.util.Optional;
 @ToString(callSuper = true)
 @NoArgsConstructor//(access = AccessLevel.PROTECTED)
 public class DeptManagerId
-        implements _BaseId, Comparable<DeptManagerId> {
+        implements _BaseId,
+                   Comparable<DeptManagerId> {
 
     @Serial
     private static final long serialVersionUID = 3570976925092865329L;
@@ -62,10 +63,10 @@ public class DeptManagerId
 
     /**
      * Replaces current value of {@link DeptManagerId_#empNo empNo} attribute with specified employee's
-     * {@link Employee_#empNo empno} attribute, and returns this object.
+     * {@link Employee_#empNo empNo} attribute, and returns this object.
      *
      * @param employee the employee whose {@link Employee_#empNo empNo} is set to {@link DeptManagerId_#empNo}
-     *                 attribute.
+     *                 attribute; may be {@code null}.
      * @return this object.
      */
     public @Nonnull DeptManagerId employee(final @Nullable Employee employee) {
@@ -84,7 +85,7 @@ public class DeptManagerId
      * {@link Department_#deptNo deptNo} attribute, and returns this object.
      *
      * @param department the department whose {@link Department_#deptNo deptNo} is set to {@link DeptManagerId_#deptNo}
-     *                   attribute.
+     *                   attribute; may be {@code null}.
      * @return this object.
      */
     public DeptManagerId department(final Department department) {

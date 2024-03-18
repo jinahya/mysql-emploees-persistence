@@ -4,13 +4,13 @@ import org.assertj.core.api.AbstractAssert;
 
 import java.io.Serializable;
 
-public abstract class _BaseEntityAssert<
-        SELF extends _BaseEntityAssert<SELF, ENTITY, ID>,
+public abstract class _BaseEntity_Assert<
+        SELF extends _BaseEntity_Assert<SELF, ENTITY, ID>,
         ENTITY extends _BaseEntity<ID>,
         ID extends Serializable>
         extends AbstractAssert<SELF, ENTITY> {
 
-    protected _BaseEntityAssert(final ENTITY actual, final Class<?> selfType) {
+    protected _BaseEntity_Assert(final ENTITY actual, final Class<?> selfType) {
         super(actual, selfType);
     }
 
