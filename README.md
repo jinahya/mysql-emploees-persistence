@@ -7,6 +7,19 @@ Jakarta Persistence for the [Employees Sample Database](https://dev.mysql.com/do
 
 ---
 
+
+## JDK
+
+```text
+$ grep \<maven\\.compiler\\. pom.xml
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
+    <maven.compiler.release>${maven.compiler.target}</maven.compiler.release>
+    <maven.compiler.testSource>${maven.compiler.source}</maven.compiler.testSource>
+    <maven.compiler.testTarget>${maven.compiler.testSource}</maven.compiler.testTarget>
+    <maven.compiler.testRelease>${maven.compiler.testTarget}</maven.compiler.testRelease>
+```
+
 ## Apache Maven
 
 * [Introduction to the Standard Directory Layout](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html)
