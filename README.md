@@ -48,7 +48,7 @@ src
 
 | profiles                | Java | Jakarta Persistence | Querydsl | Spring Boot | Quarkus | notes |
 |-------------------------|------|---------------------|----------|-------------|---------|-------|
-| failsafe                | [ ]  | [x]                 | [x]      | [x]         | [x]     |       |
+| failsafe                | [ ]  | - [x]               | [x]      | [x]         | [x]     |       |
 | framework               | [ ]  | [ ]                 | [ ]      | [x]         | [x]     |       |
 | framework-quarkus       | [ ]  | [ ]                 | [ ]      | [ ]         | [x]     |       |
 | framework-spring        | [ ]  | [ ]                 | [ ]      | [x]         | [ ]     |       |
