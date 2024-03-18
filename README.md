@@ -48,15 +48,15 @@ src
 
 | profiles                | Java | Jakarta Persistence | Querydsl | Spring Boot | Quarkus  | notes |
 |-------------------------|------|---------------------|----------|-------------|----------|-------|
-| failsafe                |      | &#x2611;            | &#x2611; | &#x2611;    | &#x2611; |       |
-| framework               |      |                     |          | &#x2611;    | &#x2611; |       |
-| framework-quarkus       |      |                     |          |             | &#x2611; |       |
-| framework-spring        |      |                     |          | &#x2611;    |          |       |
-| persistence             |      | &#x2611;            | &#x2611; |             |          |       |
-| persistence-eclipselink |      | &#x2611;            | &#x2611; |             |          |       |
+| failsafe                |      | &#x2705;            | &#x2705; | &#x2705;    | &#x2705; |       |
+| framework               |      |                     |          | &#x2705;    | &#x2705; |       |
+| framework-quarkus       |      |                     |          |             | &#x2705; |       |
+| framework-spring        |      |                     |          | &#x2705;    |          |       |
+| persistence             |      | &#x2705;            | &#x2705; |             |          |       |
+| persistence-eclipselink |      | &#x2705;            | &#x2705; |             |          |       |
 | persistence-hibernate   |      |                     |          |             |          |       |
-| querydsl                |      |                     | &#x2611; |             |          |       |
-| querydsl-5              |      |                     | &#x2611; |             |          |       |
+| querydsl                |      |                     | &#x2705; |             |          |       |
+| querydsl-5              |      |                     | &#x2705; |             |          |       |
 | querydsl-6              |      |                     |          |             |          |       |
 
 ---
