@@ -46,18 +46,18 @@ src
 
 ### Profiles
 
-| profiles                | Java | Jakarta Persistence | Querydsl | Spring Boot | Quarkus | notes |
-|-------------------------|------|---------------------|----------|-------------|---------|-------|
-| failsafe                | [ ]  | &#x2611;            | [x]      | [x]         | [x]     |       |
-| framework               | [ ]  | [ ]                 | [ ]      | [x]         | [x]     |       |
-| framework-quarkus       | [ ]  | [ ]                 | [ ]      | [ ]         | [x]     |       |
-| framework-spring        | [ ]  | [ ]                 | [ ]      | [x]         | [ ]     |       |
-| persistence             | [ ]  | [x]                 | [x]      |             |         |       |
-| persistence-eclipselink | [ ]  | [x]                 | [x]      |             |         |       |
-| persistence-hibernate   | [ ]  | [ ]                 | [ ]      |             |         |       |
-| querydsl                | [ ]  | [ ]                 | [x]      |             |         |       |
-| querydsl-5              | [ ]  | [ ]                 | [x]      |             |         |       |
-| querydsl-6              | [ ]  | [ ]                 | [ ]      |             |         |       |
+| profiles                | Java | Jakarta Persistence | Querydsl | Spring Boot | Quarkus  | notes |
+|-------------------------|------|---------------------|----------|-------------|----------|-------|
+| failsafe                | [ ]  | &#x2611;            | &#x2611; | &#x2611;    | &#x2611; |       |
+| framework               | [ ]  | [ ]                 | [ ]      | &#x2611;    | &#x2611; |       |
+| framework-quarkus       | [ ]  | [ ]                 | [ ]      | [ ]         | &#x2611; |       |
+| framework-spring        | [ ]  | [ ]                 | [ ]      | &#x2611;    | [ ]      |       |
+| persistence             | [ ]  | &#x2611;            | &#x2611; |             |          |       |
+| persistence-eclipselink | [ ]  | &#x2611;            | &#x2611; |             |          |       |
+| persistence-hibernate   | [ ]  | [ ]                 | [ ]      |             |          |       |
+| querydsl                | [ ]  | [ ]                 | &#x2611; |             |          |       |
+| querydsl-5              | [ ]  | [ ]                 | &#x2611; |             |          |       |
+| querydsl-6              | [ ]  | [ ]                 | [ ]      |             |          |       |
 
 ---
 
