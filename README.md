@@ -7,14 +7,20 @@ Persistence unit for the [Employees Sample Database](https://dev.mysql.com/doc/e
 
 ## Links
 
-### Jakarta Persistence
+### [Employees Sample Database](https://dev.mysql.com/doc/employee/en/)
 
-#### Jakarta Persistence 3.2
+* [3 Installation](https://dev.mysql.com/doc/employee/en/employees-installation.html)
+  * [Employees DB on GitHub](https://github.com/datacharmer/test_db) 
+* [5 Employees Structure](https://dev.mysql.com/doc/employee/en/sakila-structure.html)
+
+### [Jakarta Persistence](https://jakarta.ee/specifications/persistence/)
+
+#### [Jakarta Persistence 3.2](https://jakarta.ee/specifications/persistence/3.2/)
 
 * [Jakarta Persistence 3.2 Specification Document](https://jakarta.ee/specifications/persistence/3.2/jakarta-persistence-spec-3.2-m2)
 * [Jakarta Persistence 3.2 Javadoc](https://jakarta.ee/specifications/persistence/3.2/apidocs/jakarta.persistence/module-summary.html)
 
-#### Jakarta Persistence 3.1
+#### [Jakarta Persistence 3.1](https://jakarta.ee/specifications/persistence/3.1/)
 
 * [Jakarta Persistence 3.1 Specification Document](https://jakarta.ee/specifications/persistence/3.1/jakarta-persistence-spec-3.1)
 * [Jakarta Persistence 3.1 Javadoc](https://jakarta.ee/specifications/persistence/3.1/apidocs)
@@ -46,5 +52,6 @@ Persistence unit for the [Employees Sample Database](https://dev.mysql.com/doc/e
 * [Why forking?](https://github.com/OpenFeign/querydsl#why-forking)
 * [\[#274\] About this fork!](https://github.com/OpenFeign/querydsl/issues/274)
 
-### Spring Data JPA
+### [Spring Data JPA](https://spring.io/projects/spring-data-jpa)
+
 * [Slice leads to an invalid parameter binding value for maxResults](https://github.com/spring-projects/spring-data-jpa/issues/3392)
