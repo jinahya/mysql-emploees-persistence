@@ -46,7 +46,7 @@ src
 
 ### Profiles
 
-| profiles                | Java | Jakarta Persistence | Querydsl | Spring Boot | Quarkus  | notes |
+| Profiles                | Java | Jakarta Persistence | Querydsl | Spring Boot | Quarkus  | Notes |
 |-------------------------|------|---------------------|----------|-------------|----------|-------|
 | failsafe                |      | &#x2705;            | &#x2705; | &#x2705;    | &#x2705; |       |
 | framework               |      |                     |          | &#x2705;    | &#x2705; |       |
