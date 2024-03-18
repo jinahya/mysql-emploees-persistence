@@ -816,7 +816,7 @@
                 </goals>
                 <configuration>
                   <sources>
-                    <source>${project.basedir}/src/main/java-framework</source>
+                    <source>${project.basedir}/src/main/java-application</source>
                   </sources>
                 </configuration>
               </execution>
@@ -829,7 +829,7 @@
                 <configuration>
                   <resources>
                     <resource>
-                      <directory>${project.basedir}/src/main/resources-framework</directory>
+                      <directory>${project.basedir}/src/main/resources-application</directory>
                     </resource>
                   </resources>
                 </configuration>
@@ -842,7 +842,7 @@
                 </goals>
                 <configuration>
                   <sources>
-                    <source>${project.basedir}/src/test/java-framework</source>
+                    <source>${project.basedir}/src/test/java-application</source>
                   </sources>
                 </configuration>
               </execution>
@@ -855,7 +855,7 @@
                 <configuration>
                   <resources>
                     <resource>
-                      <directory>${project.basedir}/src/test/resources-framework</directory>
+                      <directory>${project.basedir}/src/test/resources-application</directory>
                     </resource>
                   </resources>
                 </configuration>
@@ -906,7 +906,7 @@
             <filtering>false</filtering>
           </testResource>
           <testResource>
-            <directory>src/test/resources-framework-spring</directory>
+            <directory>src/test/resources-application-spring-boot</directory>
             <filtering>true</filtering>
           </testResource>
         </testResources>
@@ -923,7 +923,7 @@
                 </goals>
                 <configuration>
                   <sources>
-                    <source>${project.basedir}/src/main/java-framework-spring</source>
+                    <source>${project.basedir}/src/main/java-application-spring-boot</source>
                   </sources>
                 </configuration>
               </execution>
@@ -936,7 +936,7 @@
                 <configuration>
                   <resources>
                     <resource>
-                      <directory>${project.basedir}/src/main/resources-framework-spring</directory>
+                      <directory>${project.basedir}/src/main/resources-application-spring-boot</directory>
                     </resource>
                   </resources>
                 </configuration>
@@ -949,7 +949,7 @@
                 </goals>
                 <configuration>
                   <sources>
-                    <source>${project.basedir}/src/test/java-framework-spring</source>
+                    <source>${project.basedir}/src/test/java-application-spring-boot</source>
                   </sources>
                 </configuration>
               </execution>
@@ -962,7 +962,7 @@
                 <configuration>
                   <resources>
                     <resource>
-                      <directory>${project.basedir}/src/test/resources-framework-spring</directory>
+                      <directory>${project.basedir}/src/test/resources-application-spring-boot</directory>
                     </resource>
                   </resources>
                 </configuration>
@@ -973,7 +973,7 @@
       </build>
     </profile>
     <profile>
-      <id>application-glassfish</id>
+      <id>application-jakarta-ee</id>
       <build>
         <testResources>
           <testResource>
@@ -981,7 +981,7 @@
             <filtering>false</filtering>
           </testResource>
           <testResource>
-            <directory>src/test/resources-framework-quarkus</directory>
+            <directory>src/test/resources-application-jakarta-ee</directory>
             <filtering>true</filtering>
           </testResource>
         </testResources>
@@ -998,7 +998,7 @@
                 </goals>
                 <configuration>
                   <sources>
-                    <source>${project.basedir}/src/main/java-framework-quarkus</source>
+                    <source>${project.basedir}/src/main/java-application-jakarta-ee</source>
                   </sources>
                 </configuration>
               </execution>
@@ -1011,7 +1011,7 @@
                 <configuration>
                   <resources>
                     <resource>
-                      <directory>${project.basedir}/src/main/resources-framework-quarkus</directory>
+                      <directory>${project.basedir}/src/main/resources-application-jakarta-ee</directory>
                     </resource>
                   </resources>
                 </configuration>
@@ -1024,82 +1024,7 @@
                 </goals>
                 <configuration>
                   <sources>
-                    <source>${project.basedir}/src/test/java-framework-quarkus</source>
-                  </sources>
-                </configuration>
-              </execution>
-              <execution>
-                <id>add-test-resource-framework-quarkus</id>
-                <phase>generate-test-resources</phase>
-                <goals>
-                  <goal>add-test-resource</goal>
-                </goals>
-                <configuration>
-                  <resources>
-                    <resource>
-                      <directory>${project.basedir}/src/test/resources-framework-quarkus</directory>
-                    </resource>
-                  </resources>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>framework-quarkus</id>
-      <build>
-        <testResources>
-          <testResource>
-            <directory>src/test/resources</directory>
-            <filtering>false</filtering>
-          </testResource>
-          <testResource>
-            <directory>src/test/resources-framework-quarkus</directory>
-            <filtering>true</filtering>
-          </testResource>
-        </testResources>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>build-helper-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>add-source-framework-quarkus</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>add-source</goal>
-                </goals>
-                <configuration>
-                  <sources>
-                    <source>${project.basedir}/src/main/java-framework-quarkus</source>
-                  </sources>
-                </configuration>
-              </execution>
-              <execution>
-                <id>add-resource-framework-quarkus</id>
-                <phase>generate-resources</phase>
-                <goals>
-                  <goal>add-resource</goal>
-                </goals>
-                <configuration>
-                  <resources>
-                    <resource>
-                      <directory>${project.basedir}/src/main/resources-framework-quarkus</directory>
-                    </resource>
-                  </resources>
-                </configuration>
-              </execution>
-              <execution>
-                <id>add-test-source-framework-quarkus</id>
-                <phase>generate-test-sources</phase>
-                <goals>
-                  <goal>add-test-source</goal>
-                </goals>
-                <configuration>
-                  <sources>
-                    <source>${project.basedir}/src/test/java-framework-quarkus</source>
+                    <source>${project.basedir}/src/test/java-framework-jakarta-ee</source>
                   </sources>
                 </configuration>
               </execution>
