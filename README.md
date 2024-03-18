@@ -144,6 +144,7 @@ $ mvn -Pfailsafe,framework,framework-spring clean verify
 * [Why forking?](https://github.com/OpenFeign/querydsl#why-forking)
 * [\[#274\] About this fork!](https://github.com/OpenFeign/querydsl/issues/274)
 
+---
 
 ### Spring
 
@@ -159,3 +160,16 @@ $ mvn -Pfailsafe,framework,framework-spring clean verify
 
 * [Using Hibernate ORM and Jakarta Persistence ](https://quarkus.io/guides/hibernate-orm)
 * [Simplified Hibernate ORM with Panache](https://quarkus.io/guides/hibernate-orm-panache)
+
+### [Jakarta EE](https://jakarta.ee/specifications/)
+
+#### [Jakarta EE Platform](https://jakarta.ee/specifications/platform/)
+
+#### [Jakarta EE Web Profile](https://jakarta.ee/specifications/webprofile/)
+
+##### [Jakarta EE Web Profile 10](https://jakarta.ee/specifications/webprofile/10/)
+
+* [Jakarta Web Profile 10 Specification Document](https://jakarta.ee/specifications/webprofile/10/jakarta-webprofile-spec-10.0)
+* [Jakarta Web Profile 10 Javadoc](Jakarta Web Profile 10 Specification Document)
+
+#### [Jakarta EE Core Profile](https://jakarta.ee/specifications/coreprofile/)
