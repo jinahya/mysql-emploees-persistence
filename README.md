@@ -48,15 +48,15 @@ src
 
 | profiles                | Java | Jakarta Persistence | Querydsl | Spring Boot | Quarkus  | notes |
 |-------------------------|------|---------------------|----------|-------------|----------|-------|
-| failsafe                |      | &#x2705;            | &#x2705; | &#x2705;    | &#x2705; |       |
-| framework               |      |                     |          | &#x2705;    | &#x2705; |       |
-| framework-quarkus       |      |                     |          |             | &#x2705; |       |
-| framework-spring        |      |                     |          | &#x2705;    |          |       |
-| persistence             |      | &#x2705;            | &#x2705; |             |          |       |
-| persistence-eclipselink |      | &#x2611;            | &#x2611; |             |          |       |
-| persistence-hibernate   |      | &#x2611;            | &#x2611; |             |          |       |
-| querydsl                |      |                     | &#x2705; |             |          |       |
-| querydsl-5              |      |                     | &#x2705; |             |          |       |
+| failsafe                |      | &#x2714;            | &#x2714; | &#x2714;    | &#x2714; |       |
+| framework               |      |                     |          | &#x2714;    | &#x2714; |       |
+| framework-quarkus       |      |                     |          |             | &#x2714; |       |
+| framework-spring        |      |                     |          | &#x2714;    |          |       |
+| persistence             |      | &#x2714;            | &#x2714; |             |          |       |
+| persistence-eclipselink |      | &#x2713;            | &#x2713; |             |          |       |
+| persistence-hibernate   |      | &#x2713;            | &#x2713; |             |          |       |
+| querydsl                |      |                     | &#x2714; |             |          |       |
+| querydsl-5              |      |                     | &#x2714; |             |          |       |
 | querydsl-6              |      |                     |          |             |          |       |
 
 ---
