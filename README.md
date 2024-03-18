@@ -144,10 +144,18 @@ $ mvn -Pfailsafe,framework,framework-spring clean verify
 * [Why forking?](https://github.com/OpenFeign/querydsl#why-forking)
 * [\[#274\] About this fork!](https://github.com/OpenFeign/querydsl/issues/274)
 
-### [Spring Boot](https://spring.io/projects/spring-boot)
+
+### Spring
+
+#### [Spring Boot](https://spring.io/projects/spring-boot)
 
 * [Spring Boot Reference Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/index.html)
     * [Common Application Properties](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html)
     * [Dependency Versions](https://docs.spring.io/spring-boot/docs/current/reference/html/dependency-versions.html)
 
-### [Spring Data JPA](https://spring.io/projects/spring-data-jpa)
+#### [Spring Data JPA](https://spring.io/projects/spring-data-jpa)
+
+### [Quarkus](https://quarkus.io/)
+
+* [Using Hibernate ORM and Jakarta Persistence ](https://quarkus.io/guides/hibernate-orm)
+* [Simplified Hibernate ORM with Panache](https://quarkus.io/guides/hibernate-orm-panache)
