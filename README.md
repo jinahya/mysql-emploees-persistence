@@ -56,8 +56,8 @@ src
 | persistence-eclipselink |      | &#x2713;            | &#x2713; |             |          |       |
 | persistence-hibernate   |      | &#x2713;            | &#x2713; |             |          |       |
 | querydsl                |      |                     | &#x2705; |             |          |       |
-| querydsl-5              |      |                     | &#x2705; |             |          |       |
-| querydsl-6              |      |                     |          |             |          |       |
+| querydsl-5              |      |                     | &#x2713; |             |          |       |
+| querydsl-6              |      |                     | &#x2713; |             |          |       |
 
 ---
 
