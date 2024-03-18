@@ -46,6 +46,9 @@ src
 
 ### Profiles
 
+* &#x2705;: should be selected
+* &#x2713;: either one should be selected
+
 | Profiles                | Java | Jakarta Persistence | Querydsl | Spring Boot | Quarkus  | Notes |
 |-------------------------|------|---------------------|----------|-------------|----------|-------|
 | failsafe                |      | &#x2705;            | &#x2705; | &#x2705;    | &#x2705; |       |
