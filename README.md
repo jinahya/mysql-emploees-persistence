@@ -53,8 +53,8 @@ src
 | framework-quarkus       |      |                     |          |             | &#x2705; |       |
 | framework-spring        |      |                     |          | &#x2705;    |          |       |
 | persistence             |      | &#x2705;            | &#x2705; |             |          |       |
-| persistence-eclipselink |      | &#x2705;            | &#x2705; |             |          |       |
-| persistence-hibernate   |      |                     |          |             |          |       |
+| persistence-eclipselink |      | &#x2611;            | &#x2611; |             |          |       |
+| persistence-hibernate   |      | &#x2611;            | &#x2611; |             |          |       |
 | querydsl                |      |                     | &#x2705; |             |          |       |
 | querydsl-5              |      |                     | &#x2705; |             |          |       |
 | querydsl-6              |      |                     |          |             |          |       |
