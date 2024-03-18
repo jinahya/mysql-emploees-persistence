@@ -7,8 +7,9 @@ Jakarta Persistence for the [Employees Sample Database](https://dev.mysql.com/do
 
 ---
 
-
 ## JDK
+
+The [latest LTS](https://www.oracle.com/java/technologies/java-se-support-roadmap.html) is required for building/running this module.
 
 ```text
 $ grep \<maven\\.compiler\\. pom.xml
@@ -24,6 +25,8 @@ $ grep \<maven\\.compiler\\. pom.xml
 
 * [Introduction to the Standard Directory Layout](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html)
 * [Introduction to Build Profiles](https://maven.apache.org/guides/introduction/introduction-to-profiles.html)
+
+### Directory Layout
 
 ```text
 $ tree -d -L 2 --charset=ascii src
