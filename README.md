@@ -131,6 +131,8 @@ $ mvn -Pfailsafe,framework,framework-spring clean verify
 
 #### [hibernate/hibernate-orm](https://github.com/hibernate/hibernate-orm)
 
+---
+
 ### [Querydsl](http://querydsl.com/)
 
 * Apidocs
@@ -146,7 +148,7 @@ $ mvn -Pfailsafe,framework,framework-spring clean verify
 
 ---
 
-### Spring
+### [Spring](https://spring.io/)
 
 #### [Spring Boot](https://spring.io/projects/spring-boot)
 
@@ -155,11 +157,6 @@ $ mvn -Pfailsafe,framework,framework-spring clean verify
     * [Dependency Versions](https://docs.spring.io/spring-boot/docs/current/reference/html/dependency-versions.html)
 
 #### [Spring Data JPA](https://spring.io/projects/spring-data-jpa)
-
-### [Quarkus](https://quarkus.io/)
-
-* [Using Hibernate ORM and Jakarta Persistence ](https://quarkus.io/guides/hibernate-orm)
-* [Simplified Hibernate ORM with Panache](https://quarkus.io/guides/hibernate-orm-panache)
 
 ### [Jakarta EE](https://jakarta.ee/specifications/)
 
@@ -173,3 +170,8 @@ $ mvn -Pfailsafe,framework,framework-spring clean verify
 * [Jakarta Web Profile 10 Javadoc](Jakarta Web Profile 10 Specification Document)
 
 #### [Jakarta EE Core Profile](https://jakarta.ee/specifications/coreprofile/)
+
+### [Quarkus](https://quarkus.io/)
+
+* [Using Hibernate ORM and Jakarta Persistence ](https://quarkus.io/guides/hibernate-orm)
+* [Simplified Hibernate ORM with Panache](https://quarkus.io/guides/hibernate-orm-panache)
