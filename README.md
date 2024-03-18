@@ -3,14 +3,70 @@
 [![Java CI with Maven](https://github.com/jinahya/mysql-emploees-persistence/actions/workflows/maven.yml/badge.svg)](https://github.com/jinahya/mysql-emploees-persistence/actions/workflows/maven.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jinahya_mysql-emploees-persistence&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jinahya_mysql-emploees-persistence)
 
-Persistence unit for the [Employees Sample Database](https://dev.mysql.com/doc/employee/en/).
+Jakarta Persistence for the [Employees Sample Database](https://dev.mysql.com/doc/employee/en/).
+
+---
+
+## Apache Maven
+
+* [Introduction to the Standard Directory Layout](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html)
+* [Introduction to Build Profiles](https://maven.apache.org/guides/introduction/introduction-to-profiles.html)
+
+```text
+$ tree -d -L 2 --charset=ascii src
+src
+|-- main
+|   |-- java
+|   |-- java-framework
+|   |-- java-framework-quarkus
+|   |-- java-framework-spring
+|   |-- java-persistence
+|   |-- java-querydsl
+|   |-- resources
+|   |-- resources-framework
+|   |-- resources-framework-quarkus    
+|   |-- resources-framework-spring
+|   |-- resources-persistence
+|   `-- resources-querydsl
+`-- test
+    |-- java
+    |-- java-framework
+    |-- java-framework-quarkus
+    |-- java-framework-spring
+    |-- java-persistence
+    |-- java-querydsl
+    |-- resources
+    |-- resources-framework
+    |-- resources-framework-quarkus
+    |-- resources-framework-spring
+    |-- resources-persistence
+    |-- resources-querydsl
+    `-- sql
+```
+
+### Profiles
+
+| profiles                | Java | Jakarta Persistence | Querydsl | Spring Boot | Quarkus | notes |
+|-------------------------|------|---------------------|----------|-------------|---------|-------|
+| failsafe                | [ ]  | [x]                 | [x]      | [x]         | [x]     |       |
+| framework               | [ ]  | [ ]                 | [ ]      | [x]         | [x]     |       |
+| framework-quarkus       | [ ]  | [ ]                 | [ ]      | [ ]         | [x]     |       |
+| framework-spring        | [ ]  | [ ]                 | [ ]      | [x]         | [ ]     |       |
+| persistence             | [ ]  | [x]                 | [x]      |             |         |       |
+| persistence-eclipselink | [ ]  | [x]                 | [x]      |             |         |       |
+| persistence-hibernate   | [ ]  | [ ]                 | [ ]      |             |         |       |
+| querydsl                | [ ]  | [ ]                 | [x]      |             |         |       |
+| querydsl-5              | [ ]  | [ ]                 | [x]      |             |         |       |
+| querydsl-6              | [ ]  | [ ]                 | [ ]      |             |         |       |
+
+---
 
 ## Links
 
 ### [Employees Sample Database](https://dev.mysql.com/doc/employee/en/)
 
 * [3 Installation](https://dev.mysql.com/doc/employee/en/employees-installation.html)
-  * [Employees DB on GitHub](https://github.com/datacharmer/test_db) 
+    * [Employees DB on GitHub](https://github.com/datacharmer/test_db)
 * [5 Employees Structure](https://dev.mysql.com/doc/employee/en/sakila-structure.html)
 
 ### [Jakarta Persistence](https://jakarta.ee/specifications/persistence/)
@@ -27,7 +83,7 @@ Persistence unit for the [Employees Sample Database](https://dev.mysql.com/doc/e
 
 ### [EclipseLink](https://eclipse.dev/eclipselink/)
 
-#### [EclipseLink JPA](https://eclipse.dev/eclipselink/#jpa) 
+#### [EclipseLink JPA](https://eclipse.dev/eclipselink/#jpa)
 
 * [Bug 328730 - Query.setMaxResults(0) returns unexpected results](https://bugs.eclipse.org/bugs/show_bug.cgi?id=328730)
 
@@ -42,16 +98,20 @@ Persistence unit for the [Employees Sample Database](https://dev.mysql.com/doc/e
 ### [Querydsl](http://querydsl.com/)
 
 * Apidocs
-  * [com.querydsl:querydsl-core](https://javadoc.io/doc/com.querydsl/querydsl-core/latest/index.html) 
-  * [com.querydsl:querydsl-jpa](https://javadoc.io/doc/com.querydsl/querydsl-jpa/latest/index.html)
+    * [com.querydsl:querydsl-core](https://javadoc.io/doc/com.querydsl/querydsl-core/latest/index.html)
+    * [com.querydsl:querydsl-jpa](https://javadoc.io/doc/com.querydsl/querydsl-jpa/latest/index.html)
 * [Querydsl Reference Guide](http://querydsl.com/static/querydsl/latest/reference/html/)
-  * [2.1. Querying JPA](http://querydsl.com/static/querydsl/latest/reference/html/ch02.html#jpa_integration)  
+    * [2.1. Querying JPA](http://querydsl.com/static/querydsl/latest/reference/html/ch02.html#jpa_integration)
 
 #### [OpenFeign/querydsl](https://github.com/OpenFeign/querydsl)
 
 * [Why forking?](https://github.com/OpenFeign/querydsl#why-forking)
 * [\[#274\] About this fork!](https://github.com/OpenFeign/querydsl/issues/274)
 
-### [Spring Data JPA](https://spring.io/projects/spring-data-jpa)
+### [Spring Boot](https://spring.io/projects/spring-boot)
 
-* [Slice leads to an invalid parameter binding value for maxResults](https://github.com/spring-projects/spring-data-jpa/issues/3392)
+* [Spring Boot Reference Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/index.html)
+    * [Common Application Properties](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html)
+    * [Dependency Versions](https://docs.spring.io/spring-boot/docs/current/reference/html/dependency-versions.html)
+
+### [Spring Data JPA](https://spring.io/projects/spring-data-jpa)
