@@ -49,18 +49,35 @@ src
 * &#x2705; - should be selected
 * &#x2713; - either one should be selected
 
-| Profiles                | Java | Jakarta Persistence | Querydsl | Spring Boot | Quarkus  | Notes |
-|-------------------------|------|---------------------|----------|-------------|----------|-------|
-| failsafe                |      | &#x2705;            | &#x2705; | &#x2705;    | &#x2705; |       |
-| framework               |      |                     |          | &#x2705;    | &#x2705; |       |
-| framework-quarkus       |      |                     |          |             | &#x2705; |       |
-| framework-spring        |      |                     |          | &#x2705;    |          |       |
-| persistence             |      | &#x2705;            | &#x2705; |             |          |       |
-| persistence-eclipselink |      | &#x2713;            | &#x2713; |             |          |       |
-| persistence-hibernate   |      | &#x2713;            | &#x2713; |             |          |       |
-| querydsl                |      |                     | &#x2705; |             |          |       |
-| querydsl-5              |      |                     | &#x2713; |             |          |       |
-| querydsl-6              |      |                     | &#x2713; |             |          |       |
+| Profiles                | Java | Jakarta Persistence | Querydsl | Quarkus  | Spring Boot | Notes   |
+|-------------------------|------|---------------------|----------|----------|-------------|---------|
+| failsafe                |      | &#x2705;            | &#x2705; | &#x2705; | &#x2705;    | for ITs |
+| framework               |      |                     |          | &#x2705; | &#x2705;    |         |
+| framework-quarkus       |      |                     |          | &#x2705; |             |         |
+| framework-spring        |      |                     |          |          | &#x2705;    |         |
+| persistence             |      | &#x2705;            | &#x2705; |          |             |         |
+| persistence-eclipselink |      | &#x2713;            | &#x2713; |          |             |         |
+| persistence-hibernate   |      | &#x2713;            | &#x2713; |          |             |         |
+| querydsl                |      |                     | &#x2705; |          |             |         |
+| querydsl-5              |      |                     | &#x2713; |          |             |         |
+| querydsl-6              |      |                     | &#x2713; |          |             |         |
+
+e.g.
+
+```text
+$ mvn clean test
+$ mvn -Pfailsafe,persistence,persistence-eclipselink clean verify 
+$ mvn -Pfailsafe,persistence,persistence-eclipselink,querydsl,querydsl-5 clean verify 
+$ mvn -Pfailsafe,framework,framework-spring clean verify 
+```
+
+---
+
+## Docker
+
+### Build image
+
+### Run image
 
 ---
 
