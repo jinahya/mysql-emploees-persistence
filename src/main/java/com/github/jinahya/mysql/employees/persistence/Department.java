@@ -10,6 +10,11 @@ import java.io.Serial;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * An entity class maps to {@value Department#TABLE_NAME} table.
+ *
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ */
 @NamedQuery(
         name = "Department.selectOneByDeptName",
         query = """
@@ -89,6 +94,13 @@ public class Department
         return Objects.hash(deptNo);
     }
 
+    // -------------------------------------------------------------------------------------------------------------- id
+
+    @Override
+    String getId() {
+        return getDeptNo();
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     @Size(min = SIZE_MIN_DEPT_NO, max = SIZE_MAX_DEPT_NO)
     @NotNull
@@ -105,7 +117,7 @@ public class Department
 
     // -----------------------------------------------------------------------------------------------------------------
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = DeptEmp.TABLE_NAME,
                joinColumns = {
                        @JoinColumn(name = DeptEmp.COLUMN_NAME_DEPT_NO, referencedColumnName = COLUMN_NAME_DEPT_NO)
@@ -122,7 +134,7 @@ public class Department
     private List<@Valid @NotNull Employee> employees;
 
     //    @OrderBy(DeptManager.ATTRIBUTE_NAME_FROM_DATE + " ASC")
-    @ManyToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = DeptManager.TABLE_NAME,
                joinColumns = {
                        @JoinColumn(name = DeptManager.COLUMN_NAME_DEPT_NO, referencedColumnName = COLUMN_NAME_DEPT_NO)

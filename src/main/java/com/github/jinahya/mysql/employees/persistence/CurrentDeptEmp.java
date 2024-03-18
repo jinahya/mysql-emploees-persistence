@@ -62,6 +62,16 @@ public class CurrentDeptEmp
         return Objects.hash(empNo, deptNo);
     }
 
+    // -------------------------------------------------------------------------------------------------------------- id
+
+    @Override
+    CurrentDeptEmpId getId() {
+        final var id = new CurrentDeptEmpId();
+        id.setEmpNo(getEmpNo());
+        id.setDeptNo(getDeptNo());
+        return id;
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     @NotNull
     @Id

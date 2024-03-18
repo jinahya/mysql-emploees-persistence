@@ -15,4 +15,7 @@ public abstract class _BaseEntity<ID extends Serializable>
 
     @Serial
     private static final long serialVersionUID = -3812806986886347446L;
+
+    // -------------------------------------------------------------------------------------------------------------- id
+    abstract ID getId();
 }

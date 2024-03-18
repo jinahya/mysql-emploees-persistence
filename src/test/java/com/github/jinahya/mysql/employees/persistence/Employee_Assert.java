@@ -17,15 +17,7 @@ public class Employee_Assert
         super(actual, Employee_Assert.class);
     }
 
-    @Override
-    public Employee_Assert hasId(final Integer expectedId) {
-        isNotNull()
-                .extracting(Employee::getEmpNo, InstanceOfAssertFactories.STRING)
-                .as("id of %s", actual)
-                .isEqualTo(expectedId);
-        return this;
-    }
-
+    // ----------------------------------------------------------------------------------------------------------- empNo
     public Employee_Assert hasEmpNo(final Integer expectedEmpNo) {
         return hasId(expectedEmpNo);
     }

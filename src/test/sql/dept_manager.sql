@@ -24,6 +24,11 @@ FROM dept_manager
 WHERE from_date > to_date
 ;
 
+SELECT *, DATEDIFF(to_date, from_date) AS datediff_date
+FROM dept_manager
+ORDER BY datediff_date ASC
+;
+
 -- --------------------------------------------------------------------------------------------------- dept_no,from_date
 SELECT dept_no, MAX(from_date) AS max_from_date
 FROM dept_manager

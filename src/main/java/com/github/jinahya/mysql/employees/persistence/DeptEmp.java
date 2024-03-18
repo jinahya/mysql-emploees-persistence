@@ -11,6 +11,14 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * An entity class maps {@value DeptEmp#TABLE_NAME} table.
+ *
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ * @see DeptEmpId
+ * @see Department
+ * @see Employee
+ */
 @NamedQuery(
         name = "DeptEmp.selectAllByDepartment",
         query = """
@@ -65,6 +73,10 @@ public class DeptEmp
     private static final long serialVersionUID = -6772594303267134517L;
 
     // -----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * The name of the database table to which this entity maps. The value is {@value}.
+     */
     public static final String TABLE_NAME = "dept_emp";
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -82,10 +94,10 @@ public class DeptEmp
     public static final int SIZE_MAX_DEPT_NO = Department.SIZE_MAX_DEPT_NO;
 
     // ------------------------------------------------------------------------------------------------------- from_date
-    public static final String COLUMN_NAME_FROM_DATE = "from_date";
+    public static final String COLUMN_NAME_FROM_DATE = _DomainConstants.COLUMN_NAME_FROM_DATE;
 
     // --------------------------------------------------------------------------------------------------------- to_date
-    public static final String COLUMN_NAME_TO_DATE = "to_date";
+    public static final String COLUMN_NAME_TO_DATE = _DomainConstants.COLUMN_NAME_TO_DATE;
 
     public static final LocalDate ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED =
             _DomainConstants.ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED;
@@ -157,6 +169,14 @@ public class DeptEmp
             return false;
         }
         return toDate.isAfter(ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED);
+    }
+
+    // -------------------------------------------------------------------------------------------------------------- id
+    DeptEmpId getId() {
+        final var id = new DeptEmpId();
+        id.setEmpNo(getEmpNo());
+        id.setDeptNo(getDeptNo());
+        return id;
     }
 
     // ------------------------------------------------------------------------------------------------- emp_no/employee

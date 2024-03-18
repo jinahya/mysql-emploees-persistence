@@ -19,6 +19,11 @@ SELECT COUNT(1)
 FROM employees
 ;
 
+SELECT *
+FROM employees
+ORDER BY emp_no ASC
+;
+
 -- -------------------------------------------------------------------------------------------------------------- emp_no
 SELECT COUNT(1)
 FROM employees
@@ -29,11 +34,14 @@ FROM employees
 ;
 
 -- ---------------------------------------------------------------------------------------------------------- birth_date
+-- https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html
+--
 SELECT MIN(birth_date) AS min_birth_date,
        MAX(birth_date) AS min_birth_date
 FROM employees
 ;
 
+-- https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_year
 -- birth_year
 SELECT YEAR(birth_date) AS birth_year,
        COUNT(1)         AS c
@@ -48,6 +56,15 @@ WHERE YEAR(e.birth_date) = 1952
 ORDER BY e.emp_no ASC
 ;
 
+-- https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_quarter
+-- quarter
+SELECT QUARTER(birth_date) AS birth_quarter,
+       COUNT(1)            AS c
+FROM employees
+GROUP BY birth_quarter
+ORDER BY birth_quarter ASC
+;
+
 -- birth_year, birth_month
 SELECT YEAR(birth_date)  AS birth_year,
        MONTH(birth_date) AS birth_month,
@@ -57,6 +74,13 @@ GROUP BY birth_year, birth_month
 ORDER BY birth_year ASC, birth_month ASC
 ;
 
+-- birth_month
+SELECT MONTH(birth_date) AS birth_month, COUNT(1) AS c
+FROM employees
+GROUP BY birth_month
+ORDER BY birth_month ASC
+;
+
 -- birth_dayofweek
 SELECT DAYOFWEEK(birth_date) AS birth_dayofweek,
        DAYNAME(birth_date)   AS birth_dayname,
@@ -64,13 +88,6 @@ SELECT DAYOFWEEK(birth_date) AS birth_dayofweek,
 FROM employees
 GROUP BY birth_dayofweek, birth_dayname
 ORDER BY birth_dayofweek ASC
-;
-
--- birth_month
-SELECT MONTH(birth_date) AS birth_month, COUNT(1) AS c
-FROM employees
-GROUP BY birth_month
-ORDER BY birth_month ASC
 ;
 
 -- birth_dayofmonth
@@ -107,7 +124,7 @@ SELECT last_name, COUNT(1) AS c
 FROM employees
 GROUP BY last_name
 HAVING c > 1
-ORDER BY c DESC, last_name
+ORDER BY c DESC, last_name ASC
 ;
 
 -- ------------------------------------------------------------------------------------------------ first_name/last_name
@@ -115,13 +132,22 @@ SELECT first_name, last_name, COUNT(1) AS c
 FROM employees
 GROUP BY first_name, last_name
 HAVING c > 1
-ORDER BY c DESC, first_name, last_name
+ORDER BY c DESC, first_name ASC, last_name ASC
 ;
 
 -- -------------------------------------------------------------------------------------------------------------- gender
 SELECT gender, COUNT(1) AS c
 FROM employees
-GROUP BY gender
+GROUP BY gender ASC
 ;
 
 -- ----------------------------------------------------------------------------------------------------------- hire_date
+SELECT *
+FROM employees
+ORDER BY hire_date ASC
+LIMIT 32
+;
+SELECT *
+FROM employees
+WHERE hire_date = (SELECT MIN(hire_date) FROM employees)
+;

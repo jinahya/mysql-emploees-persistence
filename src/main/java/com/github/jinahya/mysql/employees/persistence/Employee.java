@@ -195,6 +195,17 @@ public class Employee
         }
     }
 
+    // ------------------------------------------------------------------------------------------ STATIC-FACTORY_METHODS
+
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    // -------------------------------------------------------------------------------------------------------------- id
+
+    @Override
+    Integer getId() {
+        return empNo;
+    }
+
     // ------------------------------------------------------------------------------------------------------- hire_date
 
     /**
@@ -238,10 +249,11 @@ public class Employee
      * Applies current value of {@link Employee_#birthDate birthDate} attribute to specified function, and returns the
      * result.
      *
-     * @param function the function to be applied with the current value of {@link Employee_#birthDate birthDate}.
-     * @param <R>      result type parameter.
-     * @return the result of the {@code function}; {@code null} when current value of
-     * {@link Employee_#birthDate birthDate} is {@code null}.
+     * @param function the function to be applied with the current value of the {@link Employee_#birthDate birthDate}
+     *                 attribute.
+     * @param <R>      result type parameter
+     * @return the result of the {@code function}; {@code null} when current value of the
+     * {@link Employee_#birthDate birthDate} attribute is {@code null}.
      */
     public <R> @Nullable R applyBirthDate(final @NonNull Function<? super LocalDate, ? extends R> function) {
         Objects.requireNonNull(function, "function is null");
