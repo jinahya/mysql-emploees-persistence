@@ -11,7 +11,7 @@ import org.springframework.lang.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-import static com.github.jinahya.mysql.employees.persistence._BaseEntityAssertions.assertBaseEntity;
+import static com.github.jinahya.mysql.employees.persistence._BaseEntity_Assertions.assertBaseEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

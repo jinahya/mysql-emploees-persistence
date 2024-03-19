@@ -24,13 +24,10 @@ class SalaryRepository_FindAllByEmpNo_IT
         extends SalaryRepository__IT {
 
     private IntStream getEmpNoStream() {
-        return employeeRepository.findAll(
-                PageRequest.of(
-                        0,
-                        8,
-                        Sort.by(Sort.Order.asc(Employee_.empNo.getName()))
-                )
-        ).stream().mapToInt(Employee::getEmpNo);
+        return employeeRepository
+                .findAll(PageRequest.of(0, 8, Sort.by(Sort.Order.asc(Employee_.empNo.getName()))))
+                .stream()
+                .mapToInt(Employee::getEmpNo);
     }
 
     @MethodSource({"getEmpNoStream"})
@@ -41,19 +38,15 @@ class SalaryRepository_FindAllByEmpNo_IT
         final var sort = Sort.by(Sort.Order.asc(Salary_.fromDate.getName()));
         for (var pageable = PageRequest.of(0, size, sort); ; pageable = pageable.next()) {
             // ---------------------------------------------------------------------------------------------------- when
-            final var all = repositoryInstance().findAllByEmpNo(empNo, pageable);
-            log.debug("all.content.size: {}", all.getContent().size());
-            all.forEach(e -> {
-                log.debug("e: {}", e);
-            });
+            final var found = repositoryInstance().findAllByEmpNo(empNo, pageable);
             // ---------------------------------------------------------------------------------------------------- then
-            assertThat(all.getContent())
+            assertThat(found.getContent())
                     .hasSizeLessThanOrEqualTo(size)
                     .isSortedAccordingTo(Comparator.comparing(Salary::getFromDate))
-                    .extracting(Salary::getEmployee)
-                    .extracting(Employee::getEmpNo)
+                    .extracting(Salary::getEmpNo)
                     .containsOnly(empNo);
-            if (!all.hasNext() || pageable.getPageNumber() > 2) {
+            // break
+            if (!found.hasNext() || pageable.getPageNumber() > 2) {
                 break;
             }
         }
