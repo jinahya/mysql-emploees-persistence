@@ -9,7 +9,7 @@ Jakarta Persistence for the [Employees Sample Database](https://dev.mysql.com/do
 
 ## JDK
 
-The [latest LTS](https://www.oracle.com/java/technologies/java-se-support-roadmap.html) is required for building/running this module.
+The [latest LTS](https://www.oracle.com/java/technologies/java-se-support-roadmap.html) is required to build/run this module.
 
 ```text
 $ grep \<maven\\.compiler\\. pom.xml
@@ -33,28 +33,30 @@ $ tree -d -L 2 --charset=ascii src
 src
 |-- main
 |   |-- java
-|   |-- java-framework
-|   |-- java-framework-quarkus
-|   |-- java-framework-spring
+|   |-- java-application
+|   |-- java-application-jakarta-ee
+|   |-- java-application-spring-boot
 |   |-- java-persistence
 |   |-- java-querydsl
 |   |-- resources
-|   |-- resources-framework
-|   |-- resources-framework-quarkus    
-|   |-- resources-framework-spring
+|   |-- resources-application
+|   |-- resources-application-jakarta--ee
+|   |-- resources-application-spring-boot
 |   |-- resources-persistence
 |   `-- resources-querydsl
 `-- test
     |-- java
-    |-- java-framework
+    |-- java-application
+    |-- java-application-jakarta-ee
     |-- java-framework-quarkus
-    |-- java-framework-spring
+    |-- java-framework-spring-boot
     |-- java-persistence
     |-- java-querydsl
     |-- resources
-    |-- resources-framework
+    |-- resources-application
+    |-- resources-application-jakarta-ee
+    |-- resources-application-spring-boot
     |-- resources-framework-quarkus
-    |-- resources-framework-spring
     |-- resources-persistence
     |-- resources-querydsl
     `-- sql
@@ -65,35 +67,66 @@ src
 * &#x2705; - should be selected
 * &#x2713; - either one should be selected
 
-| Profiles                | Java | Jakarta Persistence | Querydsl | Quarkus  | Spring Boot | Notes   |
-|-------------------------|------|---------------------|----------|----------|-------------|---------|
-| failsafe                |      | &#x2705;            | &#x2705; | &#x2705; | &#x2705;    | for ITs |
-| framework               |      |                     |          | &#x2705; | &#x2705;    |         |
-| framework-quarkus       |      |                     |          | &#x2705; |             |         |
-| framework-spring        |      |                     |          |          | &#x2705;    |         |
-| persistence             |      | &#x2705;            | &#x2705; |          |             |         |
-| persistence-eclipselink |      | &#x2713;            | &#x2713; |          |             |         |
-| persistence-hibernate   |      | &#x2713;            | &#x2713; |          |             |         |
-| querydsl                |      |                     | &#x2705; |          |             |         |
-| querydsl-5              |      |                     | &#x2713; |          |             |         |
-| querydsl-6              |      |                     | &#x2713; |          |             |         |
+| Profiles                | Java | Jakarta Persistence | Querydsl | Jakarta EE | Spring Boot | Notes   |
+|-------------------------|------|---------------------|----------|------------|-------------|---------|
+| application             |      |                     |          | &#x2705;   | &#x2705;    |         |
+| application-jakarta-ee  |      |                     |          | &#x2705;   |             |         |
+| application-spring-boot |      |                     |          |            | &#x2705;    |         |
+| failsafe                |      | &#x2705;            | &#x2705; | &#x2705;   | &#x2705;    | for ITs |
+| persistence             |      | &#x2705;            | &#x2705; |            |             |         |
+| persistence-eclipselink |      | &#x2713;            | &#x2713; |            |             |         |
+| persistence-hibernate   |      | &#x2713;            | &#x2713; |            |             |         |
+| querydsl                |      |                     | &#x2705; |            |             |         |
+| querydsl-5              |      |                     | &#x2713; |            |             |         |
+| querydsl-6              |      |                     | &#x2713; |            |             |         |
 
 e.g.
 
-```text
+```shell
+## Java
 $ mvn clean test
+
+## Jakarta Persistence + EclipseLink
 $ mvn -Pfailsafe,persistence,persistence-eclipselink clean verify 
-$ mvn -Pfailsafe,persistence,persistence-eclipselink,querydsl,querydsl-5 clean verify 
-$ mvn -Pfailsafe,framework,framework-spring clean verify 
+
+## Jakarta Persistence + Hibernate + Querydsl
+$ mvn -Pfailsafe,persistence,persistence-hibernate,querydsl,querydsl-5 clean verify 
+
+## Spring Data JPA 
+$ mvn -Pfailsafe,application,application-spring-boot clean verify 
 ```
 
 ---
 
 ## Docker
 
-### Build image
+### Build the image
 
-### Run image
+```shell
+$ sh ./.docker.build.sh
+```
+
+We don't have to repeat this job unless the `Dockerfile` changed. 
+
+### Run the image as a container
+
+```shell
+$ sh ./.docker.run.sh
+```
+
+We'd better to wait a few seconds for the MySQL engine is fully up and running.
+
+### Connect to the running container
+
+```shell
+$ sh ./.docker.connect.sh
+```
+
+### Stop the container
+
+```shell
+$ sh ./.docker.stop.sh
+```
 
 ---
 
