@@ -45,8 +45,17 @@ effective-pom-*.xml
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-# Created by https://www.toptal.com/developers/gitignore/api/netbeans,eclipse,visualstudiocode
-# Edit at https://www.toptal.com/developers/gitignore?templates=netbeans,eclipse,visualstudiocode
+# Created by https://www.toptal.com/developers/gitignore/api/netbeans,eclipse,visualstudiocode,bluej,xcode
+# Edit at https://www.toptal.com/developers/gitignore?templates=netbeans,eclipse,visualstudiocode,bluej,xcode
+
+### bluej ###
+# BlueJ: A Java IDE for programming beginners. http://bluej.org
+
+# Editor preferences for a class etc, see http://lists.bluej.org/pipermail/bluej-discuss/2003-May/002351.html
+*.ctxt
+
+# Duplicate of project file, see http://www.hs-owl.de/fb5/labor/it/de/if1/vl/IF1JavaOhneBluej.pdf, page 4
+bluej.pkh
 
 ### Eclipse ###
 .metadata
@@ -143,4 +152,21 @@ nbdist/
 .history
 .ionide
 
-# End of https://www.toptal.com/developers/gitignore/api/netbeans,eclipse,visualstudiocode
+### Xcode ###
+## User settings
+xcuserdata/
+
+## Xcode 8 and earlier
+*.xcscmblueprint
+*.xccheckout
+
+### Xcode Patch ###
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+/*.gcno
+**/xcshareddata/WorkspaceSettings.xcsettings
+
+# End of https://www.toptal.com/developers/gitignore/api/netbeans,eclipse,visualstudiocode,bluej,xcode
