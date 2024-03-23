@@ -9,6 +9,7 @@ import org.springframework.lang.Nullable;
 import java.util.List;
 import java.util.Optional;
 
+import static com.github.jinahya.mysql.employees.persistence._BaseEntity_Assertions.assertBaseEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -41,6 +42,7 @@ class EmployeeRepository_FindById_IT
         // -------------------------------------------------------------------------------------------------------- then
         assertThat(found).hasValueSatisfying(v -> {
             assertThat(v.getEmpNo()).isEqualTo(empNo);
+            assertBaseEntity(v).hasEmpNo(empNo);
         });
     }
 }

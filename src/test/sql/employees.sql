@@ -35,37 +35,97 @@ FROM employees
 
 -- ---------------------------------------------------------------------------------------------------------- birth_date
 -- https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html
---
+-- min/max
 SELECT MIN(birth_date) AS min_birth_date,
        MAX(birth_date) AS min_birth_date
 FROM employees
 ;
 
+SELECT MIN(birth_date)                                    AS min_birth_date,
+       MAX(TIMESTAMPDIFF(YEAR, birth_date, CURRENT_DATE)) AS max_age,
+       MAX(birth_date)                                    AS min_birth_date,
+       MIN(TIMESTAMPDIFF(YEAR, birth_date, CURRENT_DATE)) AS min_age
+FROM employees
+;
+
 -- https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_year
 -- birth_year
+SELECT DISTINCT YEAR(birth_date) AS birth_year
+FROM employees
+GROUP BY birth_year
+ORDER BY birth_year ASC
+;
+
 SELECT YEAR(birth_date) AS birth_year,
        COUNT(1)         AS c
 FROM employees
 GROUP BY birth_year
 ORDER BY birth_year ASC
 ;
+SELECT YEAR(birth_date) AS birth_year,
+       gender,
+       COUNT(1)         AS c
+FROM employees
+GROUP BY birth_year, gender
+ORDER BY birth_year ASC, gender ASC
+;
+
 SELECT *
-FROM employees AS e
-WHERE YEAR(e.birth_date) = 1952
-#   AND e.gender = 'F'
-ORDER BY e.emp_no ASC
+FROM employees
+WHERE YEAR(birth_date) = 1952
+#   AND gender = 'F'
+#   AND gender = 'M'
+ORDER BY emp_no ASC
 ;
 
 -- https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_quarter
 -- quarter
+SELECT DISTINCT QUARTER(birth_date) AS birth_quarter
+FROM employees
+GROUP BY birth_quarter
+ORDER BY birth_quarter ASC
+;
+-- quarter/count
 SELECT QUARTER(birth_date) AS birth_quarter,
        COUNT(1)            AS c
 FROM employees
 GROUP BY birth_quarter
 ORDER BY birth_quarter ASC
 ;
+-- quarter/gender/count
+SELECT QUARTER(birth_date) AS birth_quarter,
+       gender,
+       COUNT(1)            AS c
+FROM employees
+GROUP BY birth_quarter, gender
+ORDER BY birth_quarter ASC, gender ASC
+;
+-- year/quarter/gender/count
+SELECT YEAR(birth_date)    AS birth_year,
+       QUARTER(birth_date) AS birth_quarter,
+       gender,
+       COUNT(1)            AS c
+FROM employees
+GROUP BY birth_year, birth_quarter, gender
+ORDER BY birth_year ASC, birth_quarter ASC, gender ASC
+;
 
--- birth_year, birth_month
+-- https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_month
+-- birth_month
+SELECT DISTINCT MONTH(birth_date)     AS birth_month,
+                MONTHNAME(birth_date) AS birth_monthname
+FROM employees
+ORDER BY birth_month ASC
+;
+-- birth_month/count
+SELECT MONTH(birth_date)     AS birth_month,
+       MONTHNAME(birth_date) AS birth_monthname,
+       COUNT(1)              AS c
+FROM employees
+GROUP BY birth_month, birth_monthname
+ORDER BY birth_month ASC
+;
+-- birth_year/birth_month/count
 SELECT YEAR(birth_date)  AS birth_year,
        MONTH(birth_date) AS birth_month,
        COUNT(1)          AS c
@@ -73,15 +133,23 @@ FROM employees
 GROUP BY birth_year, birth_month
 ORDER BY birth_year ASC, birth_month ASC
 ;
-
--- birth_month
-SELECT MONTH(birth_date) AS birth_month, COUNT(1) AS c
+-- birth_year/birth_month/gender/count
+SELECT YEAR(birth_date)  AS birth_year,
+       MONTH(birth_date) AS birth_month,
+       gender,
+       COUNT(1)          AS c
 FROM employees
-GROUP BY birth_month
-ORDER BY birth_month ASC
+GROUP BY birth_year, birth_month, gender
+ORDER BY birth_year ASC, birth_month ASC, gender ASC
 ;
 
+-- https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_dayofweek
 -- birth_dayofweek
+SELECT DISTINCT DAYOFWEEK(birth_date) AS birth_dayofweek
+FROM employees
+GROUP BY birth_dayofweek
+ORDER BY birth_dayofweek ASC
+;
 SELECT DAYOFWEEK(birth_date) AS birth_dayofweek,
        DAYNAME(birth_date)   AS birth_dayname,
        COUNT(1)              AS c
@@ -90,7 +158,13 @@ GROUP BY birth_dayofweek, birth_dayname
 ORDER BY birth_dayofweek ASC
 ;
 
+-- https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_dayofmonth
 -- birth_dayofmonth
+SELECT DISTINCT DAYOFMONTH(birth_date) AS birth_dayofmonth
+FROM employees
+ORDER BY birth_dayofmonth ASC
+;
+-- birth_dayofmonth/count
 SELECT DAYOFMONTH(birth_date) AS birth_dayofmonth,
        COUNT(1)               AS c
 FROM employees
@@ -112,15 +186,17 @@ ORDER BY e.emp_no ASC
 ;
 
 -- ---------------------------------------------------------------------------------------------------------- first_name
-SELECT first_name, COUNT(1) AS c
+SELECT first_name,
+       COUNT(1) AS c
 FROM employees
 GROUP BY first_name
 HAVING c > 1
-ORDER BY c DESC, first_name
+ORDER BY c DESC, first_name ASC
 ;
 
 -- ----------------------------------------------------------------------------------------------------------- last_name
-SELECT last_name, COUNT(1) AS c
+SELECT last_name,
+       COUNT(1) AS c
 FROM employees
 GROUP BY last_name
 HAVING c > 1
@@ -128,7 +204,9 @@ ORDER BY c DESC, last_name ASC
 ;
 
 -- ------------------------------------------------------------------------------------------------ first_name/last_name
-SELECT first_name, last_name, COUNT(1) AS c
+SELECT first_name,
+       last_name,
+       COUNT(1) AS c
 FROM employees
 GROUP BY first_name, last_name
 HAVING c > 1

@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
+import java.time.LocalDate;
 import java.time.Year;
 import java.util.Comparator;
 import java.util.concurrent.ThreadLocalRandom;
@@ -42,7 +43,11 @@ class EmployeeRepository_FindAllBornInYear1_IT
             });
             // ---------------------------------------------------------------------------------------------------- then
             assertThat(all).hasSizeLessThanOrEqualTo(size);
-            assertThat(all.getContent()).isSortedAccordingTo(Comparator.comparing(Employee::getEmpNo));
+            assertThat(all.getContent())
+                    .isSortedAccordingTo(Comparator.comparing(Employee::getEmpNo))
+                    .extracting(Employee::getBirthDate)
+                    .extracting(LocalDate::getYear)
+                    .containsOnly(year.getValue());
             if (!all.hasNext() || pageable.getPageNumber() > 2) {
                 break;
             }

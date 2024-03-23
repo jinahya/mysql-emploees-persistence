@@ -48,7 +48,23 @@ WHERE e.deptName = :deptName
 
 ## dept_manager
 
-## employees
+## employees ([employees.sql](src/test/sql/employees.sql))
+
+### all
+
+### one whose `emp_no` is equals to specified
+
+```sql
+SELECT e.*
+FROM employees AS e
+WHERE e.emp_no = ?
+```
+
+```jpaql
+SELECT e
+FROM Employee AS e
+WHERE e.empNo = :empNo
+```
 
 ## salaries
 

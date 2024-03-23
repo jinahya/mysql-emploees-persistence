@@ -17,6 +17,7 @@ import org.springframework.lang.Nullable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -67,8 +68,7 @@ class EmployeeRepository_FindAllByBirthDate_IT
     @MethodSource({"getBirthDateList"})
     @ParameterizedTest
     void __(final LocalDate birthDate) {
-//        final int size = ThreadLocalRandom.current().nextInt(16);
-        final int size = 1;
+        final int size = ThreadLocalRandom.current().nextInt(16);
         final var all = repositoryInstance().findAllByBirthDate(birthDate, Pageable.ofSize(size));
         assertThat(all)
                 .hasSizeLessThanOrEqualTo(size)

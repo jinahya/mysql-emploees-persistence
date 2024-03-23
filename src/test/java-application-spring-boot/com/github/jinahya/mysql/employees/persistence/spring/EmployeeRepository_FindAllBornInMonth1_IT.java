@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Slf4j
-class EmployeeRepository_FindAllBornInMonth_IT
+class EmployeeRepository_FindAllBornInMonth1_IT
         extends EmployeeRepository__IT {
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -30,7 +30,7 @@ class EmployeeRepository_FindAllBornInMonth_IT
         final var sort = Sort.by(Sort.Order.asc(Employee_.empNo.getName()));
         for (var pageable = PageRequest.of(0, size, sort); ; pageable = pageable.next()) {
             // ---------------------------------------------------------------------------------------------------- when
-            final var all = repositoryInstance().findAllBornInMonth(month, pageable);
+            final var all = repositoryInstance().findAllBornInMonth1(month, pageable);
             log.debug("all.content.size: {}", all.getContent().size());
             all.forEach(e -> {
                 log.debug("e: {}", e);

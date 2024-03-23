@@ -12,14 +12,14 @@ class _BaseEntityRepositoryConstantsTest {
     @DisplayName("MIN_PARAM_VALUE_MONTH == JANUARY.value")
     @Test
     void MIN_PARAM_VALUE_MONTH_JANUARY_() {
-        assertThat(_BaseEntityRepositoryConstants.MIN_PARAM_VALUE_MONTH)
+        assertThat(_BaseEntityRepositoryConstants.PARAM_VALUE_MONTH_MIN)
                 .isEqualTo(Month.JANUARY.getValue());
     }
 
     @DisplayName("MAX_PARAM_VALUE_MONTH == DECEMBER.value")
     @Test
     void MAX_PARAM_VALUE_MONTH_DECEMBER_() {
-        assertThat(_BaseEntityRepositoryConstants.MAX_PARAM_VALUE_MONTH)
+        assertThat(_BaseEntityRepositoryConstants.PARAM_VALUE_MONTH_MAX)
                 .isEqualTo(Month.DECEMBER.getValue());
     }
 }
