@@ -30,6 +30,7 @@ public interface DeptEmpRepository
     @Deprecated
     Optional<DeptEmp> findByEmployeeAndDepartment(Employee employee, Department department);
 
+    @Deprecated
     default Optional<DeptEmp> findByEmployeeAndDepartment1(final Employee employee, final Department department) {
         return findById(
                 DeptEmpId.from(employee, department)
@@ -41,8 +42,8 @@ public interface DeptEmpRepository
     // ---------------------------------------------------------------------------------------------------------- toDate
 
     // -----------------------------------------------------------------------------------------------------------------
-    Page<DeptEmp> findAllByDepartmentAndFromDateGreaterThanEqualAndToDateBefore(Department department,
-                                                                                LocalDate fromDateMinInclusive,
-                                                                                LocalDate toDateMaxInclusive,
-                                                                                Pageable pageable);
+    Page<DeptEmp> findAllByDepartmentAndFromDateGreaterThanEqualAndToDateLessThanEqual(Department department,
+                                                                                       LocalDate fromDateMinInclusive,
+                                                                                       LocalDate toDateMaxInclusive,
+                                                                                       Pageable pageable);
 }
