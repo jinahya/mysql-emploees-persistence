@@ -90,8 +90,17 @@ public class DeptManager
     public static final int SIZE_MAX_DEPT_NO = Department.SIZE_MAX_DEPT_NO;
 
     // ------------------------------------------------------------------------------------------------------- from_date
+
+    /**
+     * The name of the tabel column to which the {@value #ATTRIBUTE_NAME_FROM_DATE} attribute maps. The value is
+     * {@value}.
+     */
     public static final String COLUMN_NAME_FROM_DATE = "from_date";
 
+    /**
+     * The name of the entity attribute from which the {@value #COLUMN_NAME_FROM_DATE} column maps. The value is
+     * {@value}.
+     */
     public static final String ATTRIBUTE_NAME_FROM_DATE = "fromDate";
 
     // --------------------------------------------------------------------------------------------------------- to_date

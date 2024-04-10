@@ -19,6 +19,18 @@ import java.util.Optional;
  * @see Department
  * @see Employee
  */
+@NamedEntityGraph(
+        name = "DeptEmp.department",
+        attributeNodes = {
+                @NamedAttributeNode(DeptEmp.ATTRIBUTE_NAME_DEPARTMENT)
+        }
+)
+@NamedEntityGraph(
+        name = "DeptEmp.employee",
+        attributeNodes = {
+                @NamedAttributeNode(DeptEmp.ATTRIBUTE_NAME_EMPLOYEE)
+        }
+)
 @NamedQuery(
         name = "DeptEmp.selectAllByDepartment",
         query = """
@@ -65,7 +77,7 @@ import java.util.Optional;
 @Setter
 @Getter
 @ToString(callSuper = true)
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DeptEmp
         extends _BaseEntity<DeptEmpId> {
 
@@ -79,8 +91,12 @@ public class DeptEmp
      */
     public static final String TABLE_NAME = "dept_emp";
 
-    // -----------------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------------- emp_no
     public static final String COLUMN_NAME_EMP_NO = Employee.COLUMN_NAME_EMP_NO;
+
+    public static final String ATTRIBUTE_NAME_EMP_NO = "empNo";
+
+    public static final String ATTRIBUTE_NAME_EMPLOYEE = "employee";
 
     // -----------------------------------------------------------------------------------------------------------------
     public static final String COLUMN_NAME_DEPT_NO = Department.COLUMN_NAME_DEPT_NO;
@@ -93,11 +109,17 @@ public class DeptEmp
 
     public static final int SIZE_MAX_DEPT_NO = Department.SIZE_MAX_DEPT_NO;
 
+    public static final String ATTRIBUTE_NAME_DEPARTMENT = "department";
+
     // ------------------------------------------------------------------------------------------------------- from_date
     public static final String COLUMN_NAME_FROM_DATE = _DomainConstants.COLUMN_NAME_FROM_DATE;
 
+    public static final String ATTRIBUTE_NAME_FROM_DATE = "fromDate";
+
     // --------------------------------------------------------------------------------------------------------- to_date
     public static final String COLUMN_NAME_TO_DATE = _DomainConstants.COLUMN_NAME_TO_DATE;
+
+    public static final String ATTRIBUTE_NAME_TO_DATE = "toDate";
 
     public static final LocalDate ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED =
             _DomainConstants.ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED;
@@ -172,11 +194,9 @@ public class DeptEmp
     }
 
     // -------------------------------------------------------------------------------------------------------------- id
+    @Override
     DeptEmpId getId() {
-        final var id = new DeptEmpId();
-        id.setEmpNo(getEmpNo());
-        id.setDeptNo(getDeptNo());
-        return id;
+        return DeptEmpId.of(getEmpNo(), getDeptNo());
     }
 
     // ------------------------------------------------------------------------------------------------- emp_no/employee
