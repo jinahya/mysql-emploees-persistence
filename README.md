@@ -3,13 +3,26 @@
 [![Java CI with Maven](https://github.com/jinahya/mysql-emploees-persistence/actions/workflows/maven.yml/badge.svg)](https://github.com/jinahya/mysql-emploees-persistence/actions/workflows/maven.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jinahya_mysql-emploees-persistence&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jinahya_mysql-emploees-persistence)
 
-Jakarta Persistence for the [Employees Sample Database](https://dev.mysql.com/doc/employee/en/).
+[Jakarta Persistence] for the [Employees Sample Database](https://dev.mysql.com/doc/employee/en/).
+
+---
+
+### API Versions
+
+| platform / framework                        | version                          | notes |
+|---------------------------------------------|----------------------------------|-------|
+| [Jakarta Persistence]                       | [Jakarta Persistence 3.2]        |       |
+| [Jakarta Persistence]                       | [Jakarta Persistence 3.1]        |       |
+| [Spring Boot Dependency Versions (current)] | `:jakarta.persistence-api:3.1.0` |       |
+| [Spring Boot Dependency Versions (3.2.5)]   | `:jakarta.persistence-api:3.1.0` |       |
+| [Spring Boot Dependency Versions (3.2.4)]   | `:jakarta.persistence-api:3.1.0` |       |
 
 ---
 
 ## JDK
 
-The [latest LTS](https://www.oracle.com/java/technologies/java-se-support-roadmap.html) is required to build/run this module.
+The [latest LTS](https://www.oracle.com/java/technologies/java-se-support-roadmap.html) is required to build/run this
+module.
 
 ```text
 $ grep \<maven\\.compiler\\. pom.xml
@@ -106,7 +119,7 @@ $ mvn -Pfailsafe,application,application-spring-boot clean verify
 $ sh ./.docker.build.sh
 ```
 
-We don't have to repeat this job unless the `Dockerfile` changed. 
+We don't have to repeat this job unless the `Dockerfile` changed.
 
 ### Run the image as a container
 
@@ -209,3 +222,12 @@ $ sh ./.docker.stop.sh
 
 * [Using Hibernate ORM and Jakarta Persistence ](https://quarkus.io/guides/hibernate-orm)
 * [Simplified Hibernate ORM with Panache](https://quarkus.io/guides/hibernate-orm-panache)
+
+---
+
+[Jakarta Persistence]: https://jakarta.ee/specifications/persistence/
+[Jakarta Persistence 3.2]: https://jakarta.ee/specifications/persistence/3.1/
+[Jakarta Persistence 3.1]: https://jakarta.ee/specifications/persistence/
+[Spring Boot Dependency Versions (current)]: https://docs.spring.io/spring-boot/docs/current/reference/html/dependency-versions.html
+[Spring Boot Dependency Versions (3.2.5)]: https://docs.spring.io/spring-boot/docs/3.2.5/reference/html/dependency-versions.html#appendix.dependency-versions
+[Spring Boot Dependency Versions (3.2.4)]: https://docs.spring.io/spring-boot/docs/3.2.4/reference/html/dependency-versions.html#appendix.dependency-versions
