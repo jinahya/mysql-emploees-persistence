@@ -32,24 +32,24 @@ class DeptManager_SelectAllByIdEmpNo_IT
     private static List<DeptManager> selectAllByIdEmpNo1(final EntityManager entityManager, final int idEmpNo,
                                                          final Integer maxResults) {
         return entityManager.createNamedQuery("DeptManager.selectAllByIdEmpNo", DeptManager.class)
-                            .setParameter("idEmpNo", idEmpNo)
-                            .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
-                            .getResultList();
+                .setParameter("idEmpNo", idEmpNo)
+                .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
+                .getResultList();
     }
 
     private static List<DeptManager> selectAllByIdEmpNo2(final EntityManager entityManager, final int idEmpNo,
                                                          final Integer maxResults) {
         return entityManager.createQuery(
-                                    """
-                                            SELECT e
-                                            FROM DeptManager AS e
-                                            WHERE e.id.empNo = :idEmpNo
-                                            ORDER BY e.fromDate DESC""",
-                                    DeptManager.class
-                            )
-                            .setParameter("idEmpNo", idEmpNo)
-                            .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
-                            .getResultList();
+                        """
+                                SELECT e
+                                FROM DeptManager AS e
+                                WHERE e.id.empNo = :idEmpNo
+                                ORDER BY e.fromDate DESC""",
+                        DeptManager.class
+                )
+                .setParameter("idEmpNo", idEmpNo)
+                .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
+                .getResultList();
     }
 
     private static List<DeptManager> selectAllByIdEmpNo3(final EntityManager entityManager, final int idEmpNo,
@@ -62,8 +62,8 @@ class DeptManager_SelectAllByIdEmpNo_IT
                                                                                              builder.equal(
                                                                                                      //     =
                                                                                                      root.get(
-                                                                                                                 DeptManager_.id)
-                                                                                                         .get(DeptManagerId_.empNo),
+                                                                                                                     DeptManager_.id)
+                                                                                                             .get(DeptManagerId_.empNo),
                                                                                                      //     e.id.empNo
                                                                                                      idEmpNo
                                                                                                      //     idEmpNo
@@ -71,8 +71,8 @@ class DeptManager_SelectAllByIdEmpNo_IT
         );
         query.orderBy(builder.desc(root.get(DeptManager_.fromDate)));                        // ORDER BY e.fromDate DESC
         return entityManager.createQuery(query)
-                            .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
-                            .getResultList();
+                .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
+                .getResultList();
     }
 
     static List<DeptManager> selectAllByIdEmpNo(final EntityManager entityManager, final int empNo,

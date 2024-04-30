@@ -14,7 +14,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static com.github.jinahya.mysql.employees.persistence._BaseEntityAssertions.assertBaseEntity;
+import static com.github.jinahya.mysql.employees.persistence._BaseEntity_Assertions.assertBaseEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("selectOneByDeptName")

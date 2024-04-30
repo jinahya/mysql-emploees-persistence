@@ -43,8 +43,8 @@ class Department_SelectAll_IT
         query.select(root);                                                                     // SELECT e
         query.orderBy(builder.asc(root.get(Department_.deptNo)));                               // ORDER BY e.deptNo ASC
         return entityManager.createQuery(query)
-                            .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
-                            .getResultList();
+                .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
+                .getResultList();
     }
 
     static List<Department> selectAll(final EntityManager entityManager, final Integer maxResults) {

@@ -123,9 +123,9 @@ class Salary_Static_IT
             final var all = applyEntityManager(em -> selectAllByEmpNo1(em, empNo, 8));
             // ---------------------------------------------------------------------------------------------------- then
             assertThat(all).isNotEmpty()
-                           .isSortedAccordingTo(Comparator.comparing(Salary::getFromDate).reversed())
-                           .extracting(Salary::getEmpNo)
-                           .containsOnly(empNo);
+                    .isSortedAccordingTo(Comparator.comparing(Salary::getFromDate).reversed())
+                    .extracting(Salary::getEmpNo)
+                    .containsOnly(empNo);
         }
     }
 
@@ -163,11 +163,11 @@ class Salary_Static_IT
         assertThat(all).satisfiesAnyOf(
                 a -> assertThat(a).isEmpty(),
                 a -> assertThat(a).isNotEmpty()
-                                  .extracting(Salary::getEmpNo)
-                                  .containsOnly(empNo),
+                        .extracting(Salary::getEmpNo)
+                        .containsOnly(empNo),
                 a -> assertThat(a).isNotEmpty()
-                                  .extracting(Salary::getEmployee)
-                                  .containsOnly(employee)
+                        .extracting(Salary::getEmployee)
+                        .containsOnly(employee)
         );
     }
 
@@ -182,12 +182,12 @@ class Salary_Static_IT
         assertThat(all).satisfiesAnyOf(
                 a -> assertThat(a).isEmpty(),
                 a -> assertThat(a).isNotEmpty()
-                                  .extracting(Salary::getEmpNo)
-                                  .containsOnly(empNo),
+                        .extracting(Salary::getEmpNo)
+                        .containsOnly(empNo),
                 a -> assertThat(a).isNotEmpty()
-                                  .extracting(Salary::getEmployee)
-                                  .extracting(Employee::getEmpNo)
-                                  .containsOnly(empNo)
+                        .extracting(Salary::getEmployee)
+                        .extracting(Employee::getEmpNo)
+                        .containsOnly(empNo)
         );
     }
 }

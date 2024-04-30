@@ -14,6 +14,6 @@ class DeptEmpId_Test
     @Override
     SingleTypeEqualsVerifierApi<DeptEmpId> equals__(final SingleTypeEqualsVerifierApi<DeptEmpId> verifierApi) {
         return super.equals__(verifierApi)
-                    .suppress(Warning.NONFINAL_FIELDS);
+                .suppress(Warning.NONFINAL_FIELDS);
     }
 }

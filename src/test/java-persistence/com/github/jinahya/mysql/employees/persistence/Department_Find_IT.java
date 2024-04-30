@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static com.github.jinahya.mysql.employees.persistence._BaseEntityAssertions.assertBaseEntity;
+import static com.github.jinahya.mysql.employees.persistence._BaseEntity_Assertions.assertBaseEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("EntityManager#find(entityClass, primaryKey)")

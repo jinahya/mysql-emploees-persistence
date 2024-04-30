@@ -32,7 +32,7 @@ import java.util.function.Function;
 @ExtendWith(WeldJunit5AutoExtension.class)
 @Slf4j
 abstract class _BaseEntityIT<ENTITY extends _BaseEntity<ID>, ID extends Serializable>
-        extends __BaseEntityTest<ENTITY, ID> {
+        extends __BaseEntity__Test<ENTITY, ID> {
 
     // ------------------------------------------------------------------------------------------ STATIC-FACTORY_METHODS
 

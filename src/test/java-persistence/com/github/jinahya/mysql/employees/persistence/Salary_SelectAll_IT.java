@@ -84,7 +84,7 @@ class Salary_SelectAll_IT
         // -------------------------------------------------------------------------------------------------------- then
         assertThat(all).isSortedAccordingTo(
                 Comparator.comparing(Salary::getEmpNo)
-                          .thenComparing(Salary::getFromDate)
+                        .thenComparing(Salary::getFromDate)
         );
     }
 
@@ -100,7 +100,7 @@ class Salary_SelectAll_IT
         // -------------------------------------------------------------------------------------------------------- then
         assertThat(all).isSortedAccordingTo(
                 Comparator.comparing(Salary::getEmpNo)
-                          .thenComparing(Salary::getFromDate)
+                        .thenComparing(Salary::getFromDate)
         );
     }
 
@@ -124,7 +124,7 @@ class Salary_SelectAll_IT
         // -------------------------------------------------------------------------------------------------------- then
         assertThat(all).isSortedAccordingTo(
                 Comparator.comparing(Salary::getEmpNo)
-                          .thenComparing(Salary::getFromDate)
+                        .thenComparing(Salary::getFromDate)
         );
         if (!access) {
             for (var salary : all) {

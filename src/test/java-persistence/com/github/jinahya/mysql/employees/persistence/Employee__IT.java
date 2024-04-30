@@ -29,7 +29,7 @@ class Employee__IT
             instance.setLastName("Last");                           // TODO: Use your own
             instance.setGender(                                     // TODO: Use your own
                                                                     ThreadLocalRandom.current()
-                                                                                     .nextBoolean() ? Employee.Gender.M : Employee.Gender.F
+                                                                            .nextBoolean() ? Employee.Gender.M : Employee.Gender.F
             );
             instance.setHireDate(instance.getBirthDate().plusYears(20L));
             // ---------------------------------------------------------------------------------------------------- when

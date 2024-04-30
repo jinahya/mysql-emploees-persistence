@@ -85,7 +85,7 @@ class Salary_SelectAllFetchEmployee_IT
         assertThat(all).extracting(Salary::getEmployee).doesNotContainNull();
         assertThat(all).isSortedAccordingTo(
                 Comparator.comparing(Salary::getEmpNo)
-                          .thenComparing(Salary::getFromDate)
+                        .thenComparing(Salary::getFromDate)
         );
     }
 
@@ -103,7 +103,7 @@ class Salary_SelectAllFetchEmployee_IT
         assertThat(all).extracting(Salary::getEmployee).doesNotContainNull();
         assertThat(all).isSortedAccordingTo(
                 Comparator.comparing(Salary::getEmpNo)
-                          .thenComparing(Salary::getFromDate)
+                        .thenComparing(Salary::getFromDate)
         );
     }
 
@@ -126,7 +126,7 @@ class Salary_SelectAllFetchEmployee_IT
         assertThat(all).extracting(Salary::getEmployee).doesNotContainNull();
         assertThat(all).isSortedAccordingTo(
                 Comparator.comparing(Salary::getEmpNo)
-                          .thenComparing(Salary::getFromDate)
+                        .thenComparing(Salary::getFromDate)
         );
         for (var salary : all) {
             log.debug("employee: {}", salary.getEmployee());

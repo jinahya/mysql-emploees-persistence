@@ -32,24 +32,24 @@ class DeptManager_SelectAllByEmployee_IT
     private static List<DeptManager> selectAllByEmployee1(final EntityManager entityManager, final Employee employee,
                                                           final Integer maxResults) {
         return entityManager.createNamedQuery("DeptManager.selectAllByEmployee", DeptManager.class)
-                            .setParameter("employee", employee)
-                            .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
-                            .getResultList();
+                .setParameter("employee", employee)
+                .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
+                .getResultList();
     }
 
     private static List<DeptManager> selectAllByEmployee2(final EntityManager entityManager, final Employee employee,
                                                           final Integer maxResults) {
         return entityManager.createQuery(
-                                    """
-                                            SELECT e
-                                            FROM DeptManager AS e
-                                            WHERE e.employee = :employee
-                                            ORDER BY e.fromDate DESC""",
-                                    DeptManager.class
-                            )
-                            .setParameter("employee", employee)
-                            .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
-                            .getResultList();
+                        """
+                                SELECT e
+                                FROM DeptManager AS e
+                                WHERE e.employee = :employee
+                                ORDER BY e.fromDate DESC""",
+                        DeptManager.class
+                )
+                .setParameter("employee", employee)
+                .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
+                .getResultList();
     }
 
     private static List<DeptManager> selectAllByEmployee3(final EntityManager entityManager, final Employee employee,
@@ -70,8 +70,8 @@ class DeptManager_SelectAllByEmployee_IT
         );
         query.orderBy(builder.desc(root.get(DeptManager_.fromDate)));                        // ORDER BY e.fromDate DESC
         return entityManager.createQuery(query)
-                            .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
-                            .getResultList();
+                .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
+                .getResultList();
     }
 
     static List<DeptManager> selectAllByEmployee(final EntityManager entityManager, final Employee employee,

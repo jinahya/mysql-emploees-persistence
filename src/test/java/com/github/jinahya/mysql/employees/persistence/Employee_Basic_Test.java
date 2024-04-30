@@ -14,8 +14,8 @@ class Employee_Basic_Test
     @Override
     SingleTypeEqualsVerifierApi<Employee> equals__(final SingleTypeEqualsVerifierApi<Employee> verifierApi) {
         return super.equals__(verifierApi)
-                    .suppress(Warning.SURROGATE_KEY)
-                    .withPrefabValues(Employee.class, Employee.of(0), Employee.of(1))
+                .suppress(Warning.SURROGATE_KEY)
+                .withPrefabValues(Employee.class, Employee.of(0), Employee.of(1))
                 ;
     }
 }

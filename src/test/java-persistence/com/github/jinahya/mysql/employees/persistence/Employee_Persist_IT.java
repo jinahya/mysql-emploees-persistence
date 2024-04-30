@@ -29,7 +29,7 @@ class Employee_Persist_IT
             instance.setLastName("Last");                           // TODO: Use your own
             instance.setGender(                                     // TODO: Use your own
                                                                     ThreadLocalRandom.current()
-                                                                                     .nextBoolean() ? Employee.Gender.M : Employee.Gender.F
+                                                                            .nextBoolean() ? Employee.Gender.M : Employee.Gender.F
             );
             instance.setHireDate(LocalDate.now());
             // ------------------------------------------------------------------------------------------------- persist

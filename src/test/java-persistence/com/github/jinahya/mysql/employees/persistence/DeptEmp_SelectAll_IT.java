@@ -42,8 +42,12 @@ class DeptEmp_SelectAll_IT
         final var root = query.from(DeptEmp.class);                                             // FROM DeptEmp AS e
         query.select(root);                                                                     // SELECT e
         query.orderBy(                                                                          // ORDER BY
-                builder.asc(root.get(DeptEmp_.empNo)),                                          //     e.empNo ASC
-                builder.asc(root.get(DeptEmp_.deptNo))                                          //     e.deptNo ASC
+                                                                                                builder.asc(root.get(
+                                                                                                        DeptEmp_.empNo)),
+                                                                                                //     e.empNo ASC
+                                                                                                builder.asc(root.get(
+                                                                                                        DeptEmp_.deptNo))
+                                                                                                //     e.deptNo ASC
         );
         return entityManager.createQuery(query)
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))

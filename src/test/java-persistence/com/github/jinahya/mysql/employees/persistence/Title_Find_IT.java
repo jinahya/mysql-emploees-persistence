@@ -25,9 +25,9 @@ class Title_Find_IT
                                                           e.id.title ASC,
                                                           e.id.fromDate ASC""",
                                          TitleId.class
-                            )
-                            .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
-                            .getResultList();
+                )
+                .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
+                .getResultList();
     }
 
     private static List<TitleId> selectTitleIdList2(final EntityManager entityManager, final Integer maxResults) {
@@ -48,8 +48,8 @@ class Title_Find_IT
                                                                                                   //   e.id.fromDate ASC
         );
         return entityManager.createQuery(query)
-                            .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
-                            .getResultList();
+                .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
+                .getResultList();
     }
 
     private static List<TitleId> selectTitleIdList(final EntityManager entityManager, final Integer maxResults) {

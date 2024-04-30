@@ -6,7 +6,6 @@ import jakarta.persistence.EntityManager;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 
 class DeptEmpServiceImpl
         implements DeptEmpService {
@@ -34,6 +33,7 @@ class DeptEmpServiceImpl
     public void unassign(@Nonnull Employee employee, @Nonnull Department department) {
 
     }
+
     // -----------------------------------------------------------------------------------------------------------------
     @Inject
     private EntityManager entityManager;

@@ -18,10 +18,10 @@ class Department_Querydsl_SelectOneByDeptName_IT
 
     static List<String> getDeptNameList(final JPAQuery<Department> query, final Long limit) {
         return query.select(QDepartment.department.deptName)                                     // SELECT dept_name
-                    .from(QDepartment.department)                                                // FROM departments
-                    .orderBy(QDepartment.department.deptNo.asc())                                // ORDER BY dept_no ASC
-                    .limit(Optional.ofNullable(limit).orElse((long) Integer.MAX_VALUE))          // LIMIT ?, ?
-                    .fetch();
+                .from(QDepartment.department)                                                // FROM departments
+                .orderBy(QDepartment.department.deptNo.asc())                                // ORDER BY dept_no ASC
+                .limit(Optional.ofNullable(limit).orElse((long) Integer.MAX_VALUE))          // LIMIT ?, ?
+                .fetch();
     }
 
     // -----------------------------------------------------------------------------------------------------------------

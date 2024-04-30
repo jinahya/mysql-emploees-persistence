@@ -47,8 +47,8 @@ class DeptManager_SelectAll_IT
                                                                                                 //   e.id.deptNo ASC
         );
         return entityManager.createQuery(query)
-                            .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
-                            .getResultList();
+                .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
+                .getResultList();
     }
 
     // -----------------------------------------------------------------------------------------------------------------

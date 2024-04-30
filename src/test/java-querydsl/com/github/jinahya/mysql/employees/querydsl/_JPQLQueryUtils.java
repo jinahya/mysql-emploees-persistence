@@ -24,9 +24,9 @@ final class _JPQLQueryUtils {
         Objects.requireNonNull(idExpressionMapper, "idExpressionMapper is null");
         Objects.requireNonNull(idValue, "idValue is null");
         return query.select(entityPath)
-                    .from(entityPath)
-                    .where(idExpressionMapper.apply(entityPath).eq(idValue))
-                    .fetchOne(); // NonUniqueResultException
+                .from(entityPath)
+                .where(idExpressionMapper.apply(entityPath).eq(idValue))
+                .fetchOne(); // NonUniqueResultException
     }
 
     static <T, U extends EntityPath<T>, V> T fetchOneById(

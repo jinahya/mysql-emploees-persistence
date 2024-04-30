@@ -13,6 +13,6 @@ class SalaryId_Test
     @Override
     SingleTypeEqualsVerifierApi<SalaryId> equals__(final SingleTypeEqualsVerifierApi<SalaryId> verifierApi) {
         return super.equals__(verifierApi)
-                    .suppress(Warning.NONFINAL_FIELDS);
+                .suppress(Warning.NONFINAL_FIELDS);
     }
 }
