@@ -8,6 +8,7 @@ import lombok.*;
 
 import java.io.Serial;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -56,7 +57,7 @@ import java.util.Optional;
                 ORDER BY e.fromDate DESC"""
 )
 @NamedQuery(
-        name = "DeptEmp.selectAllByEmpNo",
+        name = DeptEmpConstants.NAMED_QUERY_NAME_SELECT_ALL_BY_EMP_NO,
         query = """
                 SELECT e
                 FROM DeptEmp AS e
@@ -115,6 +116,8 @@ public class DeptEmp
     public static final String COLUMN_NAME_FROM_DATE = _DomainConstants.COLUMN_NAME_FROM_DATE;
 
     public static final String ATTRIBUTE_NAME_FROM_DATE = "fromDate";
+
+    public static final Comparator<DeptEmp> COMPARING_FROM_DATE = Comparator.comparing(DeptEmp::getFromDate);
 
     // --------------------------------------------------------------------------------------------------------- to_date
     public static final String COLUMN_NAME_TO_DATE = _DomainConstants.COLUMN_NAME_TO_DATE;

@@ -49,8 +49,14 @@ abstract class _BaseEntityIT<ENTITY extends _BaseEntity<ID>, ID extends Serializ
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+    // TODO: remove!
     @Test
     void doNothing() {
+    }
+
+    // ----------------------------------------------------------------------------------------------- super.entityClass
+    final long selectCount() {
+        return applyEntityManager(em -> _BaseEntityIT_Utils.selectCount(em, entityClass));
     }
 
     // --------------------------------------------------------------------------------------------------- entityManager

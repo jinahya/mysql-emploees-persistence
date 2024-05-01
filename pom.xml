@@ -159,16 +159,16 @@
   <build>
     <pluginManagement>
       <plugins>
-        <plugin>
-          <groupId>au.com.alderaan</groupId>
-          <artifactId>eclipselink-staticweave-maven-plugin</artifactId>
-          <version>1.0.4</version>
-        </plugin>
-        <plugin>
-          <groupId>de.empulse.eclipselink</groupId>
-          <artifactId>staticweave-maven-plugin</artifactId>
-          <version>1.0.0</version>
-        </plugin>
+        <!--        <plugin>-->
+        <!--          <groupId>au.com.alderaan</groupId>-->
+        <!--          <artifactId>eclipselink-staticweave-maven-plugin</artifactId>-->
+        <!--          <version>1.0.4</version>-->
+        <!--        </plugin>-->
+        <!--        <plugin>-->
+        <!--          <groupId>de.empulse.eclipselink</groupId>-->
+        <!--          <artifactId>staticweave-maven-plugin</artifactId>-->
+        <!--          <version>1.0.0</version>-->
+        <!--        </plugin>-->
         <plugin>
           <groupId>com.mysema.maven</groupId>
           <artifactId>apt-maven-plugin</artifactId>

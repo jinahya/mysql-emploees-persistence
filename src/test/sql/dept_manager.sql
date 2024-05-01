@@ -120,3 +120,14 @@ WHERE to_date = '9999-01-01'
 GROUP BY dept_no
 HAVING emp_no_count > 1
 ;
+
+
+SELECT dm.emp_no, dm.dept_no, de.emp_no, de.dept_no
+FROM dept_manager AS dm
+         LEFT JOIN dept_emp AS de
+                   ON dm.emp_no = de.emp_no
+                       AND dm.dept_no = de.dept_no
+#                        AND dm.from_date = de.from_date
+#                        AND dm.to_date = de.to_date
+WHERE de.emp_no IS NULL
+;
