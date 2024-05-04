@@ -4,7 +4,6 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
@@ -15,7 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Disabled
+@org.junit.jupiter.api.Disabled
 @Slf4j
 class Salary_SelectAll_IT
         extends Salary__IT {
@@ -47,18 +46,14 @@ class Salary_SelectAll_IT
         Objects.requireNonNull(entityManager, "entityManager is null");
         final var builder = entityManager.getCriteriaBuilder();
         final var query = builder.createQuery(Salary.class);
+        // @formatter:off
         final var root = query.from(Salary.class);                                                   // FROM Salary AS e
         query.select(root);                                                                          // SELECT e
         query.orderBy(                                                                               // ORDER BY
-                                                                                                     builder.asc(
-                                                                                                             root.get(
-                                                                                                                     Salary_.empNo)),
-                                                                                                     //   e.empNo
-                                                                                                     builder.asc(
-                                                                                                             root.get(
-                                                                                                                     Salary_.fromDate))
-                                                                                                     //   e.fromDate
+                builder.asc(root.get(Salary_.empNo)),                                                //     e.empNo
+                builder.asc(root.get(Salary_.fromDate))                                              //       e.fromDate
         );
+        // @formatter:on
         return entityManager
                 .createQuery(query)
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))

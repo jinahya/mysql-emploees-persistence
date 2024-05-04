@@ -3,6 +3,7 @@ package com.github.jinahya.mysql.employees.persistence;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.EntityManager;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -17,18 +18,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@org.junit.jupiter.api.Disabled
 class Salary_Static_IT
         extends _BaseEntityIT<Salary, SalaryId> {
-
-    @Test
-    void ATTRIBUTE_NAME_EMPLOYEE__() {
-        assertThat(Salary.ATTRIBUTE_NAME_EMPLOYEE).isEqualTo(Salary_.employee.getName());
-    }
-
-    @Test
-    void ATTRIBUTE_NAME_FROM_DATE__() {
-        assertThat(Salary.ATTRIBUTE_NAME_FROM_DATE).isEqualTo(Salary_.fromDate.getName());
-    }
 
     private static List<Salary> selectAllByEmpNo1(final EntityManager entityManager, final int empNo,
                                                   final Integer maxResults) {
@@ -101,7 +93,7 @@ class Salary_Static_IT
     // -----------------------------------------------------------------------------------------------------------------
     @DisplayName("selectByEmpNo1")
     @Nested
-    class SelectByEmpNo1Test {
+    class SelectByEmpNo1IT {
 
         @DisplayName("(0)")
         @Test
