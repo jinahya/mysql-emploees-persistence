@@ -3,7 +3,8 @@ package com.github.jinahya.mysql.employees.persistence;
 import nl.jqno.equalsverifier.Warning;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 
-class DeptEmpId_Test extends _BaseIdTest<DeptEmpId> {
+class DeptEmpId_Test
+        extends _BaseId_Test<DeptEmpId> {
 
     DeptEmpId_Test() {
         super(DeptEmpId.class);

@@ -32,7 +32,8 @@ import java.util.Objects;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor
-public class DeptEmpLatestDate extends _BaseEntity<Integer> {
+public class DeptEmpLatestDate
+        extends _BaseEntity<Integer> {
 
     @Serial
     private static final long serialVersionUID = 4331323808137781879L;
@@ -69,6 +70,13 @@ public class DeptEmpLatestDate extends _BaseEntity<Integer> {
     @Override
     public int hashCode() {
         return Objects.hash(empNo);
+    }
+
+    // -------------------------------------------------------------------------------------------------------------- id
+
+    @Override
+    Integer getId() {
+        return getEmpNo();
     }
 
     // -----------------------------------------------------------------------------------------------------------------

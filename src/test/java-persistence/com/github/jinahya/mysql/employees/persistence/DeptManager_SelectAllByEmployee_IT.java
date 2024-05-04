@@ -14,7 +14,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class DeptManager_SelectAllByEmployee_IT extends _BaseEntityIT<DeptManager, DeptManagerId> {
+class DeptManager_SelectAllByEmployee_IT
+        extends _BaseEntityIT<DeptManager, DeptManagerId> {
 
     static List<Employee> selectDistinctEmployeeList(final EntityManager entityManager) {
         return entityManager
@@ -58,10 +59,14 @@ class DeptManager_SelectAllByEmployee_IT extends _BaseEntityIT<DeptManager, Dept
         final var root = query.from(DeptManager.class);                                      // FROM Department AS e
         query.select(root);                                                                  // SELECT e
         query.where(                                                                         // WHERE
-                builder.equal(                                                               //     =
-                        root.get(DeptManager_.employee),                                     //     e.id.empNo
-                        employee                                                             //     idEmpNo
-                )
+                                                                                             builder.equal(
+                                                                                                     //     =
+                                                                                                     root.get(
+                                                                                                             DeptManager_.employee),
+                                                                                                     //     e.id.empNo
+                                                                                                     employee
+                                                                                                     //     idEmpNo
+                                                                                             )
         );
         query.orderBy(builder.desc(root.get(DeptManager_.fromDate)));                        // ORDER BY e.fromDate DESC
         return entityManager.createQuery(query)

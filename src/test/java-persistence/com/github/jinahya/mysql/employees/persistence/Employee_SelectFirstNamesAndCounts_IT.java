@@ -14,7 +14,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
-class Employee_SelectFirstNamesAndCounts_IT extends _BaseEntityIT<Employee, Integer> {
+class Employee_SelectFirstNamesAndCounts_IT
+        extends _BaseEntityIT<Employee, Integer> {
 
     private static List<Object[]> selectFirstNamesAndCounts1(final EntityManager entityManager) {
         return entityManager
@@ -43,8 +44,10 @@ class Employee_SelectFirstNamesAndCounts_IT extends _BaseEntityIT<Employee, Inte
         final var count = builder.count(firstName);
         final var c = count.alias("c");
         query.select(builder.array(                                                           // SELECT
-                firstName,                                                                    // e.firstName,
-                c                                                                             // COUNT(e.firstName) AS c
+                                                                                              firstName,
+                                                                                              // e.firstName,
+                                                                                              c
+                                                                                              // COUNT(e.firstName) AS c
         ));
         query.groupBy(firstName);                                                             // GROUP BY e.firstName
         query.orderBy(builder.desc((Expression<?>) c));                                       // ORDER BY c DESC
@@ -68,8 +71,10 @@ class Employee_SelectFirstNamesAndCounts_IT extends _BaseEntityIT<Employee, Inte
         final var count = builder.count(firstName);
         final var c = count.alias("c");
         query.select(builder.tuple(                                                           // SELECT
-                firstName,                                                                    // e.firstName,
-                c                                                                             // COUNT(e.firstName) AS c
+                                                                                              firstName,
+                                                                                              // e.firstName,
+                                                                                              c
+                                                                                              // COUNT(e.firstName) AS c
         ));
         query.groupBy(firstName);                                                             // GROUP BY e.firstName
         query.orderBy(builder.desc((Expression<?>) c));                                       // ORDER BY c DESC

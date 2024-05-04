@@ -10,7 +10,8 @@ import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
-class Salary_SelectAllAvgSalaryByEmployeeGender_IT extends _BaseEntityIT<Salary, SalaryId> {
+class Salary_SelectAllAvgSalaryByEmployeeGender_IT
+        extends Salary__IT {
 
     private static List<Object[]> selectAllAvgSalaryByEmployeeGender1(final EntityManager entityManager) {
         Objects.requireNonNull(entityManager, "entityManager is null");
@@ -27,8 +28,11 @@ class Salary_SelectAllAvgSalaryByEmployeeGender_IT extends _BaseEntityIT<Salary,
         final var employee = salary.join(Salary_.employee);                                    //   JOIN s.employee AS e
         final var gender = employee.get(Employee_.gender);
         query.multiselect(                                                                     // SELECT
-                gender,                                                                        //   e.gender,
-                builder.avg(salary.get(Salary_.salary))                                        //   AVG(s.salary)
+                                                                                               gender,
+                                                                                               //   e.gender,
+                                                                                               builder.avg(salary.get(
+                                                                                                       Salary_.salary))
+                                                                                               //   AVG(s.salary)
         );
         query.groupBy(gender);                                                                 // GROUP BY e.gender
         query.orderBy(builder.asc(gender));                                                    // ORDER BY e.gender
@@ -45,12 +49,6 @@ class Salary_SelectAllAvgSalaryByEmployeeGender_IT extends _BaseEntityIT<Salary,
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    Salary_SelectAllAvgSalaryByEmployeeGender_IT() {
-        super(Salary.class);
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-
     @Test
     void selectAllAvgSalaryByEmployeeGender1__() {
         // -------------------------------------------------------------------------------------------------------- when

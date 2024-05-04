@@ -1,5 +1,6 @@
 package com.github.jinahya.mysql.employees.persistence;
 
+import jakarta.annotation.Nonnull;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -11,10 +12,12 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import org.jboss.weld.junit5.auto.AddBeanClasses;
 import org.jboss.weld.junit5.auto.WeldJunit5AutoExtension;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -32,13 +35,21 @@ import java.util.function.Function;
 @ExtendWith(WeldJunit5AutoExtension.class)
 @Slf4j
 abstract class _BaseEntityIT<ENTITY extends _BaseEntity<ID>, ID extends Serializable>
-        extends __BaseEntityTest<ENTITY, ID> {
+        extends __BaseEntity__Test<ENTITY, ID> {
 
-    // -----------------------------------------------------------------------------------------------------------------
-    @Deprecated(forRemoval = true)
-    _BaseEntityIT(final Class<ENTITY> entityClass, final Class<ID> idClass) {
-        super(entityClass, idClass);
+    private static final Method CLOSE_METHOD;
+
+    static {
+        try {
+            CLOSE_METHOD = EntityManager.class.getMethod("close");
+        } catch (final NoSuchMethodException nsme) {
+            throw new InstantiationError(nsme.getMessage());
+        }
     }
+
+    // ------------------------------------------------------------------------------------------ STATIC-FACTORY_METHODS
+
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
     /**
      * Creates a new instance for testing specified entity class.
@@ -47,12 +58,7 @@ abstract class _BaseEntityIT<ENTITY extends _BaseEntity<ID>, ID extends Serializ
      * @see #entityClass
      */
     _BaseEntityIT(final Class<ENTITY> entityClass) {
-        this(entityClass, null);
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    @Test
-    void doNothing() {
+        super(entityClass);
     }
 
     // --------------------------------------------------------------------------------------------------- entityManager
@@ -88,6 +94,26 @@ abstract class _BaseEntityIT<ENTITY extends _BaseEntity<ID>, ID extends Serializ
     final <R> R applyEntityManagerInTransactionAndRollback(
             final Function<? super EntityManager, ? extends R> function) {
         return applyEntityManagerInTransaction(function, EntityTransaction::rollback);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    final <R> R applyConnection(final @Nonnull Function<? super Connection, ? extends R> function) {
+        Objects.requireNonNull(function, "function is null");
+        return applyEntityManager(em -> {
+            try (var connection = __Lang_Utils.uncloseable(Connection.class, null, em.unwrap(Connection.class))) {
+                return function.apply(connection);
+            } catch (final SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    final void acceptConnection(final @Nonnull Consumer<? super Connection> consumer) {
+        Objects.requireNonNull(consumer, "consumer is null");
+        applyConnection(c -> {
+            consumer.accept(c);
+            return null;
+        });
     }
 
     // ------------------------------------------------------------------------------------------------------ entityName

@@ -18,7 +18,8 @@ import java.util.Objects;
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor
-public class CurrentDeptEmp extends _BaseEntity<CurrentDeptEmpId> {
+public class CurrentDeptEmp
+        extends _BaseEntity<CurrentDeptEmpId> {
 
     @Serial
     private static final long serialVersionUID = -1037825398322458255L;
@@ -31,16 +32,16 @@ public class CurrentDeptEmp extends _BaseEntity<CurrentDeptEmpId> {
     public static final String VIEW_NAME = "current_dept_emp";
 
     // ---------------------------------------------------------------------------------------------------------- emp_no
-    public static final String COLUMN_NAME_EMP_NO = DeptEmp.COLUMN_NAME_EMP_NO;
+    public static final String COLUMN_NAME_EMP_NO = DeptEmpLatestDate.COLUMN_NAME_EMP_NO;
 
     // --------------------------------------------------------------------------------------------------------- dept_no
     public static final String COLUMN_NAME_DEPT_NO = DeptEmp.COLUMN_NAME_DEPT_NO;
 
     // ------------------------------------------------------------------------------------------------------- from_date
-    public static final String COLUMN_NAME_FROM_DATE = DeptEmp.COLUMN_NAME_FROM_DATE;
+    public static final String COLUMN_NAME_FROM_DATE = DeptEmpLatestDate.COLUMN_NAME_FROM_DATE;
 
     // --------------------------------------------------------------------------------------------------------- to_date
-    public static final String COLUMN_NAME_TO_DATE = DeptEmp.COLUMN_NAME_TO_DATE;
+    public static final String COLUMN_NAME_TO_DATE = DeptEmpLatestDate.COLUMN_NAME_TO_DATE;
 
     // -----------------------------------------------------------------------------------------------------------------
 
@@ -59,6 +60,16 @@ public class CurrentDeptEmp extends _BaseEntity<CurrentDeptEmpId> {
     @Override
     public int hashCode() {
         return Objects.hash(empNo, deptNo);
+    }
+
+    // -------------------------------------------------------------------------------------------------------------- id
+
+    @Override
+    CurrentDeptEmpId getId() {
+        final var id = new CurrentDeptEmpId();
+        id.setEmpNo(getEmpNo());
+        id.setDeptNo(getDeptNo());
+        return id;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -81,24 +92,10 @@ public class CurrentDeptEmp extends _BaseEntity<CurrentDeptEmpId> {
     @Valid
     @NotNull
     @OneToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumns(
-            value = {
-                    @JoinColumn(
-                            name = COLUMN_NAME_EMP_NO,
-                            nullable = false,
-                            insertable = false,
-                            updatable = false,
-                            referencedColumnName = DeptEmp.COLUMN_NAME_EMP_NO
-                    ),
-                    @JoinColumn(
-                            name = COLUMN_NAME_DEPT_NO,
-                            nullable = false,
-                            insertable = false,
-                            updatable = false,
-                            referencedColumnName = DeptEmp.COLUMN_NAME_DEPT_NO
-                    )
-            }
-    )
+    @JoinColumn(name = COLUMN_NAME_EMP_NO, referencedColumnName = DeptEmp.COLUMN_NAME_EMP_NO, nullable = false,
+                insertable = false, updatable = false)
+    @JoinColumn(name = COLUMN_NAME_DEPT_NO, referencedColumnName = DeptEmp.COLUMN_NAME_DEPT_NO, nullable = false,
+                insertable = false, updatable = false)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private DeptEmp deptEmp;

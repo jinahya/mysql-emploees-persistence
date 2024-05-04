@@ -63,7 +63,8 @@ import java.util.Optional;
 @SuppressWarnings({
         "java:S1700" // Integer salary -> class Salary
 })
-public class Salary extends _BaseEntity<SalaryId> {
+public class Salary
+        extends _BaseEntity<SalaryId> {
 
     @Serial
     private static final long serialVersionUID = 604718367871825963L;
@@ -113,6 +114,16 @@ public class Salary extends _BaseEntity<SalaryId> {
             return true;
         }
         return !fromDate.isAfter(toDate);
+    }
+
+    // -------------------------------------------------------------------------------------------------------------- id
+
+    @Override
+    SalaryId getId() {
+        final var id = new SalaryId();
+        id.setEmpNo(getEmpNo());
+        id.setFromDate(getFromDate());
+        return id;
     }
 
     // -------------------------------------------------------------------------------------------------- empNo/employee

@@ -14,6 +14,17 @@ FROM titles
 ;
 
 -- -------------------------------------------------------------------------------------------------------------- emp_no
+SELECT emp_no, COUNT(1) AS c
+FROM titles
+GROUP BY emp_no
+HAVING c > 1
+ORDER BY c DESC
+;
+SELECT *
+FROM titles
+WHERE emp_no = 479669
+ORDER BY from_date ASC
+;
 
 -- --------------------------------------------------------------------------------------------------------------- title
 SELECT DISTINCT title

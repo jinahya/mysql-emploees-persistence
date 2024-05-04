@@ -8,9 +8,37 @@ import lombok.*;
 
 import java.io.Serial;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * An entity class maps {@value DeptEmp#TABLE_NAME} table.
+ *
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ * @see DeptEmpId
+ * @see Department
+ * @see Employee
+ */
+@NamedEntityGraph(
+        name = "DeptEmp.department",
+        attributeNodes = {
+                @NamedAttributeNode(DeptEmp.ATTRIBUTE_NAME_DEPARTMENT)
+        }
+)
+@NamedEntityGraph(
+        name = "DeptEmp.employee",
+        attributeNodes = {
+                @NamedAttributeNode(DeptEmp.ATTRIBUTE_NAME_EMPLOYEE)
+        }
+)
+@NamedEntityGraph(
+        name = "DeptEmp.employeeAndDepartment",
+        attributeNodes = {
+                @NamedAttributeNode(DeptEmp.ATTRIBUTE_NAME_EMPLOYEE),
+                @NamedAttributeNode(DeptEmp.ATTRIBUTE_NAME_DEPARTMENT)
+        }
+)
 @NamedQuery(
         name = "DeptEmp.selectAllByDepartment",
         query = """
@@ -20,7 +48,7 @@ import java.util.Optional;
                 order by e.fromDate DESC"""
 )
 @NamedQuery(
-        name = "DeptEmp.selectAllByDeptNo",
+        name = DeptEmpConstants.NAMED_QUERY_NAME_SELECT_ALL_BY_DEPT_NO,
         query = """
                 SELECT e
                 FROM DeptEmp AS e
@@ -36,7 +64,7 @@ import java.util.Optional;
                 ORDER BY e.fromDate DESC"""
 )
 @NamedQuery(
-        name = "DeptEmp.selectAllByEmpNo",
+        name = DeptEmpConstants.NAMED_QUERY_NAME_SELECT_ALL_BY_EMP_NO,
         query = """
                 SELECT e
                 FROM DeptEmp AS e
@@ -44,11 +72,22 @@ import java.util.Optional;
                 ORDER BY e.fromDate DESC"""
 )
 @NamedQuery(
+        name = "DeptEmp.selectAllFetch",
+        query = """
+                SELECT e
+                FROM DeptEmp AS e
+                JOIN FETCH e.department
+                JOIN FETCH e.employee
+                ORDER BY e.empNo ASC,
+                         e.deptNo ASC"""
+)
+@NamedQuery(
         name = "DeptEmp.selectAll",
         query = """
                 SELECT e
                 FROM DeptEmp AS e
-                ORDER BY e.empNo ASC, e.deptNo ASC"""
+                ORDER BY e.empNo ASC,
+                         e.deptNo ASC"""
 )
 @IdClass(DeptEmpId.class)
 @Entity
@@ -56,17 +95,26 @@ import java.util.Optional;
 @Setter
 @Getter
 @ToString(callSuper = true)
-@NoArgsConstructor
-public class DeptEmp extends _BaseEntity<DeptEmpId> {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class DeptEmp
+        extends _BaseEntity<DeptEmpId> {
 
     @Serial
     private static final long serialVersionUID = -6772594303267134517L;
 
     // -----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * The name of the database table to which this entity maps. The value is {@value}.
+     */
     public static final String TABLE_NAME = "dept_emp";
 
-    // -----------------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------------- emp_no
     public static final String COLUMN_NAME_EMP_NO = Employee.COLUMN_NAME_EMP_NO;
+
+    public static final String ATTRIBUTE_NAME_EMP_NO = "empNo";
+
+    public static final String ATTRIBUTE_NAME_EMPLOYEE = "employee";
 
     // -----------------------------------------------------------------------------------------------------------------
     public static final String COLUMN_NAME_DEPT_NO = Department.COLUMN_NAME_DEPT_NO;
@@ -79,13 +127,22 @@ public class DeptEmp extends _BaseEntity<DeptEmpId> {
 
     public static final int SIZE_MAX_DEPT_NO = Department.SIZE_MAX_DEPT_NO;
 
+    public static final String ATTRIBUTE_NAME_DEPARTMENT = "department";
+
     // ------------------------------------------------------------------------------------------------------- from_date
-    public static final String COLUMN_NAME_FROM_DATE = "from_date";
+    public static final String COLUMN_NAME_FROM_DATE = _DomainConstants.COLUMN_NAME_FROM_DATE;
+
+    public static final String ATTRIBUTE_NAME_FROM_DATE = "fromDate";
+
+    public static final Comparator<DeptEmp> COMPARING_FROM_DATE = Comparator.comparing(DeptEmp::getFromDate);
 
     // --------------------------------------------------------------------------------------------------------- to_date
-    public static final String COLUMN_NAME_TO_DATE = "to_date";
+    public static final String COLUMN_NAME_TO_DATE = _DomainConstants.COLUMN_NAME_TO_DATE;
 
-    public static final LocalDate COLUMN_VALUE_TO_DATE_UNSPECIFIED = LocalDate.of(9999, 1, 1);
+    public static final String ATTRIBUTE_NAME_TO_DATE = "toDate";
+
+    public static final LocalDate ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED =
+            _DomainConstants.ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED;
 
     // ------------------------------------------------------------------------------------------ STATIC FACTORY METHODS
     static DeptEmp of(final Integer empNo, final String deptNo) {
@@ -120,7 +177,7 @@ public class DeptEmp extends _BaseEntity<DeptEmpId> {
     @jakarta.persistence.PrePersist
     private void onPrePersist() {
         if (toDate == null) {
-            toDate = COLUMN_VALUE_TO_DATE_UNSPECIFIED;
+            toDate = ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED;
         }
     }
 
@@ -143,17 +200,23 @@ public class DeptEmp extends _BaseEntity<DeptEmpId> {
 
     /**
      * Asserts current value of {@link DeptEmp_#toDate toDate} attribute <em>is not after</em>
-     * {@link #COLUMN_VALUE_TO_DATE_UNSPECIFIED}.
+     * {@link #ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED}.
      *
      * @return {@code true} if current value of the {@link DeptEmp_#toDate toDate} attribute <em>is after</em> the
-     * {@link #COLUMN_VALUE_TO_DATE_UNSPECIFIED}; {@code false} otherwise.
+     * {@link #ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED}; {@code false} otherwise.
      */
     //    @jakarta.validation.constraints.AssertFalse
     private boolean isToDateAfterTheUnspecified() {
         if (toDate == null) {
             return false;
         }
-        return toDate.isAfter(COLUMN_VALUE_TO_DATE_UNSPECIFIED);
+        return toDate.isAfter(ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED);
+    }
+
+    // -------------------------------------------------------------------------------------------------------------- id
+    @Override
+    DeptEmpId getId() {
+        return DeptEmpId.of(getEmpNo(), getDeptNo());
     }
 
     // ------------------------------------------------------------------------------------------------- emp_no/employee

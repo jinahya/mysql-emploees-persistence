@@ -15,7 +15,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
-class Salary_SelectAllFetchEmployee_IT extends _BaseEntityIT<Salary, SalaryId> {
+class Salary_SelectAllFetchEmployee_IT
+        extends Salary__IT {
 
     private static List<Salary> selectAllFetchEmployee1(final @Nonnull EntityManager entityManager,
                                                         final @Nullable Integer maxResults) {
@@ -31,10 +32,10 @@ class Salary_SelectAllFetchEmployee_IT extends _BaseEntityIT<Salary, SalaryId> {
         Objects.requireNonNull(entityManager, "entityManager is null");
         return entityManager
                 .createQuery("""
-                                SELECT e
-                                FROM Salary AS e JOIN FETCH e.employee
-                                ORDER BY e.empNo, e.fromDate""",
-                        Salary.class)
+                                     SELECT e
+                                     FROM Salary AS e JOIN FETCH e.employee
+                                     ORDER BY e.empNo, e.fromDate""",
+                             Salary.class)
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
                 .getResultList();
     }
@@ -48,8 +49,12 @@ class Salary_SelectAllFetchEmployee_IT extends _BaseEntityIT<Salary, SalaryId> {
         query.select(root);                                                                   // SELECT e
         root.fetch(Salary_.employee);                                                         //   JOIN FETCH e.employee
         query.orderBy(                                                                        // ORDER BY
-                builder.asc(root.get(Salary_.empNo)),                                         //   e.empNo
-                builder.asc(root.get(Salary_.fromDate))                                       //   e.fromDate
+                                                                                              builder.asc(root.get(
+                                                                                                      Salary_.empNo)),
+                                                                                              //   e.empNo
+                                                                                              builder.asc(root.get(
+                                                                                                      Salary_.fromDate))
+                                                                                              //   e.fromDate
         );
         return entityManager
                 .createQuery(query)
@@ -63,11 +68,6 @@ class Salary_SelectAllFetchEmployee_IT extends _BaseEntityIT<Salary, SalaryId> {
             case 1 -> selectAllFetchEmployee2(entityManager, maxResults);
             default -> selectAllFetchEmployee3(entityManager, maxResults);
         };
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    Salary_SelectAllFetchEmployee_IT() {
-        super(Salary.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

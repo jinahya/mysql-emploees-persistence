@@ -15,7 +15,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Disabled
-class Salary_SelectAllByEmployee_IT extends _BaseEntityIT<Salary, SalaryId> {
+class Salary_SelectAllByEmployee_IT
+        extends Salary__IT {
 
     private static List<Salary> selectAllByEmployee1(final EntityManager entityManager, final Employee employee,
                                                      final Integer maxResults) {
@@ -32,11 +33,11 @@ class Salary_SelectAllByEmployee_IT extends _BaseEntityIT<Salary, SalaryId> {
         Objects.requireNonNull(entityManager, "entityManager is null");
         return entityManager
                 .createQuery("""
-                                SELECT e
-                                FROM Salary AS e
-                                WHERE e.employee = :employee
-                                ORDER BY e.fromDate DESC""",
-                        Salary.class)
+                                     SELECT e
+                                     FROM Salary AS e
+                                     WHERE e.employee = :employee
+                                     ORDER BY e.fromDate DESC""",
+                             Salary.class)
                 .setParameter("employee", employee)
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
                 .getResultList();
@@ -64,11 +65,6 @@ class Salary_SelectAllByEmployee_IT extends _BaseEntityIT<Salary, SalaryId> {
             case 1 -> selectOneByEmployee2(entityManager, employee, maxResults);
             default -> selectOneByEmployee3(entityManager, employee, maxResults);
         };
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    Salary_SelectAllByEmployee_IT() {
-        super(Salary.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

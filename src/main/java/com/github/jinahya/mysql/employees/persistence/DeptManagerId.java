@@ -1,5 +1,7 @@
 package com.github.jinahya.mysql.employees.persistence;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -10,16 +12,18 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.Optional;
 
 @Embeddable
 @Setter
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor//(access = AccessLevel.PROTECTED)
-public class DeptManagerId implements Serializable, Comparable<DeptManagerId> {
+public class DeptManagerId
+        implements _BaseId,
+                   Comparable<DeptManagerId> {
 
     @Serial
     private static final long serialVersionUID = 3570976925092865329L;
@@ -53,6 +57,44 @@ public class DeptManagerId implements Serializable, Comparable<DeptManagerId> {
     @Override
     public int compareTo(final DeptManagerId o) {
         return COMPARING_EMP_NO_THEN_COMPARING_DEPT_NO.compare(this, o);
+    }
+
+    // ----------------------------------------------------------------------------------------------------------- empNo
+
+    /**
+     * Replaces current value of {@link DeptManagerId_#empNo empNo} attribute with specified employee's
+     * {@link Employee_#empNo empNo} attribute, and returns this object.
+     *
+     * @param employee the employee whose {@link Employee_#empNo empNo} is set to {@link DeptManagerId_#empNo}
+     *                 attribute; may be {@code null}.
+     * @return this object.
+     */
+    public @Nonnull DeptManagerId employee(final @Nullable Employee employee) {
+        setEmpNo(
+                Optional.ofNullable(employee)
+                        .map(Employee::getEmpNo)
+                        .orElse(null)
+        );
+        return this;
+    }
+
+    // ---------------------------------------------------------------------------------------------------------- deptNo
+
+    /**
+     * Replaces current value of {@link DeptManagerId_#deptNo deptNo} attribute with specified department's
+     * {@link Department_#deptNo deptNo} attribute, and returns this object.
+     *
+     * @param department the department whose {@link Department_#deptNo deptNo} is set to {@link DeptManagerId_#deptNo}
+     *                   attribute; may be {@code null}.
+     * @return this object.
+     */
+    public DeptManagerId department(final Department department) {
+        setDeptNo(
+                Optional.ofNullable(department)
+                        .map(Department::getDeptNo)
+                        .orElse(null)
+        );
+        return this;
     }
 
     // -----------------------------------------------------------------------------------------------------------------

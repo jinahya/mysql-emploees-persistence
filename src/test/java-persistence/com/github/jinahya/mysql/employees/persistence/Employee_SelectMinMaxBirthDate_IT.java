@@ -10,7 +10,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
-class Employee_SelectMinMaxBirthDate_IT extends _BaseEntityIT<Employee, Integer> {
+class Employee_SelectMinMaxBirthDate_IT
+        extends _BaseEntityIT<Employee, Integer> {
 
     private static Object[] selectMinMaxBirthDate1(final EntityManager entityManager) {
         return entityManager
@@ -29,8 +30,10 @@ class Employee_SelectMinMaxBirthDate_IT extends _BaseEntityIT<Employee, Integer>
         final var query = builder.createQuery(Object[].class);
         final var root = query.from(Employee.class);            // FROM Employee AS e
         query.select(builder.array(                             // SELECT
-                builder.least(root.get(Employee_.birthDate)),   // MIN(e.birthDate),
-                builder.greatest(root.get(Employee_.birthDate)) // MAX(e.birthDate)
+                                                                builder.least(root.get(Employee_.birthDate)),
+                                                                // MIN(e.birthDate),
+                                                                builder.greatest(root.get(Employee_.birthDate))
+                                                                // MAX(e.birthDate)
         ));
         return entityManager.createQuery(query).getSingleResult();
     }

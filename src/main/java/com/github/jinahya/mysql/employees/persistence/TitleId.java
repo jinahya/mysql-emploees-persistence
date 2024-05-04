@@ -13,12 +13,18 @@ import java.io.Serial;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * An id class for {@link Title} entity.
+ *
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ */
 @Embeddable
 @Setter
 @Getter
 @ToString(callSuper = true)
 @NoArgsConstructor//(access = AccessLevel.PROTECTED)
-public class TitleId implements _BaseId {
+public class TitleId
+        implements _BaseId {
 
     @Serial
     private static final long serialVersionUID = -7452067856104640617L;

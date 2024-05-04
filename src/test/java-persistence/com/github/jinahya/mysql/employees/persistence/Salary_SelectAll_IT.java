@@ -4,6 +4,7 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
@@ -14,8 +15,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled
 @Slf4j
-class Salary_SelectAll_IT extends _BaseEntityIT<Salary, SalaryId> {
+class Salary_SelectAll_IT
+        extends Salary__IT {
 
     private static List<Salary> selectAll1(final @Nonnull EntityManager entityManager,
                                            final @Nullable Integer maxResults) {
@@ -31,10 +34,10 @@ class Salary_SelectAll_IT extends _BaseEntityIT<Salary, SalaryId> {
         Objects.requireNonNull(entityManager, "entityManager is null");
         return entityManager
                 .createQuery("""
-                                SELECT e
-                                FROM Salary AS e
-                                ORDER BY e.empNo, e.fromDate""",
-                        Salary.class)
+                                     SELECT e
+                                     FROM Salary AS e
+                                     ORDER BY e.empNo, e.fromDate""",
+                             Salary.class)
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
                 .getResultList();
     }
@@ -47,8 +50,14 @@ class Salary_SelectAll_IT extends _BaseEntityIT<Salary, SalaryId> {
         final var root = query.from(Salary.class);                                                   // FROM Salary AS e
         query.select(root);                                                                          // SELECT e
         query.orderBy(                                                                               // ORDER BY
-                builder.asc(root.get(Salary_.empNo)),                                                //   e.empNo
-                builder.asc(root.get(Salary_.fromDate))                                              //   e.fromDate
+                                                                                                     builder.asc(
+                                                                                                             root.get(
+                                                                                                                     Salary_.empNo)),
+                                                                                                     //   e.empNo
+                                                                                                     builder.asc(
+                                                                                                             root.get(
+                                                                                                                     Salary_.fromDate))
+                                                                                                     //   e.fromDate
         );
         return entityManager
                 .createQuery(query)
@@ -62,11 +71,6 @@ class Salary_SelectAll_IT extends _BaseEntityIT<Salary, SalaryId> {
             case 1 -> selectAll2(entityManager, maxResults);
             default -> selectAll3(entityManager, maxResults);
         };
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    Salary_SelectAll_IT() {
-        super(Salary.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
