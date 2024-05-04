@@ -51,6 +51,9 @@ abstract class _BaseEntity_Basic_Test<ENTITY extends _BaseEntity<ID>, ID extends
     // ------------------------------------------------------------------------------------------------- equals/hashCode
     @Test
     void equals__() {
+        if (Boolean.parseBoolean(System.getProperty("eclipselink.woven"))) {
+            return;
+        }
         final var verifierApi = EqualsVerifier.forClass(entityClass);
         equals__(verifierApi);
         verifierApi.verify();

@@ -25,6 +25,7 @@
       <!-- eclipselink -->
       <property name="eclipselink.logging.level.sql" value="FINE"/>
       <property name="eclipselink.logging.parameters" value="true"/>
+<!--      <property name="eclipselink.weaving" value="true"/>-->
       <!-- hibernate -->
       <property name="hibernate.format_sql" value="true"/>
       <property name="hibernate.show_sql" value="true"/>

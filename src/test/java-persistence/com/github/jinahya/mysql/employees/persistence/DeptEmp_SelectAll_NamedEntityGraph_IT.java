@@ -3,36 +3,38 @@ package com.github.jinahya.mysql.employees.persistence;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.EntityManager;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("selectAll")
-class DeptEmp_SelectAll_IT
+@DisplayName("selectAll_NamedEntityGraph")
+@Slf4j
+class DeptEmp_SelectAll_NamedEntityGraph_IT
         extends DeptEmp__IT {
-
-    private static final Comparator<DeptEmp> COMPARING_EMP_NO_THEN_COMPARING_DEPT_NO
-            = Comparator.comparing(DeptEmp::getEmpNo).thenComparing(DeptEmp::getDeptNo);
 
     // -----------------------------------------------------------------------------------------------------------------
     private static
     @Nonnull List<DeptEmp> selectAllUsingNamedQuery(final @Nonnull EntityManager entityManager,
                                                     final @Nullable Integer maxResults) {
+        final var entityGraph = entityManager.createEntityGraph("DeptEmp.employeeAndDepartment");
         return entityManager
                 .createNamedQuery("DeptEmp.selectAll", DeptEmp.class)
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
+                .setHint("jakarta.persistence.fetchgraph", entityGraph)
+//                .setHint("jakarta.persistence.loadgraph", entityGraph)
                 .getResultList();
     }
 
     private static
     @Nonnull List<DeptEmp> selectAllUsingQueryLanguage(final @Nonnull EntityManager entityManager,
                                                        final @Nullable Integer maxResults) {
+        final var entityGraph = entityManager.createEntityGraph("DeptEmp.employeeAndDepartment");
         return entityManager
                 .createQuery(
                         """
@@ -42,12 +44,15 @@ class DeptEmp_SelectAll_IT
                         DeptEmp.class
                 )
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
+                .setHint("jakarta.persistence.fetchgraph", entityGraph)
+//                .setHint("jakarta.persistence.loadgraph", entityGraph)
                 .getResultList();
     }
 
     private static
     @Nonnull List<DeptEmp> selectAllUsingCriteriaApi(final @Nonnull EntityManager entityManager,
                                                      final @Nullable Integer maxResults) {
+        final var entityGraph = entityManager.createEntityGraph("DeptEmp.employeeAndDepartment");
         final var builder = entityManager.getCriteriaBuilder();
         final var query = builder.createQuery(DeptEmp.class);
         // @formatter:off
@@ -60,6 +65,8 @@ class DeptEmp_SelectAll_IT
         // @formatter:on
         return entityManager.createQuery(query)
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
+                .setHint("jakarta.persistence.fetchgraph", entityGraph)
+//                .setHint("jakarta.persistence.loadgraph", entityGraph)
                 .getResultList();
     }
 
@@ -72,60 +79,56 @@ class DeptEmp_SelectAll_IT
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @Test
-    void selectAllUsingNamedQuery__() {
-        // ------------------------------------------------------------------------------------------------------- given
-        final var maxResults = ThreadLocalRandom.current().nextBoolean()
-                ? null
-                : ThreadLocalRandom.current().nextInt(8) + 1;
-        // -------------------------------------------------------------------------------------------------------- when
-        final var all = applyEntityManager(em -> selectAllUsingNamedQuery(em, maxResults));
-        // -------------------------------------------------------------------------------------------------------- then
+    private void verify(final int maxResults, List<DeptEmp> all) {
         assertThat(all)
                 .isNotNull()
                 .doesNotContainNull()
-                .isSortedAccordingTo(COMPARING_EMP_NO_THEN_COMPARING_DEPT_NO);
-        if (maxResults != null) {
-            assertThat(all)
-                    .hasSizeLessThanOrEqualTo(maxResults);
-        }
+                .isSortedAccordingTo(DeptEmp_SelectAll__IT.COMPARING_EMP_NO_THEN_COMPARING_DEPT_NO)
+                .hasSizeLessThanOrEqualTo(maxResults)
+                .allSatisfy(e -> {
+                    log.debug("department: {}", e.getDepartment());
+                    log.debug("employee: {}", e.getEmployee());
+                });
+    }
+
+    @Test
+    void selectAllUsingNamedQuery__() {
+        // ------------------------------------------------------------------------------------------------------- given
+        final var maxResults = 4;
+        // -------------------------------------------------------------------------------------------------------- when
+        final var all = applyEntityManager(em -> selectAllUsingNamedQuery(em, maxResults));
+        // -------------------------------------------------------------------------------------------------------- then
+        verify(maxResults, all);
     }
 
     @Test
     void selectAllUsingQueryLanguage__() {
         // ------------------------------------------------------------------------------------------------------- given
-        final var maxResults = ThreadLocalRandom.current().nextBoolean()
-                ? null
-                : ThreadLocalRandom.current().nextInt(8) + 1;
+        final var maxResults = 4;
         // -------------------------------------------------------------------------------------------------------- when
         final var all = applyEntityManager(em -> selectAllUsingQueryLanguage(em, maxResults));
         // -------------------------------------------------------------------------------------------------------- then
-        assertThat(all)
-                .isNotNull()
-                .doesNotContainNull()
-                .isSortedAccordingTo(COMPARING_EMP_NO_THEN_COMPARING_DEPT_NO);
-        if (maxResults != null) {
-            assertThat(all)
-                    .hasSizeLessThanOrEqualTo(maxResults);
-        }
+        verify(maxResults, all);
     }
 
     @Test
     void selectAllUsingCriteriaApi__() {
         // ------------------------------------------------------------------------------------------------------- given
-        final var maxResults = ThreadLocalRandom.current().nextBoolean()
-                ? null
-                : ThreadLocalRandom.current().nextInt(8) + 1;
+        final var maxResults = 4;
         // -------------------------------------------------------------------------------------------------------- when
         final var all = applyEntityManager(em -> selectAllUsingCriteriaApi(em, maxResults));
         // -------------------------------------------------------------------------------------------------------- then
-        assertThat(all)
-                .isNotNull()
-                .doesNotContainNull()
-                .isSortedAccordingTo(COMPARING_EMP_NO_THEN_COMPARING_DEPT_NO);
-        if (maxResults != null) {
-            assertThat(all)
-                    .hasSizeLessThanOrEqualTo(maxResults);
-        }
+        verify(maxResults, all);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @Test
+    void selectAll__() {
+        // ------------------------------------------------------------------------------------------------------- given
+        final var maxResults = 4;
+        // -------------------------------------------------------------------------------------------------------- when
+        final var all = applyEntityManager(em -> selectAll(em, maxResults));
+        // -------------------------------------------------------------------------------------------------------- then
+        verify(maxResults, all);
     }
 }

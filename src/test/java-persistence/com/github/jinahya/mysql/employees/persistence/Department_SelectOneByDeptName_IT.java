@@ -140,6 +140,7 @@ class Department_SelectOneByDeptName_IT
         // -------------------------------------------------------------------------------------------------------- when
         final var one = applyEntityManager(em -> selectOneByDeptName(em, deptName));
         // -------------------------------------------------------------------------------------------------------- then
-        assertThat(one).isEmpty();
+        assertThat(one)
+                .isEmpty();
     }
 }

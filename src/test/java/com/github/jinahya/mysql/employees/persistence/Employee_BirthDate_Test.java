@@ -64,7 +64,7 @@ class Employee_BirthDate_Test
             // ---------------------------------------------------------------------------------------------------- then
             assertThat(birthYearMonth).isNull();
             verify(instance, times(1)).applyBirthDate(notNull());
-            verify(instance, times(1)).getBirthDate();
+            verify(instance, atLeast(1)).getBirthDate(); // when woven
         }
 
         @Test
@@ -78,7 +78,7 @@ class Employee_BirthDate_Test
             // ---------------------------------------------------------------------------------------------------- then
             assertThat(birthYearMonth).isEqualTo(YearMonth.from(birthDate));
             verify(instance, times(1)).applyBirthDate(notNull());
-            verify(instance, times(1)).getBirthDate();
+            verify(instance, atLeast(1)).getBirthDate(); // when woven
         }
     }
 
@@ -96,7 +96,7 @@ class Employee_BirthDate_Test
             // ---------------------------------------------------------------------------------------------------- then
             assertThat(birthMonth).isNull();
             verify(instance, times(1)).applyBirthDate(notNull());
-            verify(instance, times(1)).getBirthDate();
+            verify(instance, atLeast(1)).getBirthDate(); // when woven
         }
 
         @Test
@@ -110,7 +110,7 @@ class Employee_BirthDate_Test
             // ---------------------------------------------------------------------------------------------------- then
             assertThat(birthMonth).isEqualTo(Month.from(birthDate));
             verify(instance, times(1)).applyBirthDate(notNull());
-            verify(instance, times(1)).getBirthDate();
+            verify(instance, atLeast(1)).getBirthDate(); // when woven
         }
     }
 

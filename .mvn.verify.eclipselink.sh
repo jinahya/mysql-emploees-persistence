@@ -1,2 +1,2 @@
 #!/bin/sh
-mvn -Pfailsafe,persistence-provider-eclipselink clean verify
+mvn -Pfailsafe,persistence,persistence-eclipselink,persistence-eclipselink-weaving clean verify

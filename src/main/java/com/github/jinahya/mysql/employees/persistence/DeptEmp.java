@@ -32,6 +32,13 @@ import java.util.Optional;
                 @NamedAttributeNode(DeptEmp.ATTRIBUTE_NAME_EMPLOYEE)
         }
 )
+@NamedEntityGraph(
+        name = "DeptEmp.employeeAndDepartment",
+        attributeNodes = {
+                @NamedAttributeNode(DeptEmp.ATTRIBUTE_NAME_EMPLOYEE),
+                @NamedAttributeNode(DeptEmp.ATTRIBUTE_NAME_DEPARTMENT)
+        }
+)
 @NamedQuery(
         name = "DeptEmp.selectAllByDepartment",
         query = """
@@ -41,7 +48,7 @@ import java.util.Optional;
                 order by e.fromDate DESC"""
 )
 @NamedQuery(
-        name = "DeptEmp.selectAllByDeptNo",
+        name = DeptEmpConstants.NAMED_QUERY_NAME_SELECT_ALL_BY_DEPT_NO,
         query = """
                 SELECT e
                 FROM DeptEmp AS e
@@ -63,6 +70,16 @@ import java.util.Optional;
                 FROM DeptEmp AS e
                 WHERE e.empNo = :empNo
                 ORDER BY e.fromDate DESC"""
+)
+@NamedQuery(
+        name = "DeptEmp.selectAllFetch",
+        query = """
+                SELECT e
+                FROM DeptEmp AS e
+                JOIN FETCH e.department
+                JOIN FETCH e.employee
+                ORDER BY e.empNo ASC,
+                         e.deptNo ASC"""
 )
 @NamedQuery(
         name = "DeptEmp.selectAll",

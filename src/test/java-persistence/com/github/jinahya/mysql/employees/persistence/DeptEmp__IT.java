@@ -10,7 +10,7 @@ abstract class DeptEmp__IT
 
     // -----------------------------------------------------------------------------------------------------------------
     private static Employee selectRandomEmployeeUsingQueryLanguage(final @Nonnull EntityManager entityManager) {
-        final var count = _BaseEntityIT_Utils.selectCount(entityManager, DeptEmp.class);
+        final var count = __Persistence_Utils.selectCount(entityManager, DeptEmp.class);
         final var startPosition = Math.toIntExact(ThreadLocalRandom.current().nextLong(count));
         return entityManager
                 .createQuery("SELECT e.employee FROM DeptEmp AS e", Employee.class)
@@ -20,7 +20,7 @@ abstract class DeptEmp__IT
     }
 
     private static Employee selectRandomEmployeeUsingCriteriaApi(final @Nonnull EntityManager entityManager) {
-        final var count = _BaseEntityIT_Utils.selectCount(entityManager, DeptEmp.class);
+        final var count = __Persistence_Utils.selectCount(entityManager, DeptEmp.class);
         final var startPosition = Math.toIntExact(ThreadLocalRandom.current().nextLong(count));
         return entityManager
                 .createQuery("SELECT e.employee FROM DeptEmp AS e", Employee.class)
@@ -35,10 +35,9 @@ abstract class DeptEmp__IT
                 : selectRandomEmployeeUsingCriteriaApi(entityManager);
     }
 
-    // -----------------------------------------------------------------------------------------------------------------
     private static
     @Nonnull Integer selectRandomEmpNoUsingQueryLanguage(final @Nonnull EntityManager entityManager) {
-        final var count = _BaseEntityIT_Utils.selectCount(entityManager, DeptEmp.class);
+        final var count = __Persistence_Utils.selectCount(entityManager, DeptEmp.class);
         final var startPosition = Math.toIntExact(ThreadLocalRandom.current().nextLong(count));
         return entityManager
                 .createQuery("SELECT e.empNo FROM DeptEmp AS e", Integer.class)
@@ -49,7 +48,7 @@ abstract class DeptEmp__IT
 
     private static
     @Nonnull Integer selectRandomEmpNoUsingCriteriaApi(final @Nonnull EntityManager entityManager) {
-        final var count = _BaseEntityIT_Utils.selectCount(entityManager, DeptEmp.class);
+        final var count = __Persistence_Utils.selectCount(entityManager, DeptEmp.class);
         final var startPosition = Math.toIntExact(ThreadLocalRandom.current().nextLong(count));
         final var builder = entityManager.getCriteriaBuilder();
         final var query = builder.createQuery(Integer.class);
@@ -69,6 +68,68 @@ abstract class DeptEmp__IT
         return ThreadLocalRandom.current().nextBoolean()
                 ? selectRandomEmpNoUsingQueryLanguage(entityManager)
                 : selectRandomEmpNoUsingCriteriaApi(entityManager);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    private static Department selectRandomDepartmentUsingQueryLanguage(final @Nonnull EntityManager entityManager) {
+        final var count = __Persistence_Utils.selectCount(entityManager, DeptEmp.class);
+        final var startPosition = Math.toIntExact(ThreadLocalRandom.current().nextLong(count));
+        return entityManager
+                .createQuery("SELECT e.department FROM DeptEmp AS e", Department.class)
+                .setFirstResult(startPosition)
+                .setMaxResults(1)
+                .getSingleResult();
+    }
+
+    private static Department selectRandomDepartmentUsingCriteriaApi(final @Nonnull EntityManager entityManager) {
+        final var count = __Persistence_Utils.selectCount(entityManager, DeptEmp.class);
+        final var startPosition = Math.toIntExact(ThreadLocalRandom.current().nextLong(count));
+        return entityManager
+                .createQuery("SELECT e.department FROM DeptEmp AS e", Department.class)
+                .setFirstResult(startPosition)
+                .setMaxResults(1)
+                .getSingleResult();
+    }
+
+    static Department selectRandomDepartment(final @Nonnull EntityManager entityManager) {
+        return ThreadLocalRandom.current().nextBoolean()
+                ? selectRandomDepartmentUsingQueryLanguage(entityManager)
+                : selectRandomDepartmentUsingCriteriaApi(entityManager);
+    }
+
+    private static
+    @Nonnull String selectRandomDeptNoUsingQueryLanguage(final @Nonnull EntityManager entityManager) {
+        final var count = __Persistence_Utils.selectCount(entityManager, DeptEmp.class);
+        final var startPosition = Math.toIntExact(ThreadLocalRandom.current().nextLong(count));
+        return entityManager
+                .createQuery("SELECT e.deptNo FROM DeptEmp AS e", String.class)
+                .setFirstResult(startPosition)
+                .setMaxResults(1)
+                .getSingleResult();
+    }
+
+    private static
+    @Nonnull String selectRandomDeptNoUsingCriteriaApi(final @Nonnull EntityManager entityManager) {
+        final var count = __Persistence_Utils.selectCount(entityManager, DeptEmp.class);
+        final var startPosition = Math.toIntExact(ThreadLocalRandom.current().nextLong(count));
+        final var builder = entityManager.getCriteriaBuilder();
+        final var query = builder.createQuery(String.class);
+        final var root = query.from(DeptEmp.class);                                                 // FROM DeptEmp AS e
+        query.select(root.get(DeptEmp_.deptNo));                                                    // SELECT e.deptNo
+        return entityManager.createQuery(query)
+                .setFirstResult(startPosition)                                                      // offset
+                .setMaxResults(1)                                                                   // limit
+                .getSingleResult();
+    }
+
+    static
+    @Nonnull String selectRandomDeptNo(final @Nonnull EntityManager entityManager) {
+        if (ThreadLocalRandom.current().nextBoolean()) {
+            return selectRandomDepartment(entityManager).getDeptNo();
+        }
+        return ThreadLocalRandom.current().nextBoolean()
+                ? selectRandomDeptNoUsingQueryLanguage(entityManager)
+                : selectRandomDeptNoUsingCriteriaApi(entityManager);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

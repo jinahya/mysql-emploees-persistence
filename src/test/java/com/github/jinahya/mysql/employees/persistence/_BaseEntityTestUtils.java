@@ -1,10 +1,13 @@
 package com.github.jinahya.mysql.employees.persistence;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Slf4j
 public final class _BaseEntityTestUtils {
 
     // --------------------------------------------------------------------------------------------------------- idClass
@@ -29,6 +32,11 @@ public final class _BaseEntityTestUtils {
             }
             return (Class<ID>) parameterizedType.getActualTypeArguments()[0];
         });
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    static boolean hasBeenWovenForEclipseLink(final Class<?> entityClass) {
+        return Boolean.parseBoolean(System.getProperty("eclipselink.woven"));
     }
 
     // -----------------------------------------------------------------------------------------------------------------

@@ -151,6 +151,14 @@ $ sh ./.docker.stop.sh
     * [Employees DB on GitHub](https://github.com/datacharmer/test_db)
 * [5 Employees Structure](https://dev.mysql.com/doc/employee/en/sakila-structure.html)
 
+### [Jakarta Annotations](https://jakarta.ee/specifications/annotations/)
+
+#### [Jakarta Annotations 3.0](https://jakarta.ee/specifications/annotations/3.0/)
+
+* [Jakarta Annotations 3.0 Specification Document (PDF)](https://jakarta.ee/specifications/annotations/3.0/annotations-spec-3.0.pdf)
+* [Jakarta Annotations 3.0 Specification Document (HTML)](https://jakarta.ee/specifications/annotations/3.0/annotations-spec-3.0)
+* [Jakarta Annotations 3.0 Javadoc](https://jakarta.ee/specifications/annotations/3.0/apidocs/)
+
 ### [Jakarta Persistence](https://jakarta.ee/specifications/persistence/)
 
 #### [Jakarta Persistence 3.2](https://jakarta.ee/specifications/persistence/3.2/)
@@ -164,10 +172,14 @@ $ sh ./.docker.stop.sh
 * [Jakarta Persistence 3.1 Javadoc](https://jakarta.ee/specifications/persistence/3.1/apidocs)
 
 ### [EclipseLink](https://eclipse.dev/eclipselink/)
+* 
+* [EclipseLink Documentation Center](https://eclipse.dev/eclipselink/documentation/)
 
 #### [EclipseLink JPA](https://eclipse.dev/eclipselink/#jpa)
 
+* [EclipseLink JPA Extensions Reference](https://eclipse.dev/eclipselink/documentation/4.0/jpa/extensions/jpa-extensions.html)
 * [Bug 328730 - Query.setMaxResults(0) returns unexpected results](https://bugs.eclipse.org/bugs/show_bug.cgi?id=328730)
+* [Using Weaving](https://eclipse.dev/eclipselink/documentation/2.7/solutions/testingjpa004.htm)
 
 #### [eclipse-ee4j/eclipselink](https://github.com/eclipse-ee4j/eclipselink)
 
@@ -222,6 +234,12 @@ $ sh ./.docker.stop.sh
 
 * [Using Hibernate ORM and Jakarta Persistence ](https://quarkus.io/guides/hibernate-orm)
 * [Simplified Hibernate ORM with Panache](https://quarkus.io/guides/hibernate-orm-panache)
+
+### [GitHub](https://github.com)
+
+### [Bealdung](https://www.baeldung.com)
+
+* [JPA Entity Graph](https://www.baeldung.com/jpa-entity-graph)
 
 ---
 

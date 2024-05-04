@@ -67,10 +67,10 @@ class DeptEmp_SelectAllByEmpNo_IT
                                                             final @Nullable Integer maxResults) {
         final var builder = entityManager.getCriteriaBuilder();
         final var query = builder.createQuery(DeptEmp.class);
-        final var root = query.from(DeptEmp.class);                                       // FROM DeptEmpLatestDate AS e
-        query.select(root);                                                               // SELECT e
-        query.where(builder.equal(root.get(DeptEmp_.empNo), empNo));                      // WHERE e.empNo = :empNo
-        query.orderBy(builder.desc(root.get(DeptEmp_.fromDate)));                         // ORDER BY e.fromDate DESC
+        final var root = query.from(DeptEmp.class);                                          // FROM DeptEmp AS e
+        query.select(root);                                                                  // SELECT e
+        query.where(builder.equal(root.get(DeptEmp_.empNo), empNo));                         // WHERE e.empNo = :empNo
+        query.orderBy(builder.desc(root.get(DeptEmp_.fromDate)));                            // ORDER BY e.fromDate DESC
         return entityManager.createQuery(query)
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
                 .getResultList();

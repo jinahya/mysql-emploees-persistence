@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
-final class _BaseEntityIT_Utils {
+final class __Persistence_Utils {
 
     /**
      * Returns {@link EntityType#getName() entityName} of specified class.
@@ -31,7 +31,7 @@ final class _BaseEntityIT_Utils {
                                                        final @Nonnull Class<ENTITY> entityClass) {
         final var entityName = getEntityName(entityManager, entityClass);
         return entityManager
-                .createQuery("SELECT COUNT(*) FROM %1$s" .formatted(entityName), Long.class)
+                .createQuery("SELECT COUNT(e) FROM %1$s AS e".formatted(entityName), Long.class)
                 .getSingleResult();
     }
 
@@ -61,7 +61,7 @@ final class _BaseEntityIT_Utils {
         final var count = selectCount(entityManager, entityClass);
         final var startPosition = Math.toIntExact(ThreadLocalRandom.current().nextLong(count));
         return entityManager
-                .createQuery("SELECT e FROM %1$s AS e" .formatted(entityName), entityClass)
+                .createQuery("SELECT e FROM %1$s AS e".formatted(entityName), entityClass)
                 .setFirstResult(startPosition)
                 .setMaxResults(1)
                 .getSingleResult();
@@ -86,7 +86,7 @@ final class _BaseEntityIT_Utils {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private _BaseEntityIT_Utils() {
+    private __Persistence_Utils() {
         throw new AssertionError("instantiation is not allowed");
     }
 }
