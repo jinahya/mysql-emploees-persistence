@@ -1,2 +1,2 @@
 #!/bin/sh
-mvn -Ppersistence-provider-eclipselink clean test
+mvn -Ppersistence,persistence-eclipselink clean test

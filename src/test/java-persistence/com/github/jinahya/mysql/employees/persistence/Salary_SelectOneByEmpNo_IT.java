@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-//@Disabled
+//@org.junit.jupiter.api.Disabled
 class Salary_SelectOneByEmpNo_IT
         extends Salary__IT {
 
@@ -70,7 +70,7 @@ class Salary_SelectOneByEmpNo_IT
     // -----------------------------------------------------------------------------------------------------------------
     @DisplayName("selectByEmpNo1")
     @Nested
-    class SelectByEmpNo1Test {
+    class SelectByEmpNo1IT {
 
         @DisplayName("(0)")
         @Test
@@ -100,7 +100,7 @@ class Salary_SelectOneByEmpNo_IT
 
     @DisplayName("selectByEmpNo2")
     @Nested
-    class SelectByEmpNo2Test {
+    class SelectByEmpNo2IT {
 
         @DisplayName("(0)")
         @Test
@@ -130,7 +130,7 @@ class Salary_SelectOneByEmpNo_IT
 
     @DisplayName("selectByEmpNo3")
     @Nested
-    class SelectByEmpNo3Test {
+    class SelectByEmpNo3IT {
 
         @DisplayName("(0)")
         @Test

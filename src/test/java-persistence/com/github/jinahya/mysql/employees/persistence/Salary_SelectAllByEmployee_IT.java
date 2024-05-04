@@ -14,7 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Disabled
+@org.junit.jupiter.api.Disabled
 class Salary_SelectAllByEmployee_IT
         extends Salary__IT {
 

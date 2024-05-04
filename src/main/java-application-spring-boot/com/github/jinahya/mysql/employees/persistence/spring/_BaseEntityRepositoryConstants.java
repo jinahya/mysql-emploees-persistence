@@ -1,7 +1,5 @@
 package com.github.jinahya.mysql.employees.persistence.spring;
 
-import org.hibernate.annotations.SQLUpdate;
-
 @SuppressWarnings({
         "java:S101" // class _Base...
 })

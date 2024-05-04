@@ -59,7 +59,6 @@
     <version.maven-failsafe>${version.maven-surefire}</version.maven-failsafe>
     <version.maven-surefire>3.2.5</version.maven-surefire>
     <version.mysql-connector-j>8.3.0</version.mysql-connector-j>
-    <version.org.datanucleus>6.0.7</version.org.datanucleus>
     <version.org.eclipse.persistence>4.0.2</version.org.eclipse.persistence>
     <version.org.hibernate.orm>6.4.4.Final</version.org.hibernate.orm>
     <version.org.hibernate.validator>8.0.1.Final</version.org.hibernate.validator>
@@ -160,11 +159,6 @@
   <build>
     <pluginManagement>
       <plugins>
-        <!--        <plugin>-->
-        <!--          <groupId>au.com.alderaan</groupId>-->
-        <!--          <artifactId>eclipselink-staticweave-maven-plugin</artifactId>-->
-        <!--          <version>1.0.4</version>-->
-        <!--        </plugin>-->
         <plugin>
           <groupId>de.empulse.eclipselink</groupId>
           <artifactId>staticweave-maven-plugin</artifactId>
@@ -339,6 +333,7 @@
         <configuration>
           <excludes>
             <exclude>**/*IT.java</exclude> <!-- 이게 왜 필요한지 확인 필요 -->
+            <exclude>**/*IT</exclude> <!-- 이게 왜 필요한지 확인 필요 -->
           </excludes>
           <trimStackTrace>false</trimStackTrace>
           <systemPropertyVariables>
@@ -451,20 +446,8 @@
 
     <profile>
       <id>persistence</id>
-      <!--      <activation>-->
-      <!--        <activeByDefault>true</activeByDefault>-->
-      <!--      </activation>-->
       <dependencyManagement>
         <dependencies>
-          <!-- https://www.datanucleus.org/products/accessplatform_6_0/jakarta/tools.html#maven -->
-          <!-- https://www.datanucleus.org/products/accessplatform_6_0/ -->
-          <dependency><!-- https://search.maven.org/artifact/org.datanucleus/datanucleus-accessplatform-jakarta-rdbms -->
-            <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-accessplatform-jakarta-rdbms</artifactId>
-            <version>${version.org.datanucleus}</version>
-            <type>pom</type>
-            <!--            <scope>import</scope>-->
-          </dependency>
           <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>eclipselink</artifactId>
@@ -527,12 +510,6 @@
           <version>${version.org.jboss.weld}</version>
           <scope>test</scope>
         </dependency>
-        <!--        <dependency>-->
-        <!--          <groupId>org.projectlombok</groupId>-->
-        <!--          <artifactId>lombok</artifactId>-->
-        <!--          <version>${version.lombok}</version>-->
-        <!--          <scope>provided</scope>-->
-        <!--        </dependency>-->
       </dependencies>
       <build>
         <testResources>
@@ -604,23 +581,15 @@
       </build>
     </profile>
     <profile>
-      <id>persistence-datanucleus</id>
-      <properties>
-        <persistence.provider>org.datanucleus.api.jpa.PersistenceProviderImpl</persistence.provider>
-      </properties>
-      <dependencies>
-        <dependency><!-- https://search.maven.org/artifact/org.datanucleus/datanucleus-accessplatform-jakarta-rdbms -->
-          <groupId>org.datanucleus</groupId>
-          <artifactId>datanucleus-accessplatform-jakarta-rdbms</artifactId>
-          <type>pom</type>
-          <scope>test</scope>
-        </dependency>
-      </dependencies>
-    </profile>
-    <profile>
       <id>persistence-eclipselink</id>
+      <!-- https://eclipse.dev/eclipselink/documentation/2.7/concepts/app_dev005.htm -->
+      <!-- https://eclipse.dev/eclipselink/documentation/2.7/solutions/testingjpa004.htm -->
+      <!-- https://wiki.eclipse.org/EclipseLink/UserGuide/JPA/Advanced_JPA_Development/Performance/Weaving/Static_Weaving -->
       <properties>
         <persistence.provider>org.eclipse.persistence.jpa.PersistenceProvider</persistence.provider>
+        <!-- https://stackoverflow.com/a/65283669/330457 -->
+        <argLine>-javaagent:${settings.localRepository}/org/eclipse/persistence/eclipselink/${version.org.eclipse.persistence}/eclipselink-${version.org.eclipse.persistence}.jar</argLine>
+        <eclipselink.woven>true</eclipselink.woven>
       </properties>
       <dependencies>
         <dependency><!-- just for the dynamic weaving -->
@@ -636,54 +605,26 @@
         </dependency>
       </dependencies>
     </profile>
-    <profile>
-      <id>persistence-eclipselink-weaving</id>
-      <!-- https://eclipse.dev/eclipselink/documentation/2.7/concepts/app_dev005.htm -->
-      <!-- https://eclipse.dev/eclipselink/documentation/2.7/solutions/testingjpa004.htm -->
-      <!-- https://wiki.eclipse.org/EclipseLink/UserGuide/JPA/Advanced_JPA_Development/Performance/Weaving/Static_Weaving -->
-      <properties>
-        <persistence.provider>org.eclipse.persistence.jpa.PersistenceProvider</persistence.provider>
-        <!-- https://stackoverflow.com/a/65283669/330457 -->
-        <argLine>-javaagent:${settings.localRepository}/org/eclipse/persistence/eclipselink/${version.org.eclipse.persistence}/eclipselink-${version.org.eclipse.persistence}.jar</argLine>
-        <eclipselink.woven>true</eclipselink.woven>
-      </properties>
-      <dependencies>
-        <dependency> <!-- just for the dynamic weaving -->
-          <groupId>org.eclipse.persistence</groupId>
-          <artifactId>eclipselink</artifactId>
-          <version>${version.org.eclipse.persistence}</version>
-          <scope>runtime</scope>
-        </dependency>
-      </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <!-- https://github.com/empulse-gmbh/eclipselink-static-weave-plugin -->
-            <groupId>de.empulse.eclipselink</groupId>
-            <artifactId>staticweave-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <goals>
-<!--                  <goal>weave</goal>-->
-                </goals>
-                <phase>process-classes</phase>
-                <configuration>
-                  <persistenceXMLLocation>META-INF/persistence.xml</persistenceXMLLocation>
-                  <logLevel>FINE</logLevel>
-                </configuration>
-              </execution>
-            </executions>
-            <dependencies>
-              <dependency>
-                <groupId>org.eclipse.persistence</groupId>
-                <artifactId>eclipselink</artifactId>
-                <version>${version.org.eclipse.persistence}</version>
-              </dependency>
-            </dependencies>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
+<!--    <profile>-->
+<!--      <id>persistence-eclipselink-weaving</id>-->
+<!--      &lt;!&ndash; https://eclipse.dev/eclipselink/documentation/2.7/concepts/app_dev005.htm &ndash;&gt;-->
+<!--      &lt;!&ndash; https://eclipse.dev/eclipselink/documentation/2.7/solutions/testingjpa004.htm &ndash;&gt;-->
+<!--      &lt;!&ndash; https://wiki.eclipse.org/EclipseLink/UserGuide/JPA/Advanced_JPA_Development/Performance/Weaving/Static_Weaving &ndash;&gt;-->
+<!--      <properties>-->
+<!--        <persistence.provider>org.eclipse.persistence.jpa.PersistenceProvider</persistence.provider>-->
+<!--        &lt;!&ndash; https://stackoverflow.com/a/65283669/330457 &ndash;&gt;-->
+<!--        <argLine>-javaagent:${settings.localRepository}/org/eclipse/persistence/eclipselink/${version.org.eclipse.persistence}/eclipselink-${version.org.eclipse.persistence}.jar</argLine>-->
+<!--        <eclipselink.woven>true</eclipselink.woven>-->
+<!--      </properties>-->
+<!--      <dependencies>-->
+<!--        <dependency> &lt;!&ndash; just for the dynamic weaving &ndash;&gt;-->
+<!--          <groupId>org.eclipse.persistence</groupId>-->
+<!--          <artifactId>eclipselink</artifactId>-->
+<!--          <version>${version.org.eclipse.persistence}</version>-->
+<!--          <scope>runtime</scope>-->
+<!--        </dependency>-->
+<!--      </dependencies>-->
+<!--    </profile>-->
     <profile>
       <id>persistence-hibernate</id>
       <properties>
@@ -819,7 +760,8 @@
       <id>querydsl-6</id>
       <properties>
         <groupId.querydsl>io.github.openfeign.querydsl</groupId.querydsl>
-        <version.querydsl>6.1</version.querydsl>
+        <!--        <version.querydsl>6.1</version.querydsl>-->
+        <version.querydsl>6.2.1</version.querydsl>
       </properties>
       <dependencies>
         <dependency>

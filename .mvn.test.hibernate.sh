@@ -1,2 +1,2 @@
 #!/bin/sh
-mvn -Ppersistence-provider-hibernate clean test
+mvn -Ppersistence,persistence-hibernate clean test
