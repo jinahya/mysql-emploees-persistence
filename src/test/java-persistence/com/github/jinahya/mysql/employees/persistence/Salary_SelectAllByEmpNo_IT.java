@@ -1,5 +1,7 @@
 package com.github.jinahya.mysql.employees.persistence;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -14,38 +16,43 @@ import java.util.concurrent.ThreadLocalRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 //@org.junit.jupiter.api.Disabled
-class Salary_SelectOneByEmpNo_IT
+class Salary_SelectAllByEmpNo_IT
         extends Salary__IT {
 
-    private static List<Salary> selectAllByEmpNo1(final EntityManager entityManager, final int empNo,
-                                                  final Integer maxResults) {
+    private static final String PARAMETER_EMP_NO = "empNo";
+
+    private static
+    @Nonnull List<Salary> selectAllByEmpNoUsingNamedQuery(final @Nonnull EntityManager entityManager, final int empNo,
+                                                          final @Nullable Integer maxResults) {
         Objects.requireNonNull(entityManager, "entityManager is null");
         return entityManager
                 .createNamedQuery("Salary.selectAllByEmpNo", Salary.class)
-                .setParameter("empNo", empNo)
+                .setParameter(PARAMETER_EMP_NO, empNo)
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
                 .getResultList();
     }
 
-    private static List<Salary> selectAllByEmpNo2(final EntityManager entityManager, final int empNo,
-                                                  final Integer maxResults) {
+    private static
+    @Nonnull List<Salary> selectAllByEmpNoUsingQueryLanguage(final @Nonnull EntityManager entityManager,
+                                                             final int empNo, final @Nullable Integer maxResults) {
         Objects.requireNonNull(entityManager, "entityManager is null");
         return entityManager
                 .createQuery(
                         """
-                                SELECT e
-                                FROM Salary AS e
-                                WHERE e.empNo = :empNo
-                                ORDER BY e.fromDate DESC""",
+                                SELECT s
+                                FROM Salary AS s
+                                WHERE s.empNo = :%1$s
+                                ORDER BY s.fromDate DESC""".formatted(PARAMETER_EMP_NO),
                         Salary.class
                 )
-                .setParameter("empNo", empNo)
+                .setParameter(PARAMETER_EMP_NO, empNo)
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
                 .getResultList();
     }
 
-    private static List<Salary> selectAllByEmpNo3(final EntityManager entityManager, final int empNo,
-                                                  final Integer maxResults) {
+    private static
+    @Nonnull List<Salary> selectAllByEmpNoUsingCriteriaApi(final @Nonnull EntityManager entityManager, final int empNo,
+                                                           final @Nullable Integer maxResults) {
         Objects.requireNonNull(entityManager, "entityManager is null");
         final var builder = entityManager.getCriteriaBuilder();
         final var query = builder.createQuery(Salary.class);
@@ -59,18 +66,19 @@ class Salary_SelectOneByEmpNo_IT
                 .getResultList();
     }
 
-    static List<Salary> findAllByEmpNo(final EntityManager entityManager, final int empNo, final Integer maxResults) {
+    static List<Salary> findAllByEmpNo(final @Nonnull EntityManager entityManager, final int empNo,
+                                       final @Nullable Integer maxResults) {
         return switch (ThreadLocalRandom.current().nextInt(3)) {
-            case 0 -> selectAllByEmpNo1(entityManager, empNo, maxResults);
-            case 1 -> selectAllByEmpNo2(entityManager, empNo, maxResults);
-            default -> selectAllByEmpNo3(entityManager, empNo, maxResults);
+            case 0 -> selectAllByEmpNoUsingNamedQuery(entityManager, empNo, maxResults);
+            case 1 -> selectAllByEmpNoUsingQueryLanguage(entityManager, empNo, maxResults);
+            default -> selectAllByEmpNoUsingCriteriaApi(entityManager, empNo, maxResults);
         };
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @DisplayName("selectByEmpNo1")
+    @DisplayName("selectAllByEmpNoUsingNamedQuery")
     @Nested
-    class SelectByEmpNo1IT {
+    class SelectAllByEmpNoUsingNamedQueryIT {
 
         @DisplayName("(0)")
         @Test
@@ -78,7 +86,7 @@ class Salary_SelectOneByEmpNo_IT
             // --------------------------------------------------------------------------------------------------- given
             final var empNo = 0;
             // ---------------------------------------------------------------------------------------------------- when
-            final var all = applyEntityManager(em -> selectAllByEmpNo1(em, empNo, 8));
+            final var all = applyEntityManager(em -> selectAllByEmpNoUsingNamedQuery(em, empNo, 8));
             // ---------------------------------------------------------------------------------------------------- then
             assertThat(all).isEmpty();
         }
@@ -89,18 +97,19 @@ class Salary_SelectOneByEmpNo_IT
             // --------------------------------------------------------------------------------------------------- given
             final var empNo = 10001;
             // ---------------------------------------------------------------------------------------------------- when
-            final var all = applyEntityManager(em -> selectAllByEmpNo1(em, empNo, 8));
+            final var all = applyEntityManager(em -> selectAllByEmpNoUsingNamedQuery(em, empNo, 8));
             // ---------------------------------------------------------------------------------------------------- then
-            assertThat(all).isNotEmpty()
+            assertThat(all)
+                    .isNotEmpty()
                     .isSortedAccordingTo(Comparator.comparing(Salary::getFromDate).reversed())
                     .extracting(Salary::getEmpNo)
                     .containsOnly(empNo);
         }
     }
 
-    @DisplayName("selectByEmpNo2")
+    @DisplayName("selectAllByEmpNoUsingQueryLanguage")
     @Nested
-    class SelectByEmpNo2IT {
+    class SelectAllByEmpNoUsingQueryLanguageIT {
 
         @DisplayName("(0)")
         @Test
@@ -108,7 +117,7 @@ class Salary_SelectOneByEmpNo_IT
             // --------------------------------------------------------------------------------------------------- given
             final var empNo = 0;
             // ---------------------------------------------------------------------------------------------------- when
-            final var all = applyEntityManager(em -> selectAllByEmpNo2(em, empNo, 8));
+            final var all = applyEntityManager(em -> selectAllByEmpNoUsingQueryLanguage(em, empNo, 8));
             // ---------------------------------------------------------------------------------------------------- then
             assertThat(all).isEmpty();
         }
@@ -119,18 +128,19 @@ class Salary_SelectOneByEmpNo_IT
             // --------------------------------------------------------------------------------------------------- given
             final var empNo = 10001;
             // ---------------------------------------------------------------------------------------------------- when
-            final var all = applyEntityManager(em -> selectAllByEmpNo2(em, empNo, 8));
+            final var all = applyEntityManager(em -> selectAllByEmpNoUsingQueryLanguage(em, empNo, 8));
             // ---------------------------------------------------------------------------------------------------- then
-            assertThat(all).isNotEmpty()
+            assertThat(all)
+                    .isNotEmpty()
                     .isSortedAccordingTo(Comparator.comparing(Salary::getFromDate).reversed())
                     .extracting(Salary::getEmpNo)
                     .containsOnly(empNo);
         }
     }
 
-    @DisplayName("selectByEmpNo3")
+    @DisplayName("selectAllByEmpNoUsingCriteriaApi")
     @Nested
-    class SelectByEmpNo3IT {
+    class SelectAllByEmpNoUsingCriteriaApiIT {
 
         @DisplayName("(0)")
         @Test
@@ -138,7 +148,7 @@ class Salary_SelectOneByEmpNo_IT
             // --------------------------------------------------------------------------------------------------- given
             final var empNo = 0;
             // ---------------------------------------------------------------------------------------------------- when
-            final var all = applyEntityManager(em -> selectAllByEmpNo3(em, empNo, 8));
+            final var all = applyEntityManager(em -> selectAllByEmpNoUsingCriteriaApi(em, empNo, 8));
             // ---------------------------------------------------------------------------------------------------- then
             assertThat(all).isEmpty();
         }
@@ -149,7 +159,7 @@ class Salary_SelectOneByEmpNo_IT
             // --------------------------------------------------------------------------------------------------- given
             final var empNo = 10001;
             // ---------------------------------------------------------------------------------------------------- when
-            final var all = applyEntityManager(em -> selectAllByEmpNo3(em, empNo, 8));
+            final var all = applyEntityManager(em -> selectAllByEmpNoUsingCriteriaApi(em, empNo, 8));
             // ---------------------------------------------------------------------------------------------------- then
             assertThat(all)
                     .isNotEmpty()

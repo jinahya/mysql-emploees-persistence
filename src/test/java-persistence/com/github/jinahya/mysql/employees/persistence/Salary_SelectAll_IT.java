@@ -14,13 +14,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@org.junit.jupiter.api.Disabled
+//@org.junit.jupiter.api.Disabled
 @Slf4j
 class Salary_SelectAll_IT
         extends Salary__IT {
 
-    private static List<Salary> selectAll1(final @Nonnull EntityManager entityManager,
-                                           final @Nullable Integer maxResults) {
+    private static List<Salary> selectAllUsingNamedQuery(final @Nonnull EntityManager entityManager,
+                                                         final @Nullable Integer maxResults) {
         Objects.requireNonNull(entityManager, "entityManager is null");
         return entityManager
                 .createNamedQuery("Salary.selectAll", Salary.class)
@@ -28,21 +28,23 @@ class Salary_SelectAll_IT
                 .getResultList();
     }
 
-    private static List<Salary> selectAll2(final @Nonnull EntityManager entityManager,
-                                           final @Nullable Integer maxResults) {
+    private static List<Salary> selectAllUsingQueryLanguage(final @Nonnull EntityManager entityManager,
+                                                            final @Nullable Integer maxResults) {
         Objects.requireNonNull(entityManager, "entityManager is null");
         return entityManager
-                .createQuery("""
-                                     SELECT e
-                                     FROM Salary AS e
-                                     ORDER BY e.empNo, e.fromDate""",
-                             Salary.class)
+                .createQuery(
+                        """
+                                SELECT e
+                                FROM Salary AS e
+                                ORDER BY e.empNo, e.fromDate""",
+                        Salary.class
+                )
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
                 .getResultList();
     }
 
-    private static List<Salary> selectAll3(final @Nonnull EntityManager entityManager,
-                                           final @Nullable Integer maxResults) {
+    private static List<Salary> selectAllUsingCriteriaApi(final @Nonnull EntityManager entityManager,
+                                                          final @Nullable Integer maxResults) {
         Objects.requireNonNull(entityManager, "entityManager is null");
         final var builder = entityManager.getCriteriaBuilder();
         final var query = builder.createQuery(Salary.class);
@@ -60,73 +62,51 @@ class Salary_SelectAll_IT
                 .getResultList();
     }
 
-    static List<Salary> selectAll(final EntityManager entityManager, final Integer maxResults) {
+    static List<Salary> selectAll(final @Nonnull EntityManager entityManager, final @Nullable Integer maxResults) {
         return switch (ThreadLocalRandom.current().nextInt(3)) {
-            case 0 -> selectAll1(entityManager, maxResults);
-            case 1 -> selectAll2(entityManager, maxResults);
-            default -> selectAll3(entityManager, maxResults);
+            case 0 -> selectAllUsingNamedQuery(entityManager, maxResults);
+            case 1 -> selectAllUsingQueryLanguage(entityManager, maxResults);
+            default -> selectAllUsingCriteriaApi(entityManager, maxResults);
         };
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @Test
-    void selectAll1__() {
-        final var maxResults = ThreadLocalRandom.current().nextInt(8) + 1;
-        // -------------------------------------------------------------------------------------------------------- when
-        final var all = applyEntityManager(em -> {
-            final var result = selectAll1(em, maxResults);
-            assertThat(result).extracting(super::id).isSorted();
-            return result;
-        });
-        // -------------------------------------------------------------------------------------------------------- then
-        assertThat(all).isSortedAccordingTo(
-                Comparator.comparing(Salary::getEmpNo)
-                        .thenComparing(Salary::getFromDate)
-        );
+    private void verify(final int maxResults, final List<Salary> result) {
+        assertThat(result)
+                .isNotNull()
+                .hasSizeLessThanOrEqualTo(maxResults)
+                .isSortedAccordingTo(Comparator.comparing(_BaseEntity::getId));
     }
 
     @Test
-    void selectAll2__() {
+    void selectAllUsingNamedQuery__() {
+        // ------------------------------------------------------------------------------------------------------- given
         final var maxResults = ThreadLocalRandom.current().nextInt(8) + 1;
         // -------------------------------------------------------------------------------------------------------- when
-        final var all = applyEntityManager(em -> {
-            final var result = selectAll2(em, maxResults);
-            assertThat(result).extracting(super::id).isSorted();
-            return result;
-        });
+        final var result = applyEntityManager(em -> selectAllUsingNamedQuery(em, maxResults));
         // -------------------------------------------------------------------------------------------------------- then
-        assertThat(all).isSortedAccordingTo(
-                Comparator.comparing(Salary::getEmpNo)
-                        .thenComparing(Salary::getFromDate)
-        );
+        verify(maxResults, result);
     }
 
     @Test
-    void selectAll3__() {
-//        final var maxResults = ThreadLocalRandom.current().nextInt(8) + 1;
-        final var maxResults = 32;
-        final var access = false;
+    void selectAllUsingQueryLanguage__() {
+        // ------------------------------------------------------------------------------------------------------- given
+        final var maxResults = ThreadLocalRandom.current().nextInt(8) + 1;
         // -------------------------------------------------------------------------------------------------------- when
-        final var all = applyEntityManager(em -> {
-            final var result = selectAll3(em, maxResults);
-            assertThat(result).extracting(super::id).isSorted();
-            if (access) {
-                result.forEach(s -> {
-                    final var string = s.getEmployee().toString();
-                });
-            }
-            em.clear();
-            return result;
+        final var result = applyEntityManager(em -> {
+            return selectAllUsingQueryLanguage(em, maxResults);
         });
         // -------------------------------------------------------------------------------------------------------- then
-        assertThat(all).isSortedAccordingTo(
-                Comparator.comparing(Salary::getEmpNo)
-                        .thenComparing(Salary::getFromDate)
-        );
-        if (!access) {
-            for (var salary : all) {
-                final var string = salary.getEmployee().toString();
-            }
-        }
+        verify(maxResults, result);
+    }
+
+    @Test
+    void selectAllUsingCriteriaApi__() {
+        // ------------------------------------------------------------------------------------------------------- given
+        final var maxResults = ThreadLocalRandom.current().nextInt(8) + 1;
+        // -------------------------------------------------------------------------------------------------------- when
+        final var result = applyEntityManager(em -> selectAllUsingCriteriaApi(em, maxResults));
+        // -------------------------------------------------------------------------------------------------------- then
+        verify(maxResults, result);
     }
 }
