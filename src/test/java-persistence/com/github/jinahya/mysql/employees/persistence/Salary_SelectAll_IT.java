@@ -47,11 +47,11 @@ class Salary_SelectAll_IT
         final var builder = entityManager.getCriteriaBuilder();
         final var query = builder.createQuery(Salary.class);
         // @formatter:off
-        final var root = query.from(Salary.class);                                                   // FROM Salary AS e
-        query.select(root);                                                                          // SELECT e
-        query.orderBy(                                                                               // ORDER BY
-                builder.asc(root.get(Salary_.empNo)),                                                //     e.empNo
-                builder.asc(root.get(Salary_.fromDate))                                              //       e.fromDate
+        final var root = query.from(Salary.class);                               // FROM Salary AS e
+        query.select(root);                                                      // SELECT e
+        query.orderBy(                                                           // ORDER BY e.empNo ASC, e.fromDate ASC
+                builder.asc(root.get(Salary_.empNo)),
+                builder.asc(root.get(Salary_.fromDate))
         );
         // @formatter:on
         return entityManager
