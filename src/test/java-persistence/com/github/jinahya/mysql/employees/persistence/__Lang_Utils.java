@@ -4,12 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.Objects;
 
 @Slf4j
 final class __Lang_Utils {
 
     static <T extends AutoCloseable> T uncloseable(final Class<T> interfaceClass, Method method,
                                                    final T closeableInstance) {
+        Objects.requireNonNull(interfaceClass, "interfaceClass is null");
+        Objects.requireNonNull(closeableInstance, "closeableInstance is null");
         if (method == null) {
             try {
                 method = AutoCloseable.class.getMethod("close");

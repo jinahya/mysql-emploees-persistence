@@ -16,6 +16,13 @@ import java.util.Objects;
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
  */
 @NamedQuery(
+        name = "Department.selectAllByDeptNameLike",
+        query = """
+                SELECT e
+                FROM Department AS e
+                WHERE e.deptName LIKE :deptNamePattern"""
+)
+@NamedQuery(
         name = "Department.selectOneByDeptName",
         query = """
                 SELECT e

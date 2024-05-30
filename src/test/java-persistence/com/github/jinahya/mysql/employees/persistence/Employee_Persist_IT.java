@@ -10,12 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 class Employee_Persist_IT
-        extends _BaseEntityIT<Employee, Integer> {
-
-    // -----------------------------------------------------------------------------------------------------------------
-    Employee_Persist_IT() {
-        super(Employee.class);
-    }
+        extends Employee__IT {
 
     // -----------------------------------------------------------------------------------------------------------------
     @Test

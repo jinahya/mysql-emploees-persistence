@@ -4,10 +4,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 import java.util.Objects;
@@ -23,7 +23,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class Department_SelectOneByDeptName_IT
         extends Department__IT {
 
-    private static Optional<Department> selectOneByDeptName1(final EntityManager entityManager, final String deptName) {
+    private static Optional<Department> selectOneByDeptNameUsingNamedQuery(final EntityManager entityManager,
+                                                                           final String deptName) {
         try {
             return Optional.of(
                     entityManager
@@ -32,12 +33,13 @@ class Department_SelectOneByDeptName_IT
                             .getSingleResult() // NoResultException
             );
         } catch (final NoResultException nre) {
-            log.error("failed to find a Department by deptName('{})'", deptName, nre);
+            log.error("no result for deptName('{})'", deptName, nre);
             return Optional.empty();
         }
     }
 
-    private static Optional<Department> selectOneByDeptName2(final EntityManager entityManager, final String deptName) {
+    private static Optional<Department> selectOneByDeptNameQueryLanguage(final EntityManager entityManager,
+                                                                         final String deptName) {
         try {
             return Optional.of(
                     entityManager
@@ -57,7 +59,8 @@ class Department_SelectOneByDeptName_IT
         }
     }
 
-    private static Optional<Department> selectOneByDeptName3(final EntityManager entityManager, final String deptName) {
+    private static Optional<Department> selectOneByDeptNameCriteriaApi(final EntityManager entityManager,
+                                                                       final String deptName) {
         final var builder = entityManager.getCriteriaBuilder();
         final var query = builder.createQuery(Department.class);
         final var root = query.from(Department.class);                                   // FROM Department AS e
@@ -79,9 +82,9 @@ class Department_SelectOneByDeptName_IT
         Objects.requireNonNull(entityManager, "entityManager is null");
         Objects.requireNonNull(deptName, "deptName is null");
         return switch (ThreadLocalRandom.current().nextInt(3)) {
-            case 1 -> selectOneByDeptName2(entityManager, deptName);
-            case 0 -> selectOneByDeptName1(entityManager, deptName);
-            default -> selectOneByDeptName3(entityManager, deptName);
+            case 1 -> selectOneByDeptNameQueryLanguage(entityManager, deptName);
+            case 0 -> selectOneByDeptNameUsingNamedQuery(entityManager, deptName);
+            default -> selectOneByDeptNameCriteriaApi(entityManager, deptName);
         };
     }
 
@@ -95,9 +98,9 @@ class Department_SelectOneByDeptName_IT
 
     @MethodSource({"getDeptNameList"})
     @ParameterizedTest
-    void selectOneByDeptName1__(final String deptName) {
+    void selectOneByDeptNameUsingNamedQuery__(final String deptName) {
         // -------------------------------------------------------------------------------------------------------- when
-        final var one = applyEntityManager(em -> selectOneByDeptName1(em, deptName));
+        final var one = applyEntityManager(em -> selectOneByDeptNameUsingNamedQuery(em, deptName));
         // -------------------------------------------------------------------------------------------------------- then
         assertThat(one)
                 .hasValueSatisfying(v -> {
@@ -108,9 +111,9 @@ class Department_SelectOneByDeptName_IT
 
     @MethodSource({"getDeptNameList"})
     @ParameterizedTest
-    void selectOneByDeptName2__(final String deptName) {
+    void selectOneByDeptNameUsingQueryLanguage__(final String deptName) {
         // -------------------------------------------------------------------------------------------------------- when
-        final var one = applyEntityManager(em -> selectOneByDeptName2(em, deptName));
+        final var one = applyEntityManager(em -> selectOneByDeptNameQueryLanguage(em, deptName));
         // -------------------------------------------------------------------------------------------------------- then
         assertThat(one)
                 .hasValueSatisfying(v -> {
@@ -121,9 +124,9 @@ class Department_SelectOneByDeptName_IT
 
     @MethodSource({"getDeptNameList"})
     @ParameterizedTest
-    void selectOneByDeptName3__(final String deptName) {
+    void selectOneByDeptNameUsingCriteriaApi__(final String deptName) {
         // -------------------------------------------------------------------------------------------------------- when
-        final var one = applyEntityManager(em -> selectOneByDeptName3(em, deptName));
+        final var one = applyEntityManager(em -> selectOneByDeptNameCriteriaApi(em, deptName));
         // -------------------------------------------------------------------------------------------------------- then
         assertThat(one)
                 .hasValueSatisfying(v -> {
@@ -133,10 +136,12 @@ class Department_SelectOneByDeptName_IT
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @Test
-    void selectOneByDeptName_Empty_Unknown() {
-        // ------------------------------------------------------------------------------------------------------- given
-        final var deptName = "Section 8";
+    @ValueSource(strings = {
+            "Section 8",
+            "인사과"
+    })
+    @ParameterizedTest
+    void selectOneByDeptName_Empty_Unknown(final String deptName) {
         // -------------------------------------------------------------------------------------------------------- when
         final var one = applyEntityManager(em -> selectOneByDeptName(em, deptName));
         // -------------------------------------------------------------------------------------------------------- then

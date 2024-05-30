@@ -17,14 +17,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 class Employee_SelectAll_IT
         extends _BaseEntityIT<Employee, Integer> {
 
-    private static List<Employee> selectAll1(final EntityManager entityManager, final @Nullable Integer maxResult) {
+    private static List<Employee> selectAllUsingNamedQuery(final EntityManager entityManager,
+                                                           final @Nullable Integer maxResult) {
         return entityManager
                 .createNamedQuery("Employee.selectAll", Employee.class)
                 .setMaxResults(Optional.ofNullable(maxResult).orElse(Integer.MAX_VALUE))
                 .getResultList();
     }
 
-    private static List<Employee> selectAll2(final EntityManager entityManager, final @Nullable Integer maxResult) {
+    private static List<Employee> selectAllUsingQueryLanguage(final EntityManager entityManager,
+                                                              final @Nullable Integer maxResult) {
         return entityManager
                 .createQuery(
                         """
@@ -37,7 +39,8 @@ class Employee_SelectAll_IT
                 .getResultList();
     }
 
-    private static List<Employee> selectAll3(final EntityManager entityManager, final @Nullable Integer maxResult) {
+    private static List<Employee> selectAllUsingCriteriaApi(final EntityManager entityManager,
+                                                            final @Nullable Integer maxResult) {
         final var builder = entityManager.getCriteriaBuilder();
         final var query = builder.createQuery(Employee.class);
         final var employee = query.from(Employee.class);                                           // FROM Employee AS e
@@ -55,9 +58,9 @@ class Employee_SelectAll_IT
             throw new IllegalArgumentException("negative maxResult: " + maxResult);
         }
         return switch (ThreadLocalRandom.current().nextInt(3)) {
-            case 0 -> selectAll1(entityManager, maxResult);
-            case 1 -> selectAll2(entityManager, maxResult);
-            default -> selectAll3(entityManager, maxResult);
+            case 0 -> selectAllUsingNamedQuery(entityManager, maxResult);
+            case 1 -> selectAllUsingQueryLanguage(entityManager, maxResult);
+            default -> selectAllUsingCriteriaApi(entityManager, maxResult);
         };
     }
 
@@ -68,13 +71,13 @@ class Employee_SelectAll_IT
 
     // -----------------------------------------------------------------------------------------------------------------
     @Test
-    void selectAll1__() {
+    void selectAllUsingNamedQuery__() {
         // ------------------------------------------------------------------------------------------------------- given
         final var maxResults = ThreadLocalRandom.current().nextBoolean()
                 ? null
-                : ThreadLocalRandom.current().nextInt(8);
+                : ThreadLocalRandom.current().nextInt(8) + 1;
         // -------------------------------------------------------------------------------------------------------- when
-        final var all = applyEntityManager(em -> selectAll1(em, maxResults));
+        final var all = applyEntityManager(em -> selectAllUsingNamedQuery(em, maxResults));
         // -------------------------------------------------------------------------------------------------------- then
         assertThat(all)
                 .isNotNull()
@@ -86,13 +89,13 @@ class Employee_SelectAll_IT
     }
 
     @Test
-    void selectAll2__() {
+    void selectAllUsingQueryLanguage__() {
         // ------------------------------------------------------------------------------------------------------- given
         final var maxResults = ThreadLocalRandom.current().nextBoolean()
                 ? null
-                : ThreadLocalRandom.current().nextInt(8);
+                : ThreadLocalRandom.current().nextInt(8) + 1;
         // -------------------------------------------------------------------------------------------------------- when
-        final var all = applyEntityManager(em -> selectAll2(em, maxResults));
+        final var all = applyEntityManager(em -> selectAllUsingQueryLanguage(em, maxResults));
         // -------------------------------------------------------------------------------------------------------- then
         assertThat(all)
                 .isNotNull()
@@ -104,13 +107,13 @@ class Employee_SelectAll_IT
     }
 
     @Test
-    void selectAll3__() {
+    void selectAllUsingCriteriaApi__() {
         // ------------------------------------------------------------------------------------------------------- given
         final var maxResults = ThreadLocalRandom.current().nextBoolean()
                 ? null
-                : ThreadLocalRandom.current().nextInt(8);
+                : ThreadLocalRandom.current().nextInt(8) + 1;
         // -------------------------------------------------------------------------------------------------------- when
-        final var all = applyEntityManager(em -> selectAll3(em, maxResults));
+        final var all = applyEntityManager(em -> selectAllUsingCriteriaApi(em, maxResults));
         // -------------------------------------------------------------------------------------------------------- then
         assertThat(all)
                 .isNotNull()

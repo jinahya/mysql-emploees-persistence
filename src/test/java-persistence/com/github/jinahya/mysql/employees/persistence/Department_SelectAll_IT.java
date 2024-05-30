@@ -1,5 +1,6 @@
 package com.github.jinahya.mysql.employees.persistence;
 
+import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
@@ -16,14 +17,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 class Department_SelectAll_IT
         extends Department__IT {
 
-    private static List<Department> selectAll1(final EntityManager entityManager, final @Nullable Integer maxResults) {
+    private static List<Department> selectAllUsingNamedQuery(final @Nonnull EntityManager entityManager,
+                                                             final @Nullable Integer maxResults) {
         return entityManager
                 .createNamedQuery("Department.selectAll", Department.class)
                 .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
                 .getResultList();
     }
 
-    private static List<Department> selectAll2(final EntityManager entityManager, final @Nullable Integer maxResults) {
+    private static List<Department> selectAllUsingQueryLanguage(final @Nonnull EntityManager entityManager,
+                                                                final @Nullable Integer maxResults) {
         return entityManager
                 .createQuery(
                         """
@@ -36,7 +39,8 @@ class Department_SelectAll_IT
                 .getResultList();
     }
 
-    private static List<Department> selectAll3(final EntityManager entityManager, final @Nullable Integer maxResults) {
+    private static List<Department> selectAllUsingCriteriaApi(final @Nonnull EntityManager entityManager,
+                                                              final @Nullable Integer maxResults) {
         final var builder = entityManager.getCriteriaBuilder();
         final var query = builder.createQuery(Department.class);
         final var root = query.from(Department.class);                                          // FROM Department AS e
@@ -49,22 +53,14 @@ class Department_SelectAll_IT
 
     static List<Department> selectAll(final EntityManager entityManager, final Integer maxResults) {
         return switch (ThreadLocalRandom.current().nextInt(3)) {
-            case 0 -> selectAll1(entityManager, maxResults);
-            case 1 -> selectAll2(entityManager, maxResults);
-            default -> selectAll3(entityManager, maxResults);
+            case 0 -> selectAllUsingNamedQuery(entityManager, maxResults);
+            case 1 -> selectAllUsingQueryLanguage(entityManager, maxResults);
+            default -> selectAllUsingCriteriaApi(entityManager, maxResults);
         };
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @Test
-    void selectAll1__() {
-        // ------------------------------------------------------------------------------------------------------- given
-        final var maxResults = ThreadLocalRandom.current().nextBoolean()
-                ? null
-                : ThreadLocalRandom.current().nextInt(8) + 1;
-        // -------------------------------------------------------------------------------------------------------- when
-        final var all = applyEntityManager(em -> selectAll1(em, maxResults));
-        // -------------------------------------------------------------------------------------------------------- then
+    private void verify(final Integer maxResults, final List<Department> all) {
         assertThat(all)
                 .isNotNull()
                 .doesNotContainNull()
@@ -75,41 +71,40 @@ class Department_SelectAll_IT
         }
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
     @Test
-    void selectAll2__() {
+    void selectAllUsingNamedQuery__() {
         // ------------------------------------------------------------------------------------------------------- given
         final var maxResults = ThreadLocalRandom.current().nextBoolean()
                 ? null
                 : ThreadLocalRandom.current().nextInt(8) + 1;
         // -------------------------------------------------------------------------------------------------------- when
-        final var all = applyEntityManager(em -> selectAll2(em, maxResults));
+        final var all = applyEntityManager(em -> selectAllUsingNamedQuery(em, maxResults));
         // -------------------------------------------------------------------------------------------------------- then
-        assertThat(all)
-                .isNotNull()
-                .doesNotContainNull()
-                .isSortedAccordingTo(Comparator.comparing(Department::getDeptNo));
-        if (maxResults != null) {
-            assertThat(all)
-                    .hasSizeLessThanOrEqualTo(maxResults);
-        }
+        verify(maxResults, all);
     }
 
     @Test
-    void selectAll3__() {
+    void selectAllUsingQueryLanguage__() {
         // ------------------------------------------------------------------------------------------------------- given
         final var maxResults = ThreadLocalRandom.current().nextBoolean()
                 ? null
                 : ThreadLocalRandom.current().nextInt(8) + 1;
         // -------------------------------------------------------------------------------------------------------- when
-        final var all = applyEntityManager(em -> selectAll3(em, maxResults));
+        final var all = applyEntityManager(em -> selectAllUsingQueryLanguage(em, maxResults));
         // -------------------------------------------------------------------------------------------------------- then
-        assertThat(all)
-                .isNotNull()
-                .doesNotContainNull()
-                .isSortedAccordingTo(Comparator.comparing(Department::getDeptNo));
-        if (maxResults != null) {
-            assertThat(all)
-                    .hasSizeLessThanOrEqualTo(maxResults);
-        }
+        verify(maxResults, all);
+    }
+
+    @Test
+    void selectAllUsingCriteriaApi__() {
+        // ------------------------------------------------------------------------------------------------------- given
+        final var maxResults = ThreadLocalRandom.current().nextBoolean()
+                ? null
+                : ThreadLocalRandom.current().nextInt(8) + 1;
+        // -------------------------------------------------------------------------------------------------------- when
+        final var all = applyEntityManager(em -> selectAllUsingCriteriaApi(em, maxResults));
+        // -------------------------------------------------------------------------------------------------------- then
+        verify(maxResults, all);
     }
 }

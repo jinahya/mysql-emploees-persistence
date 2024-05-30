@@ -17,8 +17,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -74,17 +74,9 @@ abstract class _BaseEntityIT<ENTITY extends _BaseEntity<ID>, ID extends Serializ
         return Objects.requireNonNull(function, "function is null").apply(entityManager);
     }
 
-    final <R> R applyEntityManagerInTransaction(final Function<? super EntityManager, ? extends R> function,
-                                                final Consumer<? super EntityTransaction> consumer) {
-        return applyEntityManager(em -> {
-            final var transaction = em.getTransaction();
-            transaction.begin();
-            try {
-                return function.apply(em);
-            } finally {
-                consumer.accept(transaction);
-            }
-        });
+    private <R> R applyEntityManagerInTransaction(final Function<? super EntityManager, ? extends R> function,
+                                                  final Consumer<? super EntityTransaction> consumer) {
+        return applyEntityManager(em -> __Persistence_Utils.applyInTransaction(em, function, consumer));
     }
 
     final <R> R applyEntityManagerInTransaction(final Function<? super EntityManager, ? extends R> function) {
@@ -99,21 +91,26 @@ abstract class _BaseEntityIT<ENTITY extends _BaseEntity<ID>, ID extends Serializ
     // -----------------------------------------------------------------------------------------------------------------
     final <R> R applyConnection(final @Nonnull Function<? super Connection, ? extends R> function) {
         Objects.requireNonNull(function, "function is null");
-        return applyEntityManager(em -> {
-            try (var connection = __Lang_Utils.uncloseable(Connection.class, null, em.unwrap(Connection.class))) {
-                return function.apply(connection);
-            } catch (final SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        // https://wiki.eclipse.org/EclipseLink/Examples/JPA/EMAPI#Getting_a_JDBC_Connection_from_an_EntityManager
+        return applyEntityManagerInTransaction(em -> __Jdbc_Utils.applyUnwrappedConnection(em, function));
     }
 
-    final void acceptConnection(final @Nonnull Consumer<? super Connection> consumer) {
-        Objects.requireNonNull(consumer, "consumer is null");
-        applyConnection(c -> {
-            consumer.accept(c);
-            return null;
-        });
+    final <R> R applyConnectionInTransaction(final @Nonnull Function<? super Connection, ? extends R> function) {
+        Objects.requireNonNull(function, "function is null");
+        if (ThreadLocalRandom.current().nextBoolean()) {
+            return applyEntityManagerInTransaction(em -> __Jdbc_Utils.applyUnwrappedConnection(em, function));
+        }
+        return applyEntityManager(em -> __Jdbc_Utils.applyUnwrappedConnectionInTransaction(em, function));
+    }
+
+    final <R> R applyConnectionInTransactionAndRollback(
+            final @Nonnull Function<? super Connection, ? extends R> function) {
+        Objects.requireNonNull(function, "function is null");
+        if (ThreadLocalRandom.current().nextBoolean()) {
+            return applyEntityManagerInTransactionAndRollback(
+                    em -> __Jdbc_Utils.applyUnwrappedConnection(em, function));
+        }
+        return applyEntityManager(em -> __Jdbc_Utils.applyUnwrappedConnectionInTransactionAndRollback(em, function));
     }
 
     // ------------------------------------------------------------------------------------------------------ entityName
