@@ -12,6 +12,11 @@ import java.io.Serial;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * An entity class for mapping {@value CurrentDeptEmp#VIEW_NAME} view.
+ *
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ */
 @IdClass(CurrentDeptEmpId.class)
 @Entity
 @Table(name = CurrentDeptEmp.VIEW_NAME)

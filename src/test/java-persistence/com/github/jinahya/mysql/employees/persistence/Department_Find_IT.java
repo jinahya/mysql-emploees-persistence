@@ -27,7 +27,7 @@ class Department_Find_IT
     private static List<String> selectDeptNoListUsingSql(final EntityManager entityManager,
                                                          final Integer maxResults) {
         Objects.requireNonNull(entityManager, "entityManager is null");
-        return __Jdbc_Utils.applyUnwrappedConnection(
+        return __JdbcUtils.applyUnwrappedConnection(
                 entityManager,
                 c -> {
                     final var sql = """

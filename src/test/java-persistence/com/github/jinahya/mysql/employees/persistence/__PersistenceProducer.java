@@ -8,7 +8,7 @@ import jakarta.persistence.Persistence;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class _PersistenceProducer {
+public class __PersistenceProducer {
 
     // -----------------------------------------------------------------------------------------------------------------
 

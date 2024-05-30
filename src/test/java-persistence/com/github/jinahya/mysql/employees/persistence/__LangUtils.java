@@ -7,7 +7,7 @@ import java.lang.reflect.Proxy;
 import java.util.Objects;
 
 @Slf4j
-final class __Lang_Utils {
+final class __LangUtils {
 
     static <T extends AutoCloseable> T uncloseable(final Class<T> interfaceClass, Method method,
                                                    final T closeableInstance) {
@@ -37,7 +37,7 @@ final class __Lang_Utils {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private __Lang_Utils() {
+    private __LangUtils() {
         throw new AssertionError("instantiation is not allowed");
     }
 }

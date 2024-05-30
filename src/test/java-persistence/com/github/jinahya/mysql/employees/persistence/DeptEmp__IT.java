@@ -10,7 +10,7 @@ abstract class DeptEmp__IT
 
     // -----------------------------------------------------------------------------------------------------------------
     private static Employee selectRandomEmployee_QueryLanguage(final @Nonnull EntityManager entityManager) {
-        final var count = __Persistence_Utils.selectCount(entityManager, DeptEmp.class);
+        final var count = __PersistenceUtils.selectCount(entityManager, DeptEmp.class);
         final var startPosition = Math.toIntExact(ThreadLocalRandom.current().nextLong(count));
         return entityManager
                 .createQuery("SELECT e.employee FROM DeptEmp AS e", Employee.class)
@@ -20,7 +20,7 @@ abstract class DeptEmp__IT
     }
 
     private static Employee selectRandomEmployee_CriteriaApi(final @Nonnull EntityManager entityManager) {
-        final var count = __Persistence_Utils.selectCount(entityManager, DeptEmp.class);
+        final var count = __PersistenceUtils.selectCount(entityManager, DeptEmp.class);
         final var startPosition = Math.toIntExact(ThreadLocalRandom.current().nextLong(count));
         return entityManager
                 .createQuery("SELECT e.employee FROM DeptEmp AS e", Employee.class)
@@ -37,7 +37,7 @@ abstract class DeptEmp__IT
 
     private static
     @Nonnull Integer selectRandomEmpNo_QueryLanguage(final @Nonnull EntityManager entityManager) {
-        final var count = __Persistence_Utils.selectCount(entityManager, DeptEmp.class);
+        final var count = __PersistenceUtils.selectCount(entityManager, DeptEmp.class);
         final var startPosition = Math.toIntExact(ThreadLocalRandom.current().nextLong(count));
         return entityManager
                 .createQuery("SELECT e.empNo FROM DeptEmp AS e", Integer.class)
@@ -48,7 +48,7 @@ abstract class DeptEmp__IT
 
     private static
     @Nonnull Integer selectRandomEmpNo_CriteriaApi(final @Nonnull EntityManager entityManager) {
-        final var count = __Persistence_Utils.selectCount(entityManager, DeptEmp.class);
+        final var count = __PersistenceUtils.selectCount(entityManager, DeptEmp.class);
         final var startPosition = Math.toIntExact(ThreadLocalRandom.current().nextLong(count));
         final var builder = entityManager.getCriteriaBuilder();
         final var query = builder.createQuery(Integer.class);
@@ -72,7 +72,7 @@ abstract class DeptEmp__IT
 
     // -----------------------------------------------------------------------------------------------------------------
     private static Department selectRandomDepartment_QueryLanguage(final @Nonnull EntityManager entityManager) {
-        final var count = __Persistence_Utils.selectCount(entityManager, DeptEmp.class);
+        final var count = __PersistenceUtils.selectCount(entityManager, DeptEmp.class);
         final var startPosition = Math.toIntExact(ThreadLocalRandom.current().nextLong(count));
         return entityManager
                 .createQuery("SELECT e.department FROM DeptEmp AS e", Department.class)
@@ -82,7 +82,7 @@ abstract class DeptEmp__IT
     }
 
     private static Department selectRandomDepartment_CriteriaApi(final @Nonnull EntityManager entityManager) {
-        final var count = __Persistence_Utils.selectCount(entityManager, DeptEmp.class);
+        final var count = __PersistenceUtils.selectCount(entityManager, DeptEmp.class);
         final var startPosition = Math.toIntExact(ThreadLocalRandom.current().nextLong(count));
         return entityManager
                 .createQuery("SELECT e.department FROM DeptEmp AS e", Department.class)
@@ -99,7 +99,7 @@ abstract class DeptEmp__IT
 
     private static
     @Nonnull String selectRandomDeptNo_QueryLanguage(final @Nonnull EntityManager entityManager) {
-        final var count = __Persistence_Utils.selectCount(entityManager, DeptEmp.class);
+        final var count = __PersistenceUtils.selectCount(entityManager, DeptEmp.class);
         final var startPosition = Math.toIntExact(ThreadLocalRandom.current().nextLong(count));
         return entityManager
                 .createQuery("SELECT e.deptNo FROM DeptEmp AS e", String.class)
@@ -110,7 +110,7 @@ abstract class DeptEmp__IT
 
     private static
     @Nonnull String selectRandomDeptNo_CriteriaApi(final @Nonnull EntityManager entityManager) {
-        final var count = __Persistence_Utils.selectCount(entityManager, DeptEmp.class);
+        final var count = __PersistenceUtils.selectCount(entityManager, DeptEmp.class);
         final var startPosition = Math.toIntExact(ThreadLocalRandom.current().nextLong(count));
         final var builder = entityManager.getCriteriaBuilder();
         final var query = builder.createQuery(String.class);

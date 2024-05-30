@@ -10,19 +10,19 @@ import java.util.Objects;
 import java.util.function.Function;
 
 @Slf4j
-final class __Jdbc_Utils {
+final class __JdbcUtils {
 
     // -----------------------------------------------------------------------------------------------------------------
     static <R> R applyUnwrappedConnection(final @Nonnull EntityManager entityManager,
                                           final @Nonnull Function<? super Connection, ? extends R> function) {
         Objects.requireNonNull(entityManager, "entityManager is null");
         Objects.requireNonNull(function, "function is null");
-        return __Persistence_Utils.applyInTransaction(
+        return __PersistenceUtils.applyInTransaction(
                 entityManager,
                 em -> {
                     final var unwrapped = em.unwrap(Connection.class);
                     assert unwrapped != null : "null unwrapped for " + Connection.class;
-                    final var uuncloseable = __Lang_Utils.uncloseable(Connection.class, null, unwrapped);
+                    final var uuncloseable = __LangUtils.uncloseable(Connection.class, null, unwrapped);
                     return function.apply(uuncloseable);
                 },
                 et -> {
@@ -79,7 +79,7 @@ final class __Jdbc_Utils {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private __Jdbc_Utils() {
+    private __JdbcUtils() {
         throw new AssertionError("instantiation is not allowed");
     }
 }

@@ -3,19 +3,42 @@ package com.github.jinahya.mysql.employees.persistence;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.metamodel.Attribute;
 import jakarta.persistence.metamodel.EntityType;
+import jakarta.persistence.metamodel.ManagedType;
+import jakarta.persistence.metamodel.SingularAttribute;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Slf4j
-final class __Persistence_Utils {
+final class __PersistenceUtils {
 
+    // -----------------------------------------------------------------------------------------------------------------
+    static <ENTITY extends _BaseEntity<?>> Set<Attribute<? super ENTITY, ?>> getIdAttributes(
+            final ManagedType<ENTITY> managedType) {
+        Objects.requireNonNull(managedType, "managedType is null");
+        return managedType.getAttributes().stream()
+                .filter(a -> a instanceof SingularAttribute<?, ?>)
+                .filter(a -> ((SingularAttribute<?, ?>) a).isId())
+                .collect(Collectors.toSet());
+    }
+
+    static <ENTITY extends _BaseEntity<?>> void acceptEachIdAttribute(
+            final ManagedType<ENTITY> managedType, final Consumer<? super Attribute<? super ENTITY, ?>> consumer) {
+        Objects.requireNonNull(managedType, "managedType is null");
+        Objects.requireNonNull(consumer, "consumer is null");
+        getIdAttributes(managedType).forEach(consumer);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
     static <R> R applyInTransaction(final EntityManager entityManager,
                                     final Function<? super EntityManager, ? extends R> function,
                                     final Consumer<? super EntityTransaction> consumer) {
@@ -129,7 +152,7 @@ final class __Persistence_Utils {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private __Persistence_Utils() {
+    private __PersistenceUtils() {
         throw new AssertionError("instantiation is not allowed");
     }
 }
