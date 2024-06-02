@@ -249,6 +249,7 @@ $ sh ./.docker.stop.sh
 
 * [기간 영어로 (duration, period, time frame, span, length of time, interval, term, tenure 차이)](https://blog-ko.engram.us/duration/)
 * [기타 영어로 (Etcetera (etc.), Miscellaneous, Additional, Non-specific, Assorted 차이)](https://blog-ko.engram.us/etcetera/)
+* [/assertj/assertj/issues/3491 Ambiguous assertThat for Temporal instance implementing Comparable #3491](https://github.com/assertj/assertj/issues/3491)
 
 ---
 

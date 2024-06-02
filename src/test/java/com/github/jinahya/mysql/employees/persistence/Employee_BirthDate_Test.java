@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
 import java.time.YearMonth;
+import java.time.temporal.Temporal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.notNull;
@@ -33,7 +34,8 @@ class Employee_BirthDate_Test
             // ---------------------------------------------------------------------------------------------------- when
             final var birthYear = instance.getBirthYear();
             // ---------------------------------------------------------------------------------------------------- then
-            assertThat(birthYear).isNull();
+            // https://github.com/assertj/assertj/issues/3491
+            assertThat((Temporal) birthYear).isNull();
         }
 
         @DisplayName("getBirthDate()!null")
@@ -46,7 +48,8 @@ class Employee_BirthDate_Test
             // ---------------------------------------------------------------------------------------------------- when
             final var birthYear = instance.getBirthYear();
             // ---------------------------------------------------------------------------------------------------- then
-            assertThat(birthYear).isEqualTo(Year.from(birthDate));
+            // https://github.com/assertj/assertj/issues/3491
+            assertThat((Temporal) birthYear).isEqualTo(Year.from(birthDate));
         }
     }
 

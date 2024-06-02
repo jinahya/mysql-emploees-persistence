@@ -55,7 +55,8 @@
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <groupId.querydsl>com.querydsl</groupId.querydsl>
     <version.querydsl>5.1.0</version.querydsl>
-    <version.lombok>1.18.30</version.lombok>
+<!--    <version.lombok>1.18.30</version.lombok>-->
+    <version.lombok>1.18.32</version.lombok>
     <version.maven-failsafe>${version.maven-surefire}</version.maven-failsafe>
     <version.maven-surefire>3.2.5</version.maven-surefire>
     <version.mysql-connector-j>8.3.0</version.mysql-connector-j>
@@ -65,7 +66,9 @@
     <version.org.jboss.weld>4.0.2.Final</version.org.jboss.weld>
     <version.org.jooq>3.19.5</version.org.jooq>
     <version.org.junit.jupiter>5.10.2</version.org.junit.jupiter>
-    <version.org.mockito>5.11.0</version.org.mockito>
+<!--    <version.org.junit.jupiter>5.12.0</version.org.junit.jupiter>-->
+<!--    <version.org.mockito>5.11.0</version.org.mockito>-->
+    <version.org.mockito>5.12.0</version.org.mockito>
     <eclipselink.woven>false</eclipselink.woven>
   </properties>
 
@@ -128,7 +131,8 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>3.25.3</version>
+<!--      ;<version>3.25.3</version>-->
+      <version>3.26.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
