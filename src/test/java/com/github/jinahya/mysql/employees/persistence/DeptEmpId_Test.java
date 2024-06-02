@@ -3,9 +3,11 @@ package com.github.jinahya.mysql.employees.persistence;
 import nl.jqno.equalsverifier.Warning;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Named;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
@@ -33,7 +35,7 @@ class DeptEmpId_Test
     /**
      * A nested test class for testing {@link DeptEmpId#setEmployee(Employee)} method.
      */
-    @DisplayName("setEmployee(v)")
+    @DisplayName("setEmployee(employee)")
     @Nested
     class SetEmployeeTest {
 
@@ -79,7 +81,7 @@ class DeptEmpId_Test
     /**
      * A nested class for testing {@link DeptEmpId#employee(Employee)} method.
      */
-    @DisplayName("employee(v)")
+    @DisplayName("employee(employee)")
     @Nested
     class EmployeeTest {
 
@@ -88,16 +90,16 @@ class DeptEmpId_Test
          *
          * @return a stream of {@link Employee}s.
          */
-        private static Stream<Employee> getEmployeeStream() {
+        private static Stream<Arguments> getEmployeeStream() {
             return Stream.of(
-                    null,
-                    mock(Employee.class),
-                    mock(Employee.class, i -> {
+                    Arguments.of(Named.named("null", null)),
+                    Arguments.of(Named.named("non-null with null empNo", mock(Employee.class))),
+                    Arguments.of(Named.named("non-null with non-null empNo", mock(Employee.class, i -> {
                         if (i.getMethod().getName().equals("getEmpNo")) {
                             return 0;
                         }
                         return null;
-                    })
+                    })))
             );
         }
 
@@ -107,7 +109,7 @@ class DeptEmpId_Test
          *
          * @param employee given argument.
          */
-        @DisplayName("(v) -> setEmployee(v) -> v")
+        @DisplayName("(employee) -> setEmployee(employee) -> self")
         @MethodSource({"getEmployeeStream"})
         @ParameterizedTest
         void __(final Employee employee) {
@@ -124,93 +126,57 @@ class DeptEmpId_Test
     // -----------------------------------------------------------------------------------------------------------------
 
     /**
-     * A nested test class for testing {@link DeptEmpId#setDepartment(Department)} method.
+     * Returns a stream of {@link Department}s for testing.
+     *
+     * @return a stream of {@link Department}s.
      */
-    @DisplayName("setDepartment(Department)")
-    @Nested
-    class SetDepartmentTest {
-
-        @DisplayName("(null)")
-        @Test
-        void __Null() {
-            // --------------------------------------------------------------------------------------------------- given
-            final var instance = newIdSpy();
-            // ---------------------------------------------------------------------------------------------------- when
-            instance.setDepartment(null);
-            // ---------------------------------------------------------------------------------------------------- then
-            // TODO: verify, setDeptNo(null) invoked, once
-        }
-
-        @DisplayName("(non-null-with-null-emp-no)")
-        @Test
-        void __NonNullWithNullDeptNo() {
-            // --------------------------------------------------------------------------------------------------- given
-            final var instance = newIdSpy();
-            final var department = mock(Department.class);
-            given(department.getDeptNo()).willReturn(null);
-            // ---------------------------------------------------------------------------------------------------- when
-            instance.setDepartment(department);
-            // ---------------------------------------------------------------------------------------------------- then
-            // TODO: verify , setDeptNo(null) invoked, once.
-        }
-
-        @DisplayName("(non-null-with-null-emp-no)")
-        @Test
-        void __NonNullWithNonNullDeptNo() {
-            // --------------------------------------------------------------------------------------------------- given
-            final var instance = newIdSpy();
-            final var department = mock(Department.class);
-            final var deptNo = "0";
-            given(department.getDeptNo()).willReturn(deptNo);
-            // ---------------------------------------------------------------------------------------------------- when
-            instance.setDepartment(department);
-            // ---------------------------------------------------------------------------------------------------- then
-            // TODO: verify, setDeptNo(deptNo) invoked, once.
-        }
+    private static Stream<Arguments> getDepartmentStream() {
+        return Stream.of(
+                Arguments.of(Named.named("null", null)),
+                Arguments.of(Named.named("non-null with null deptNo", mock(Department.class))),
+                Arguments.of(Named.named("non-null with non-null deptNo", mock(Department.class, i -> {
+                    if (i.getMethod().getName().equals("getDeptNo")) {
+                        return "0";
+                    }
+                    return null;
+                })))
+        );
     }
 
     /**
-     * A nested class for testing {@link DeptEmpId#department(Department)} method.
+     * {@link DeptEmpId#setDepartment(Department) setDepartment(department)} 메서드를 호출했을 때,
+     * {@link DeptEmpId#setDeptNo(String) setDeptNo(department?.deptNo} 를 한 번 호출한다.
+     *
+     * @param department a department to test with.
      */
-    @DisplayName("department(v)")
-    @Nested
-    class DepartmentTest {
+    @DisplayName("setDepartment(department) -> setDeptNo(department?.deptNo)")
+    @MethodSource({"getDepartmentStream"})
+    @ParameterizedTest
+    void setDepartment_setDeptNoWithDepartmentDeptNo_(final Department department) {
+        // --------------------------------------------------------------------------------------------------- given
+        final var instance = newIdSpy();
+        // ---------------------------------------------------------------------------------------------------- when
+        instance.setDepartment(department);
+        // ---------------------------------------------------------------------------------------------------- then
+        // TODO: verify, setDeptNo(department?.deptNo) invoked, once
+    }
 
-        /**
-         * Returns a stream of {@link Department}s for testing.
-         *
-         * @return a stream of {@link Department}s.
-         */
-        private static Stream<Department> getDepartmentStream() {
-            return Stream.of(
-                    null,                         // null
-                    mock(Department.class),       // non-null with null deptNo
-                    mock(Department.class, i -> { // non-null with no null deptNo
-                        if (i.getMethod().getName().equals("getDeptNo")) {
-                            return "0";
-                        }
-                        return null;
-                    })
-            );
-        }
-
-        /**
-         * Verifies that {@link DeptEmpId#department(Department)} method invokes
-         * {@link DeptEmpId#setDepartment(Department)} method with given arguments, and returns self.
-         *
-         * @param department given argument.
-         */
-        @DisplayName("(v) -> setDepartment(v) -> v")
-        @MethodSource({"getDepartmentStream"})
-        @ParameterizedTest
-        void __(final Department department) {
-            // --------------------------------------------------------------------------------------------------- given
-            final var instance = newIdSpy();
-            // ---------------------------------------------------------------------------------------------------- when
-            final var result = instance.department(department);
-            // ---------------------------------------------------------------------------------------------------- then
-            // TODO: verify, setDepartment(department) invoked, once.
-            // TODO: assert, result is same as instance.
-        }
+    /**
+     * {@link DeptEmpId#department(Department) department(department)} 메서드를 호출했을 때,
+     * {@link DeptEmpId#setDepartment(Department) setDepartment(department)} 를 한 번 호출한 후 가지 자신을 반환한다.
+     *
+     * @param department a department to test with.
+     */
+    @DisplayName("department(department) -> setDepartment(department) -> self")
+    @MethodSource({"getDepartmentStream"})
+    @ParameterizedTest
+    void department_setDepartmentWithDepartment_(final Department department) {
+        // --------------------------------------------------------------------------------------------------- given
+        final var instance = newIdSpy();
+        // ---------------------------------------------------------------------------------------------------- when
+        final var result = instance.department(department);
+        // ---------------------------------------------------------------------------------------------------- then
+        // TODO: verify, setDepartment(department) invoked, once.
+        // TODO: assert, result is same as instance.
     }
 }

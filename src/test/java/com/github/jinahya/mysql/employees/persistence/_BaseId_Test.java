@@ -8,17 +8,16 @@ import org.mockito.Mockito;
 
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
-import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-abstract class _BaseId_Test<ID extends _BaseId> {
+abstract class _BaseId_Test<ID extends _BaseId>
+        extends __BaseId_Test<ID> {
 
     // -----------------------------------------------------------------------------------------------------------------
     _BaseId_Test(final Class<ID> idClass) {
-        super();
-        this.idClass = Objects.requireNonNull(idClass, "idClass is null");
+        super(idClass);
     }
 
     // --------------------------------------------------------------------------------------------------- getter/setter
@@ -96,7 +95,4 @@ abstract class _BaseId_Test<ID extends _BaseId> {
             throw new RuntimeException("failed to instantiate " + idClass, roe);
         }
     }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    final Class<ID> idClass;
 }
