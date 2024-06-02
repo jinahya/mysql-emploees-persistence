@@ -37,7 +37,6 @@ abstract class _BaseEntityIT<ENTITY extends _BaseEntity<ID>, ID extends Serializ
         this.idClass = _BaseEntityTestUtils.idClass(this.entityClass);
     }
 
-
 //    // --------------------------------------------------------------------------------------------------- entityManager
 //
 //    <R> R applyMetamodel(final Function<? super Metamodel, ? extends R> function) {

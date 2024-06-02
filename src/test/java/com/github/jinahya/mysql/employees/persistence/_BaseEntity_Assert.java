@@ -1,7 +1,6 @@
 package com.github.jinahya.mysql.employees.persistence;
 
 import org.assertj.core.api.AbstractAssert;
-import org.assertj.core.api.Assertions;
 
 import java.io.Serializable;
 
@@ -13,13 +12,5 @@ abstract class _BaseEntity_Assert<
 
     _BaseEntity_Assert(final ENTITY actual, final Class<?> selfType) {
         super(actual, selfType);
-    }
-
-    @SuppressWarnings({"unchecked"})
-    public final SELF hasId(final ID id) {
-        isNotNull()
-                .extracting(_BaseEntity::getId, Assertions::assertThat)
-                .isEqualTo(id);
-        return (SELF) this;
     }
 }

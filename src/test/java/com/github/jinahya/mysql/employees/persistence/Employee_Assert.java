@@ -18,9 +18,6 @@ public class Employee_Assert
     }
 
     // ----------------------------------------------------------------------------------------------------------- empNo
-    public Employee_Assert hasEmpNo(final Integer expectedEmpNo) {
-        return hasId(expectedEmpNo);
-    }
 
     // ------------------------------------------------------------------------------------------------------- birthDate
     public Employee_Assert hasBirthDateSatisfying(final Consumer<? super LocalDate> requirements) {

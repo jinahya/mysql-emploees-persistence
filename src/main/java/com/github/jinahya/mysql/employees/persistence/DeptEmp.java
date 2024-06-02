@@ -213,12 +213,6 @@ public class DeptEmp
         return toDate.isAfter(ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED);
     }
 
-    // -------------------------------------------------------------------------------------------------------------- id
-    @Override
-    DeptEmpId getId() {
-        return DeptEmpId.of(getEmpNo(), getDeptNo());
-    }
-
     // ------------------------------------------------------------------------------------------------- emp_no/employee
 
     /**

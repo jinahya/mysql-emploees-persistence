@@ -63,5 +63,4 @@ public class TitleId
     @Basic(optional = false)
     @Column(name = Title.COLUMN_NAME_FROM_DATE, nullable = false, insertable = true, updatable = false)
     private LocalDate fromDate;
-
 }

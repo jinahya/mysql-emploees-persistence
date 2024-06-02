@@ -1,5 +1,6 @@
 package com.github.jinahya.mysql.employees.persistence;
 
+import com.github.jinahya.mysql.employees.persistence.service._BaseEntityPersistenceService;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 
@@ -7,7 +8,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 abstract class BaseEntityServiceImpl<
-        SERVICE extends _BaseEntityService<ENTITY>,
+        SERVICE extends _BaseEntityPersistenceService<ENTITY>,
         ENTITY extends _BaseEntity<ID>,
         ID extends Serializable> {
 

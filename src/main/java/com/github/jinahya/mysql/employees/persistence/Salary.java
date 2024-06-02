@@ -116,16 +116,6 @@ public class Salary
         return !fromDate.isAfter(toDate);
     }
 
-    // -------------------------------------------------------------------------------------------------------------- id
-
-    @Override
-    SalaryId getId() {
-        final var id = new SalaryId();
-        id.setEmpNo(getEmpNo());
-        id.setFromDate(getFromDate());
-        return id;
-    }
-
     // -------------------------------------------------------------------------------------------------- empNo/employee
 
     // TODO: narrow the scope!

@@ -1,18 +1,21 @@
-package com.github.jinahya.mysql.employees.persistence;
+package com.github.jinahya.mysql.employees.persistence.service;
 
+import com.github.jinahya.mysql.employees.persistence.Department;
+import com.github.jinahya.mysql.employees.persistence.DeptEmp;
+import com.github.jinahya.mysql.employees.persistence.Employee;
 import jakarta.annotation.Nonnull;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface DeptEmpService
-        extends _BaseEntityService<DeptEmp> {
+public interface DeptEmpPersistenceService
+        extends _BaseEntityPersistenceService<DeptEmp> {
 
     /**
      * Returns current assignment of specified employee.
      *
      * @param employee the employee whose current assignment is found.
-     * @return alist of current assignment.
+     * @return a list of current assignment.
      */
     List<DeptEmp> getCurrentAssignments(@Nonnull Employee employee);
 

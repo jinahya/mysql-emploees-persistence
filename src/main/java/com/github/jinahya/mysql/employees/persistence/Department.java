@@ -101,13 +101,6 @@ public class Department
         return Objects.hash(deptNo);
     }
 
-    // -------------------------------------------------------------------------------------------------------------- id
-
-    @Override
-    String getId() {
-        return getDeptNo();
-    }
-
     // -----------------------------------------------------------------------------------------------------------------
     @Size(min = SIZE_MIN_DEPT_NO, max = SIZE_MAX_DEPT_NO)
     @NotNull

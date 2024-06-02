@@ -1,5 +1,6 @@
 package com.github.jinahya.mysql.employees.persistence;
 
+import com.github.jinahya.mysql.employees.persistence.service.DeptEmpPersistenceService;
 import jakarta.annotation.Nonnull;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -8,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 class DeptEmpServiceImpl
-        implements DeptEmpService {
+        implements DeptEmpPersistenceService {
 
     @Override
     public List<DeptEmp> getCurrentAssignments(final @Nonnull Employee employee) {

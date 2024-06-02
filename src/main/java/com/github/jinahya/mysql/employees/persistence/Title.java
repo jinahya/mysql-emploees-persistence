@@ -92,16 +92,15 @@ public class Title
     // --------------------------------------------------------------------------------------------------------- to_date
     public static final String COLUMN_NAME_TO_DATE = "to_date";
 
-    // -----------------------------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
 
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    // ------------------------------------------------------------------------------------------------ java.lang.Object
     @Override
     public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof Title that)) {
-            return false;
-        }
+        if (this == obj) return true;
+        if (!(obj instanceof Title that)) return false;
         return Objects.equals(id, that.id);
     }
 
@@ -110,14 +109,52 @@ public class Title
         return Objects.hash(id);
     }
 
+    // -------------------------------------------------------------------------------------------------------------- id
+    public TitleId getId() {
+        return id;
+    }
+
+    /**
+     * Replace current value of {@code id.empNo} attribute path with specified value.
+     *
+     * @param idEmpNo new value for the {@code id.empNo} attribute path.
+     */
+    public void setIdEmpNo(final Integer idEmpNo) {
+        assert id != null;
+        id.setEmpNo(idEmpNo);
+    }
+
+    public void setIdTitle(final String idTitle) {
+        assert id != null;
+        id.setTitle(idTitle);
+    }
+
+    public void setIdFromDate(final LocalDate idFromDate) {
+        assert id != null;
+        id.setFromDate(idFromDate);
+    }
+
     // -------------------------------------------------------------------------------------------------------- employee
 
+    /**
+     * Returns current value of {@link Title_#employee employee} attribute.
+     *
+     * @return current value of the {@link Title_#employee employee} attribute.
+     */
     public Employee getEmployee() {
         return employee;
     }
 
+    /**
+     * Replace current value of {@link Title_#employee employee} attribute with specified value.
+     *
+     * @param employee new value for the {@link Title_#employee employee} attribute.
+     * @implSpec This method also replaces current value of {@link TitleId_#empNo id.empNo} attribute path with
+     * {@code employee?.empNo}.
+     */
     public void setEmployee(final Employee employee) {
         this.employee = employee;
+        assert id != null;
         id.setEmpNo(
                 Optional.ofNullable(this.employee)
                         .map(Employee::getEmpNo)
@@ -129,12 +166,20 @@ public class Title
     @Valid
     @NotNull
     @EmbeddedId
-    @Setter(AccessLevel.NONE)
-    private TitleId id = new TitleId();
+    @Setter(AccessLevel.NONE) // getter-only
+    // > The entity class must not be final.
+    // > No methods or persistent instance variables of the entity class may be final.
+    // https://jakarta.ee/specifications/persistence/3.0/jakarta-persistence-spec-3.0#a18
+    private /* final */ TitleId id = new TitleId();
 
     @Valid
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = COLUMN_NAME_EMP_NO, nullable = false, insertable = false, updatable = false)
+    @JoinColumn(
+            name = COLUMN_NAME_EMP_NO,
+            nullable = false,
+            insertable = false, // !!!
+            updatable = false   // !!!
+            )
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Employee employee;

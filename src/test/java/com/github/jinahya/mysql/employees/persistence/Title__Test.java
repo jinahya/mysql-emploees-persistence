@@ -1,9 +1,9 @@
 package com.github.jinahya.mysql.employees.persistence;
 
-abstract class Title_Test
+abstract class Title__Test
         extends _BaseEntity_Test<Title, TitleId> {
 
-    Title_Test() {
+    Title__Test() {
         super(Title.class);
     }
 }
