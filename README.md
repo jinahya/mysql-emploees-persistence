@@ -9,13 +9,14 @@
 
 ### API Versions
 
-| platform / framework                        | version                          | notes |
-|---------------------------------------------|----------------------------------|-------|
-| [Jakarta Persistence]                       | [Jakarta Persistence 3.2]        |       |
-| [Jakarta Persistence]                       | [Jakarta Persistence 3.1]        |       |
-| [Spring Boot Dependency Versions (current)] | `:jakarta.persistence-api:3.1.0` |       |
-| [Spring Boot Dependency Versions (3.2.5)]   | `:jakarta.persistence-api:3.1.0` |       |
-| [Spring Boot Dependency Versions (3.2.4)]   | `:jakarta.persistence-api:3.1.0` |       |
+| platform / framework                        | version                             | notes               |
+|---------------------------------------------|-------------------------------------|---------------------|
+| [Jakarta Persistence]                       | [Jakarta Persistence 3.2]           |                     |
+| [Jakarta Persistence]                       | [Jakarta Persistence 3.1]           |                     |
+| [Spring Boot Dependency Versions (current)] | `:jakarta.persistence-api:3.1.0`    |                     |
+| [Spring Boot Dependency Versions (3.2.6)]   | `:jakarta.persistence-api:3.1.0`    |                     |
+| [Jakarta EE Platform 11]                    | `:jakarta.persistence-api:3.2.0-M2` | (Under development) |
+| [Jakarta EE Platform 10]                    | `:jakarta.persistence-api:3.1.0`    |                     |
 
 ---
 
@@ -172,7 +173,8 @@ $ sh ./.docker.stop.sh
 * [Jakarta Persistence 3.1 Javadoc](https://jakarta.ee/specifications/persistence/3.1/apidocs)
 
 ### [EclipseLink](https://eclipse.dev/eclipselink/)
-* 
+
+*
 * [EclipseLink Documentation Center](https://eclipse.dev/eclipselink/documentation/)
 
 #### [EclipseLink JPA](https://eclipse.dev/eclipselink/#jpa)
@@ -244,8 +246,15 @@ $ sh ./.docker.stop.sh
 ---
 
 [Jakarta Persistence]: https://jakarta.ee/specifications/persistence/
-[Jakarta Persistence 3.2]: https://jakarta.ee/specifications/persistence/3.1/
-[Jakarta Persistence 3.1]: https://jakarta.ee/specifications/persistence/
-[Spring Boot Dependency Versions (current)]: https://docs.spring.io/spring-boot/docs/current/reference/html/dependency-versions.html
-[Spring Boot Dependency Versions (3.2.5)]: https://docs.spring.io/spring-boot/docs/3.2.5/reference/html/dependency-versions.html#appendix.dependency-versions
-[Spring Boot Dependency Versions (3.2.4)]: https://docs.spring.io/spring-boot/docs/3.2.4/reference/html/dependency-versions.html#appendix.dependency-versions
+
+[Jakarta Persistence 3.2]: https://jakarta.ee/specifications/persistence/3.2/
+
+[Jakarta Persistence 3.1]: https://jakarta.ee/specifications/persistence/3.1/
+
+[Spring Boot Dependency Versions (current)]: https://docs.spring.io/spring-boot/appendix/dependency-versions/coordinates.html
+
+[Spring Boot Dependency Versions (3.2.6)]: https://docs.spring.io/spring-boot/docs/3.2.6/reference/html/dependency-versions.html#appendix.dependency-versions
+
+[Jakarta EE Platform 11]: https://jakarta.ee/specifications/platform/11/
+
+[Jakarta EE Platform 10]: https://jakarta.ee/specifications/platform/10/
