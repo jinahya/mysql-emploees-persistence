@@ -243,6 +243,13 @@ $ sh ./.docker.stop.sh
 
 * [JPA Entity Graph](https://www.baeldung.com/jpa-entity-graph)
 
+### Et cetera
+
+### Miscellaneous
+
+* [기간 영어로 (duration, period, time frame, span, length of time, interval, term, tenure 차이)](https://blog-ko.engram.us/duration/)
+* [기타 영어로 (Etcetera (etc.), Miscellaneous, Additional, Non-specific, Assorted 차이)](https://blog-ko.engram.us/etcetera/)
+
 ---
 
 [Jakarta Persistence]: https://jakarta.ee/specifications/persistence/

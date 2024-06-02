@@ -4,6 +4,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -80,6 +81,10 @@ abstract class _BaseId_Test<ID extends _BaseId> {
     }
 
     // --------------------------------------------------------------------------------------------------------- idClass
+    ID newIdSpy() {
+        return Mockito.spy(newIdInstance());
+    }
+
     ID newIdInstance() {
         try {
             final var constructor = idClass.getDeclaredConstructor();

@@ -121,9 +121,9 @@ public class Employee
     /**
      * The column value of {@value} for the {@value #COLUMN_NAME_GENDER} column.
      */
-    public static final String COLUMN_VALUE_GENER_F = "F";
+    public static final String COLUMN_VALUE_GENDER_F = "F";
 
-    public static final String COLUMN_VALUE_GENER_M = "M";
+    public static final String COLUMN_VALUE_GENDER_M = "M";
 
     /**
      * Constants for {@link Employee_#gender gender} attribute.
@@ -133,14 +133,14 @@ public class Employee
     public enum Gender {
 
         /**
-         * Constants for {@value #COLUMN_VALUE_GENER_F} column value.
+         * Constants for {@value #COLUMN_VALUE_GENDER_F} column value.
          */
-        F(COLUMN_VALUE_GENER_F),
+        F(COLUMN_VALUE_GENDER_F),
 
         /**
-         * Constants for {@value #COLUMN_VALUE_GENER_M} column value.
+         * Constants for {@value #COLUMN_VALUE_GENDER_M} column value.
          */
-        M(COLUMN_VALUE_GENER_M);
+        M(COLUMN_VALUE_GENDER_M);
 
         /**
          * Finds the value whose {@link #getColumnValue() columnValue} matches specified value.
@@ -321,8 +321,8 @@ public class Employee
     private String lastName;
 
     @NotNull
-//    @Convert(converter = GenderConverter.class)
-    @Enumerated(EnumType.STRING)
+//    @Convert(converter = GenderConverter.class) // TODO: uncomment
+    @Enumerated(EnumType.STRING)                  // TODO: comment-out
     @Column(name = COLUMN_NAME_GENDER, nullable = false, insertable = true, updatable = true)
     private Gender gender;
 

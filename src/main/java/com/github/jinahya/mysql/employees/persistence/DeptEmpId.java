@@ -1,5 +1,7 @@
 package com.github.jinahya.mysql.employees.persistence;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +10,7 @@ import lombok.ToString;
 import java.io.Serial;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * An id class for {@link DeptEmp} entity.
@@ -43,6 +46,13 @@ public class DeptEmpId
      * @see #of(Integer, String)
      */
     public static DeptEmpId from(final Employee employee, final Department department) {
+        // TODO: choose either one or another!
+        if (ThreadLocalRandom.current().nextBoolean()) {
+            return of(
+                    Optional.ofNullable(employee).map(Employee::getEmpNo).orElse(null),
+                    Optional.ofNullable(department).map(Department::getDeptNo).orElse(null)
+            );
+        }
         return of(null, null)
                 .employee(employee)
                 .department(department);
@@ -50,7 +60,7 @@ public class DeptEmpId
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
-    // -----------------------------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------------ java.lang.Object
     @Override
     public final boolean equals(final Object obj) {
         if (this == obj) {
@@ -83,11 +93,11 @@ public class DeptEmpId
     // ---------------------------------------------------------------------------------------------------------- deptNo
 
     /**
-     * Replaces current value of {@link DeptEmp_#deptNo deptNo} attribute with specified department's
-     * {@link Department_#deptNo deptNo} attribute.
+     * Replaces current value of {@code deptNo} property with specified department's {@link Department_#deptNo deptNo}
+     * attribute.
      *
-     * @param department the department whose {@link Department_#deptNo deptNo} attribute is set to the
-     *                   {@link DeptEmp_#deptNo deptNot} attribute.
+     * @param department the department whose {@link Department_#deptNo deptNo} attribute is set to the {@code deptNo}
+     *                   property.
      */
     public void setDepartment(final Department department) {
         setDeptNo(
@@ -96,11 +106,11 @@ public class DeptEmpId
     }
 
     /**
-     * Replaces current value of {@link DeptEmp_#deptNo deptNo} attribute with specified department's
-     * {@link Department_#deptNo deptNo} attribute, and returns this object.
+     * Replaces current value of {@code deptNo} property with specified department's {@link Department_#deptNo deptNo}
+     * attribute, and returns this object.
      *
-     * @param department the department whose {@link Department_#deptNo deptNo} attribute is set to the
-     *                   {@link DeptEmp_#deptNo deptNot} attribute.
+     * @param department the department whose {@link Department_#deptNo deptNo} attribute is set to the {@code deptNo}
+     *                   property.
      * @return this object.
      * @see #setDepartment(Department)
      */
@@ -110,7 +120,10 @@ public class DeptEmpId
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+    @NotNull
     private Integer empNo;
 
+    @Size(min = DeptEmp.SIZE_MIN_DEPT_NO, max = DeptEmp.SIZE_MAX_DEPT_NO)
+    @NotNull
     private String deptNo;
 }

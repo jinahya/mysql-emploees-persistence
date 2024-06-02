@@ -64,7 +64,8 @@ import java.util.Optional;
         "java:S1700" // Integer salary -> class Salary
 })
 public class Salary
-        extends _BaseEntity<SalaryId> {
+        extends _BaseEntity<SalaryId>
+        implements ILocalDateSpan {
 
     @Serial
     private static final long serialVersionUID = 604718367871825963L;
@@ -114,6 +115,18 @@ public class Salary
             return true;
         }
         return !fromDate.isAfter(toDate);
+    }
+
+    // -------------------------------------------------------------------------------------------------- ILocalDateSpan
+
+    @Override
+    public LocalDate getStart_() {
+        return getFromDate();
+    }
+
+    @Override
+    public LocalDate getEnd_() {
+        return getToDate();
     }
 
     // -------------------------------------------------------------------------------------------------- empNo/employee
