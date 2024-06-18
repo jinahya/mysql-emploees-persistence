@@ -2,13 +2,14 @@ package com.github.jinahya.mysql.employees.persistence.service;
 
 import com.github.jinahya.mysql.employees.persistence.Department;
 import com.github.jinahya.mysql.employees.persistence.DeptManager;
+import com.github.jinahya.mysql.employees.persistence.DeptManagerId;
 import com.github.jinahya.mysql.employees.persistence.Employee;
 import jakarta.annotation.Nonnull;
 
 import java.time.LocalDate;
 
 public interface DeptManagerService
-        extends _BaseEntityPersistenceService<DeptManager> {
+        extends _IBaseEntityService<DeptManager, DeptManagerId> {
 
     /**
      * Appoints specified employee as the manager of specified department, as of specified date.

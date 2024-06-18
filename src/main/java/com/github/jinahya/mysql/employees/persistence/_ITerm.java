@@ -13,43 +13,45 @@ import java.time.temporal.TemporalAmount;
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
  */
 @SuppressWarnings({
+        "java:S114", // interface _Iterm
         "java:S119" // <TEMPORAL_ACCESSOR ...>
 })
-public interface ISpan<
+public interface _ITerm<
         TEMPORAL_ACCESSOR extends TemporalAccessor & Comparable<? super TEMPORAL_ACCESSOR>,
         TEMPORAL_AMOUNT extends TemporalAmount> {
 
     // ------------------------------------------------------------------------------------------------- Bean-Validation
 
     /**
-     * Asserts that {@link #getStart_() start_} is not after the {@link #getEnd_() end_}.
+     * Asserts that {@link #getTermStart() termStart} is not after the {@link #getTermEnd() termEnd}.
      *
-     * @return {@code true} when {@link #getStart_() start_} is not after the {@link #getEnd_() end_}; {@code false}
-     * otherwise; {@code true} when either {@link #getStart_() start_} or {@link #getEnd_() end_} is {@code null}.
+     * @return {@code true} when {@link #getTermStart() termStart} is not after the {@link #getTermEnd() termEnd};
+     * {@code false} otherwise; {@code true} when either {@link #getTermStart() termStart} or
+     * {@link #getTermEnd() termEnd} is {@code null}.
      */
     @AssertTrue
-    default boolean isStart_IsNotAfterEnd_() {
-        final TEMPORAL_ACCESSOR start_ = getStart_();
-        final TEMPORAL_ACCESSOR end_ = getEnd_();
-        if (start_ == null || end_ == null) {
+    default boolean isTermStartNotAfterTermEnd() {
+        final TEMPORAL_ACCESSOR termStart = getTermStart();
+        final TEMPORAL_ACCESSOR termEnd = getTermEnd();
+        if (termStart == null || termEnd == null) {
             return true;
         }
-        return start_.compareTo(end_) <= 0;
+        return termStart.compareTo(termEnd) <= 0;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
 
     /**
-     * Returns a temporal amount between {@link #getStart_() start_} and {@link #getEnd_() end_}.
+     * Returns a temporal amount between {@link #getTermStart() termStart} and {@link #getTermEnd() termEnd}.
      *
-     * @return a temporal amount between {@link #getStart_() start_} and {@link #getEnd_() end_}; {@code null} when
-     * either {@link #getStart_() start_} or {@link #getEnd_() end_} is {@code null}.
+     * @return a temporal amount between {@link #getTermStart() termStart} and {@link #getTermEnd() termEnd};
+     * {@code null} when either {@link #getTermStart() termStart} or {@link #getTermEnd() termEnd} is {@code null}.
      */
-    TEMPORAL_AMOUNT getSpan_();
+    TEMPORAL_AMOUNT getTermSpan();
 
     // -----------------------------------------------------------------------------------------------------------------
-    TEMPORAL_ACCESSOR getStart_();
+    TEMPORAL_ACCESSOR getTermStart();
 
     // -----------------------------------------------------------------------------------------------------------------
-    TEMPORAL_ACCESSOR getEnd_();
+    TEMPORAL_ACCESSOR getTermEnd();
 }

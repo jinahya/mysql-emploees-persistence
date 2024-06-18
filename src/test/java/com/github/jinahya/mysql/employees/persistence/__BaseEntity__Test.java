@@ -1,5 +1,7 @@
 package com.github.jinahya.mysql.employees.persistence;
 
+import org.mockito.Mockito;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -40,6 +42,15 @@ abstract class __BaseEntity__Test<ENTITY extends _BaseEntity<ID>, ID extends Ser
         } catch (final ReflectiveOperationException roe) {
             throw new RuntimeException("failed to instantiate " + entityClass, roe);
         }
+    }
+
+    /**
+     * Returns a spy of {@link #newEntityInstance()}.
+     *
+     * @return a spy of {@link #newEntityInstance()}.
+     */
+    ENTITY newEntitySpy() {
+        return Mockito.spy(newEntityInstance());
     }
 
     // --------------------------------------------------------------------------------------------------------- idClass

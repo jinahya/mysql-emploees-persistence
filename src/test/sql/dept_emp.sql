@@ -51,3 +51,54 @@ WHERE from_date <= CURDATE()
 GROUP BY emp_no
 HAVING c > 1
 ;
+
+
+
+
+
+
+
+
+-- ------------------------------------------------------------------------- https://stackoverflow.com/q/78632033/330457
+
+SELECT *
+FROM dept_emp
+WHERE emp_no IN (21076, 37429, 91899, 206466, 228322, 290639, 435075,
+                 435183, 440659, 469544, 475919, 496147)
+ORDER BY emp_no
+;
+
+SELECT *
+FROM dept_emp
+WHERE emp_no IN (21076, 37429, 91899, 206466, 228322, 290639, 435075,
+                 435183, 440659, 469544, 475919, 496147)
+ORDER BY emp_no, from_date, to_date
+;
+
+SELECT emp_no,
+       from_date,
+       to_date,
+#        LAG(to_date) OVER (PARTITION BY emp_no ORDER BY from_date) previous_to_date
+       LAG(to_date) OVER (PARTITION BY emp_no ORDER BY to_date) previous_to_date
+FROM dept_emp
+;
+
+SELECT emp_no, from_date, to_date, previous_to_date
+FROM (SELECT emp_no,
+             from_date,
+             to_date,
+             LAG(to_date) OVER (PARTITION BY emp_no ORDER BY from_date) previous_to_date
+#              LAG(to_date) OVER (PARTITION BY emp_no ORDER BY to_date) previous_to_date
+      FROM dept_emp) AS de
+WHERE from_date < previous_to_date
+;
+
+select *
+from dept_emp
+where exists (select null
+              from dept_emp other
+              where other.emp_no = dept_emp.emp_no
+                and other.dept_no <> dept_emp.dept_no
+                and other.from_date < dept_emp.to_date
+                and other.to_date > dept_emp.from_date)
+;

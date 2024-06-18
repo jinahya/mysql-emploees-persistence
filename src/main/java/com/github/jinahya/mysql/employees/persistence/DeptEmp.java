@@ -2,6 +2,7 @@ package com.github.jinahya.mysql.employees.persistence;
 
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -110,8 +111,15 @@ public class DeptEmp
     public static final String TABLE_NAME = "dept_emp";
 
     // ---------------------------------------------------------------------------------------------------------- emp_no
+
+    /**
+     * The name of the table column to which the {@link DeptEmp_#empNo empNo} attribute maps. The value is {@value}.
+     */
     public static final String COLUMN_NAME_EMP_NO = Employee.COLUMN_NAME_EMP_NO;
 
+    /**
+     * The name of the entity attribute from which the {@value #COLUMN_NAME_EMP_NO} column maps. The value is {@value}.
+     */
     public static final String ATTRIBUTE_NAME_EMP_NO = "empNo";
 
     public static final String ATTRIBUTE_NAME_EMPLOYEE = "employee";
@@ -190,7 +198,7 @@ public class DeptEmp
      * @return {@code true} if current value of the {@link DeptEmp_#fromDate fromDate} attribute <em>is after</em>
      * current value of the {@link DeptEmp_#toDate toDate} attribute; {@code false} otherwise.
      */
-//    @jakarta.validation.constraints.AssertFalse(message = "fromDate shouldn't be after the toDate")
+    @AssertFalse(message = "fromDate shouldn't be after the toDate")
     private boolean isFromDateAfterToDate() {
         if (fromDate == null || toDate == null) {
             return false;
@@ -205,7 +213,7 @@ public class DeptEmp
      * @return {@code true} if current value of the {@link DeptEmp_#toDate toDate} attribute <em>is after</em> the
      * {@link #ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED}; {@code false} otherwise.
      */
-    //    @jakarta.validation.constraints.AssertFalse
+    @AssertFalse(message = "toDate shouldn't be after the 9999-01-01")
     private boolean isToDateAfterTheUnspecified() {
         if (toDate == null) {
             return false;
@@ -214,6 +222,26 @@ public class DeptEmp
     }
 
     // ------------------------------------------------------------------------------------------------- emp_no/employee
+
+    /**
+     * Returns current value of {@link DeptEmp_#empNo empNo} attribute.
+     *
+     * @return current value of the {@link DeptEmp_#empNo empNo} attribute.
+     */
+    // TODO: narrow the scope
+    public Integer getEmpNo() {
+        return empNo;
+    }
+
+    /**
+     * Replaces current value of {@link DeptEmp_#empNo empNo} attribute with specified value.
+     *
+     * @param empNo new value for the {@link DeptEmp_#empNo empNo} attribute.
+     */
+    // TODO: narrow the scope
+    public void setEmpNo(final Integer empNo) {
+        this.empNo = empNo;
+    }
 
     /**
      * Returns current value of {@link DeptEmp_#employee employee} attribute.
@@ -240,11 +268,39 @@ public class DeptEmp
         );
     }
 
+    /**
+     * Replaces current value of {@link DeptEmp_#employee employee} attribute with specified value, and returns this
+     * entity.
+     *
+     * @param employee new value for the {@link DeptEmp_#employee employee} attribute.
+     * @return this entity.
+     * @implSpec Default implementation invokes {@link #setEmployee(Employee)} method with {@code employee}, and returns
+     * {@code this}.
+     */
+    public DeptEmp employee(final Employee employee) {
+        setEmployee(employee);
+        return this;
+    }
+
     // ---------------------------------------------------------------------------------------------- dept_no/department
+    // TODO: put javadoc
+    // TODO: narrow the scope
+    public String getDeptNo() {
+        return deptNo;
+    }
+
+    // TODO: put javadoc
+    // TODO: narrow the scope
+    public void setDeptNo(final String deptNo) {
+        this.deptNo = deptNo;
+    }
+
+    // TODO: put javadoc
     public Department getDepartment() {
         return department;
     }
 
+    // TODO: put javadoc
     public void setDepartment(final Department department) {
         this.department = department;
         setDeptNo(
@@ -254,16 +310,65 @@ public class DeptEmp
         );
     }
 
+    // TODO: put javadoc
+    public DeptEmp department(final Department department) {
+        setDepartment(department);
+        return this;
+    }
+
     // -------------------------------------------------------------------------------------------------------- fromDate
 
+    /**
+     * Returns current value of {@link DeptEmp_#fromDate fromDate} attribute.
+     *
+     * @return current value of {@link DeptEmp_#fromDate fromDate} attribute.
+     */
+    public LocalDate getFromDate() {
+        return fromDate;
+    }
+
+    /**
+     * Replaces current value of {@link DeptEmp_#fromDate fromDate} attribute with specified value.
+     *
+     * @param fromDate new value for the {@link DeptEmp_#fromDate fromDate} attribute.
+     */
+    public void setFromDate(final LocalDate fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    /**
+     * Replaces current value of {@link DeptEmp_#fromDate fromDate} attribute with specified value, and returns this
+     * object.
+     *
+     * @param fromDate new value for the {@link DeptEmp_#fromDate fromDate} attribute.
+     * @return this object.
+     */
+    public DeptEmp fromDate(final LocalDate fromDate) {
+        setFromDate(fromDate);
+        return this;
+    }
+
     // ---------------------------------------------------------------------------------------------------------- toDate
+    // TODO: put javadoc
+    public LocalDate getToDate() {
+        return toDate;
+    }
+
+    // TODO: put javadoc
+    public void setToDate(final LocalDate toDate) {
+        this.toDate = toDate;
+    }
+
+    // TODO: put javadoc
+    public DeptEmp toDate(final LocalDate toDate) {
+        setToDate(toDate);
+        return this;
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotNull
     @Id
     @Column(name = COLUMN_NAME_EMP_NO, nullable = false, insertable = true, updatable = false)
-//    @lombok.Setter(AccessLevel.PACKAGE)
-//    @lombok.Getter(AccessLevel.PACKAGE)
     private Integer empNo;
 
     @Valid
@@ -279,8 +384,6 @@ public class DeptEmp
     @Id
     @Column(name = COLUMN_NAME_DEPT_NO, length = COLUMN_LENGTH_DEPT_NO, nullable = false, insertable = true,
             updatable = false)
-//    @lombok.Setter(AccessLevel.PACKAGE)
-//    @lombok.Getter(AccessLevel.PACKAGE)
     private String deptNo;
 
     @Valid
@@ -291,10 +394,9 @@ public class DeptEmp
     private Department department;
 
     // -----------------------------------------------------------------------------------------------------------------
-//    @jakarta.validation.constraints.PastOrPresent
     @NotNull
     @Basic(optional = false)
-    @Column(name = COLUMN_NAME_FROM_DATE, nullable = false, insertable = true, updatable = true)
+    @Column(name = COLUMN_NAME_FROM_DATE, nullable = false, insertable = true, updatable = false)
     private LocalDate fromDate;
 
     @NotNull

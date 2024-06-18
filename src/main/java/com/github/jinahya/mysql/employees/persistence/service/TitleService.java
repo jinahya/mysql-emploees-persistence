@@ -2,6 +2,7 @@ package com.github.jinahya.mysql.employees.persistence.service;
 
 import com.github.jinahya.mysql.employees.persistence.Employee;
 import com.github.jinahya.mysql.employees.persistence.Title;
+import com.github.jinahya.mysql.employees.persistence.TitleId;
 import com.github.jinahya.mysql.employees.persistence.TitleId_;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -9,8 +10,8 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
-public interface TitlePersistenceService
-        extends _BaseEntityPersistenceService<Title> {
+public interface TitleService
+        extends _IBaseEntityService<Title, TitleId> {
 
     /**
      * Sets specified employee's title as specified from specified date, while setting specified employee's latest

@@ -4,7 +4,7 @@ import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalAmount;
 
 interface ISpanTest<
-        ISPAN extends ISpan<TEMPORAL_ACCESSOR, TEMPORAL_AMOUNT>,
+        ISPAN extends _ITerm<TEMPORAL_ACCESSOR, TEMPORAL_AMOUNT>,
         TEMPORAL_ACCESSOR extends TemporalAccessor & Comparable<? super TEMPORAL_ACCESSOR>,
         TEMPORAL_AMOUNT extends TemporalAmount> {
 
