@@ -152,6 +152,10 @@ $ sh ./.docker.stop.sh
     * [Employees DB on GitHub](https://github.com/datacharmer/test_db)
 * [5 Employees Structure](https://dev.mysql.com/doc/employee/en/sakila-structure.html)
 
+### Java
+
+* [A general-purpose utility to retrieve Java generic type values](https://xebia.com/blog/a-general-purpose-utility-to-retrieve-java-generic-type-values/)
+
 ### [Jakarta Annotations](https://jakarta.ee/specifications/annotations/)
 
 #### [Jakarta Annotations 3.0](https://jakarta.ee/specifications/annotations/3.0/)

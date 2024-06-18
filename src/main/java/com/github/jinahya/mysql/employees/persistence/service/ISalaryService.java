@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDate;
 
-public interface SalaryService
+public interface ISalaryService
         extends _IBaseEntityService<Salary, SalaryId> {
 
     void set(@Valid @NotNull Employee employee, @Positive int salary, @NotNull LocalDate fromDate,

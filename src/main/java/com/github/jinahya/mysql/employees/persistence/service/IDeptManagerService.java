@@ -8,7 +8,7 @@ import jakarta.annotation.Nonnull;
 
 import java.time.LocalDate;
 
-public interface DeptManagerService
+public interface IDeptManagerService
         extends _IBaseEntityService<DeptManager, DeptManagerId> {
 
     /**

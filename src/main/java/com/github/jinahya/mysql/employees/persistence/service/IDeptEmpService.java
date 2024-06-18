@@ -11,7 +11,7 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface DeptEmpService
+public interface IDeptEmpService
         extends _IBaseEntityService<DeptEmp, DeptEmpId> {
 
     /**

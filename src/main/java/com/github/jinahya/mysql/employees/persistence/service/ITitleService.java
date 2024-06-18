@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
-public interface TitleService
+public interface ITitleService
         extends _IBaseEntityService<Title, TitleId> {
 
     /**
