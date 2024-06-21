@@ -51,7 +51,8 @@ class Department_Find_IT
                     } catch (final SQLException sqle) {
                         throw new RuntimeException(sqle);
                     }
-                });
+                }
+        );
     }
 
     private static List<String> selectDeptNoListUsingQueryLanguage(final EntityManager entityManager,

@@ -2,9 +2,16 @@ package com.github.jinahya.mysql.employees.persistence;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.EntityManager;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * An abstract class for integration-testing {@link DeptEmp} entity.
+ *
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ */
+@Slf4j
 abstract class DeptEmp__IT
         extends _BaseEntityIT<DeptEmp, DeptEmpId> {
 
@@ -55,9 +62,9 @@ abstract class DeptEmp__IT
         final var root = query.from(DeptEmp.class);                                                 // FROM DeptEmp AS e
         query.select(root.get(DeptEmp_.empNo));                                                     // SELECT e.empNo
         return entityManager.createQuery(query)
-                .setFirstResult(startPosition)                                                      // offset
-                .setMaxResults(1)                                                                   // limit
-                .getSingleResult(); // NoResultException
+                            .setFirstResult(startPosition)                                          // offset
+                            .setMaxResults(1)                                                       // limit
+                            .getSingleResult(); // NoResultException
     }
 
     static
@@ -117,9 +124,10 @@ abstract class DeptEmp__IT
         final var root = query.from(DeptEmp.class);                                                 // FROM DeptEmp AS e
         query.select(root.get(DeptEmp_.deptNo));                                                    // SELECT e.deptNo
         return entityManager.createQuery(query)
-                .setFirstResult(startPosition)                                                      // offset
-                .setMaxResults(1)                                                                   // limit
-                .getSingleResult();
+                            .setFirstResult(
+                                    startPosition)                                                      // offset
+                            .setMaxResults(1)                                                                   // limit
+                            .getSingleResult();
     }
 
     static

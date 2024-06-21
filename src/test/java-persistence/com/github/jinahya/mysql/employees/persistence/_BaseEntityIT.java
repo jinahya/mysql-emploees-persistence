@@ -1,5 +1,6 @@
 package com.github.jinahya.mysql.employees.persistence;
 
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.metamodel.EntityType;
 import lombok.AccessLevel;
@@ -115,9 +116,8 @@ abstract class _BaseEntityIT<ENTITY extends _BaseEntity<ID>, ID extends Serializ
      */
     final String entityName() {
         if (entityName == null) {
-            entityName = applyEntityManager(em -> {
-                final var metamodel = em.getMetamodel();
-                final var entityType = metamodel.entity(entityClass);
+            entityName = applyMetamodel(m -> {
+                final var entityType = m.entity(entityClass);
                 return entityType.getName();
             });
         }
@@ -125,13 +125,14 @@ abstract class _BaseEntityIT<ENTITY extends _BaseEntity<ID>, ID extends Serializ
     }
 
     /**
-     * Returns the identifier of specified entity.
+     * Returns the identifier of specified entity instance.
      *
-     * @param entity the entity.
+     * @param entity the entity instance whose identifier is returned.
      * @return the identifier of the {@code entity}.
      * @see jakarta.persistence.PersistenceUnitUtil#getIdentifier(Object)
      */
-    final ID id(final ENTITY entity) {
+    final @Nonnull ID id(final @Nonnull ENTITY entity) {
+        Objects.requireNonNull(entity, "entity is null");
         return applyEntityManager(em -> {
             return idClass.cast(
                     em.getEntityManagerFactory().getPersistenceUnitUtil().getIdentifier(entity));

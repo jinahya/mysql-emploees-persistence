@@ -3,6 +3,7 @@ package com.github.jinahya.mysql.employees.persistence;
 import jakarta.annotation.Nonnull;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.metamodel.Metamodel;
 import lombok.AccessLevel;
@@ -44,10 +45,13 @@ abstract class __PersistenceIT {
     }
 
     // --------------------------------------------------------------------------------------------------- entityManager
-
-    <R> R applyMetamodel(final Function<? super Metamodel, ? extends R> function) {
+    final <R> R applyMetamodel(final Function<? super Metamodel, ? extends R> function) {
         Objects.requireNonNull(function, "function is null");
         return applyEntityManager(em -> function.apply(em.getMetamodel()));
+    }
+
+    final <R> R applyEntityManagerFactory(final Function<EntityManagerFactory, ? extends R> function) {
+        return applyEntityManager(em -> function.apply(em.getEntityManagerFactory()));
     }
 
     /**

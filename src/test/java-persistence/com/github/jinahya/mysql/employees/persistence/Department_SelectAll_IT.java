@@ -3,6 +3,7 @@ package com.github.jinahya.mysql.employees.persistence;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.EntityManager;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("selectAll")
+@Slf4j
 class Department_SelectAll_IT
         extends Department__IT {
 
@@ -47,8 +49,8 @@ class Department_SelectAll_IT
         query.select(root);                                                                     // SELECT e
         query.orderBy(builder.asc(root.get(Department_.deptNo)));                               // ORDER BY e.deptNo ASC
         return entityManager.createQuery(query)
-                .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
-                .getResultList();
+                            .setMaxResults(Optional.ofNullable(maxResults).orElse(Integer.MAX_VALUE))
+                            .getResultList();
     }
 
     static List<Department> selectAll(final EntityManager entityManager, final Integer maxResults) {
