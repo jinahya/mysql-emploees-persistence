@@ -6,13 +6,12 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings({
         "java:S114", // interface _IChrono...
-        "java:S119" // <SELF ...>
+        "java:S119" // <TEMPORAL_ACCESSOR ...>
 })
 public interface _IChronoLocalDateTerm<
-        SELF extends _IChronoLocalDateTerm<SELF, TEMPORAL_ACCESSOR, TEMPORAL_AMOUNT>,
         TEMPORAL_ACCESSOR extends ChronoLocalDate,
         TEMPORAL_AMOUNT extends TemporalAmount>
-        extends _ITerm<SELF, TEMPORAL_ACCESSOR, TEMPORAL_AMOUNT> {
+        extends _ITerm<TEMPORAL_ACCESSOR, TEMPORAL_AMOUNT> {
 
     // ----------------------------------------------------------------------------------------- Jakarta Bean Validation
     @Override

@@ -1,9 +1,11 @@
 package com.github.jinahya.mysql.employees.persistence;
 
+import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.AssertTrue;
 
 import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalAmount;
+import java.util.Comparator;
 import java.util.Objects;
 
 /**
@@ -15,20 +17,24 @@ import java.util.Objects;
  */
 @SuppressWarnings({
         "java:S114", // interface _Iterm
-        "java:S119" // <SELF ...>
+        "java:S119" // <TEMPORAL_ACCESSOR ...>
 })
-public interface _ITerm<SELF extends _ITerm<SELF, TEMPORAL_ACCESSOR, TEMPORAL_AMOUNT>,
+public interface _ITerm<
         TEMPORAL_ACCESSOR extends TemporalAccessor & Comparable<? super TEMPORAL_ACCESSOR>,
         TEMPORAL_AMOUNT extends TemporalAmount>
-        extends Comparable<SELF> {
+        extends Comparable<_ITerm<?, ?>> {
+
+    /**
+     * A comparator compares {@link #getTermStart() termStart} properties.
+     */
+    Comparator<_ITerm<?, ?>> COMPARING_TERM_START = Comparator.comparing(_ITerm::getTermStart);
 
     // -------------------------------------------------------------------------------------------- java.lang.Comparable
 
     @Override
-    default int compareTo(final SELF o) {
+    default int compareTo(final _ITerm<?, ?> o) {
         Objects.requireNonNull(o, "o is null");
-        // https://stackoverflow.com/q/78650289/330457
-        return getTermStart().compareTo(o.getTermStart());
+        return COMPARING_TERM_START.compare(this, o);
     }
 
     // ----------------------------------------------------------------------------------------- Jakarta Bean Validation

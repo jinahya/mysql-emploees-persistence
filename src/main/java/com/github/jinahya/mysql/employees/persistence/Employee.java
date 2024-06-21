@@ -251,8 +251,8 @@ public class Employee
     public <R> @Nullable R applyBirthDate(final @NonNull Function<? super LocalDate, ? extends R> function) {
         Objects.requireNonNull(function, "function is null");
         return Optional.ofNullable(getBirthDate())
-                .map(function)
-                .orElse(null);
+                       .map(function)
+                       .orElse(null);
     }
 
     /**
@@ -292,8 +292,8 @@ public class Employee
     public <R> R applyHireDate(final @NonNull Function<? super LocalDate, ? extends R> function) {
         Objects.requireNonNull(function, "function is null");
         return Optional.ofNullable(getHireDate())
-                .map(function)
-                .orElse(null);
+                       .map(function)
+                       .orElse(null);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

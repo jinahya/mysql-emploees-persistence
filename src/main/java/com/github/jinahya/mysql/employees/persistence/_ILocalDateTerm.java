@@ -7,8 +7,8 @@ import java.time.Period;
         "java:S114", // interface _ILocal...
         "java:S119" // <SELF ...>
 })
-public interface _ILocalDateTerm<SELF extends _ILocalDateTerm<SELF>>
-        extends _IChronoLocalDateTerm<SELF, LocalDate, Period> {
+public interface _ILocalDateTerm
+        extends _IChronoLocalDateTerm<LocalDate, Period> {
 
     @Override
     default Period getTermSpan() {

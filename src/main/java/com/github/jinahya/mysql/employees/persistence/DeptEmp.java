@@ -99,7 +99,7 @@ import java.util.Optional;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DeptEmp
         extends _BaseEntity<DeptEmpId>
-        implements _ILocalDateTerm<DeptEmp> {
+        implements _ILocalDateTerm {
 
     @Serial
     private static final long serialVersionUID = -6772594303267134517L;
@@ -157,6 +157,12 @@ public class DeptEmp
     public static final LocalDate ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED =
             _DomainConstants.ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED;
 
+    // -----------------------------------------------------------------------------------------------------------------
+    static final Comparator<DeptEmp> COMPARATOR =
+            COMPARING_EMP_NO
+                    .thenComparing(COMPARING_DEPT_NO)
+                    .thenComparing(COMPARING_TERM_START);
+
     // ------------------------------------------------------------------------------------------ STATIC FACTORY METHODS
     static DeptEmp of(final Integer empNo, final String deptNo) {
         final var instance = new DeptEmp();
@@ -187,22 +193,14 @@ public class DeptEmp
     }
 
     // -------------------------------------------------------------------------------------------- java.lang.Comparable
+
     @Override
-    public int compareTo(final DeptEmp o) {
+    public int compareTo(final _ITerm<?, ?> o) {
         Objects.requireNonNull(o, "o is null");
-        {
-            final var result = COMPARING_EMP_NO.compare(this, o);
-            if (result != 0) {
-                return result;
-            }
+        if (!(o instanceof DeptEmp)) {
+            throw new ClassCastException("not an instance of " + getClass());
         }
-        {
-            final var result = COMPARING_DEPT_NO.compare(this, o);
-            if (result != 0) {
-                return result;
-            }
-        }
-        return _ILocalDateTerm.super.compareTo(o);
+        return COMPARATOR.compare(this, (DeptEmp) o);
     }
 
     // --------------------------------------------------------------------------------------------- Jakarta Persistence
