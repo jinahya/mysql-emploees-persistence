@@ -98,7 +98,8 @@ import java.util.Optional;
 @ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DeptEmp
-        extends _BaseEntity<DeptEmpId> {
+        extends _BaseEntity<DeptEmpId>
+        implements _ILocalDateTerm {
 
     @Serial
     private static final long serialVersionUID = -6772594303267134517L;
@@ -219,6 +220,27 @@ public class DeptEmp
             return false;
         }
         return toDate.isAfter(ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED);
+    }
+
+    // ------------------------------------------------------------------------------------------------- _ILocalDateTerm
+    @Override
+    public LocalDate getTermStart() {
+        return getFromDate();
+    }
+
+    @Override
+    public void getTermStart(final LocalDate termStart) {
+        setFromDate(termStart);
+    }
+
+    @Override
+    public LocalDate getTermEnd() {
+        return getToDate();
+    }
+
+    @Override
+    public void getTermEnd(final LocalDate termEnd) {
+        setToDate(termEnd);
     }
 
     // ------------------------------------------------------------------------------------------------- emp_no/employee

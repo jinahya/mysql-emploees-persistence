@@ -108,7 +108,7 @@ public class DeptManager
 
     public static final LocalDate COLUMN_VALUE_TO_DATE_UNSPECIFIED = _DomainConstants.ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED;
 
-    // -----------------------------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------------ java.lang.Object
 
     @Override
     public boolean equals(final Object obj) {
@@ -125,6 +125,10 @@ public class DeptManager
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    // ------------------------------------------------------------------------------------------------- BEAN-VALIDATION
+
+    // ------------------------------------------------------------------------------------------------- _ILocalDateTerm
 
     // -------------------------------------------------------------------------------------------------------------- id
     public <R> R applyId(final Function<? super DeptManagerId, ? extends R> function) {

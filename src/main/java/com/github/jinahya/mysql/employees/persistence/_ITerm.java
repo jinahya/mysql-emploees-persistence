@@ -42,16 +42,44 @@ public interface _ITerm<
     // -----------------------------------------------------------------------------------------------------------------
 
     /**
-     * Returns a temporal amount between {@link #getTermStart() termStart} and {@link #getTermEnd() termEnd}.
+     * Returns a temporal amount, of {@link TEMPORAL_AMOUNT}, between {@link #getTermStart() termStart} and
+     * {@link #getTermEnd() termEnd}.
      *
-     * @return a temporal amount between {@link #getTermStart() termStart} and {@link #getTermEnd() termEnd};
-     * {@code null} when either {@link #getTermStart() termStart} or {@link #getTermEnd() termEnd} is {@code null}.
+     * @return a temporal amount, of {@link TEMPORAL_AMOUNT} between {@link #getTermStart() termStart} and
+     * {@link #getTermEnd() termEnd}; {@code null} when either {@link #getTermStart() termStart} or
+     * {@link #getTermEnd() termEnd} is {@code null}.
      */
     TEMPORAL_AMOUNT getTermSpan();
 
-    // -----------------------------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------------------- termStart
+
+    /**
+     * Returns the start of this term.
+     *
+     * @return the start of this term.
+     */
     TEMPORAL_ACCESSOR getTermStart();
 
-    // -----------------------------------------------------------------------------------------------------------------
+    /**
+     * Replaces current value of {@code termStart} property with specified value.
+     *
+     * @param termStart new value for the {@code termStart} property.
+     */
+    void getTermStart(TEMPORAL_ACCESSOR termStart);
+
+    // --------------------------------------------------------------------------------------------------------- termEnd
+
+    /**
+     * Returns the end of this term.
+     *
+     * @return the end of this term.
+     */
     TEMPORAL_ACCESSOR getTermEnd();
+
+    /**
+     * Replaces current value of {@code termEnd} property with specified value.
+     *
+     * @param termEnd new value for the {@code termEnd} property.
+     */
+    void getTermEnd(TEMPORAL_ACCESSOR termEnd);
 }

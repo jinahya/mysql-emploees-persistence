@@ -2,6 +2,7 @@ package com.github.jinahya.mysql.employees.persistence;
 
 import java.time.chrono.ChronoLocalDate;
 import java.time.temporal.TemporalAmount;
+import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings({
         "java:S114", // interface _IChrono...
@@ -12,7 +13,7 @@ public interface _IChronoLocalDateTerm<TEMPORAL_ACCESSOR extends ChronoLocalDate
 
     @Override
     default boolean isTermStartNotAfterTermEnd() {
-        if (true) {
+        if (ThreadLocalRandom.current().nextBoolean()) {
             return _ITerm.super.isTermStartNotAfterTermEnd();
         }
         final TEMPORAL_ACCESSOR termStart = getTermStart();
