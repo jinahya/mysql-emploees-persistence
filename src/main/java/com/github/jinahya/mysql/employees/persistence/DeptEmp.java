@@ -99,7 +99,7 @@ import java.util.Optional;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DeptEmp
         extends _BaseEntity<DeptEmpId>
-        implements _ILocalDateTerm {
+        implements _ILocalDateTerm<DeptEmp> {
 
     @Serial
     private static final long serialVersionUID = -6772594303267134517L;
@@ -125,7 +125,9 @@ public class DeptEmp
 
     public static final String ATTRIBUTE_NAME_EMPLOYEE = "employee";
 
-    // -----------------------------------------------------------------------------------------------------------------
+    private static final Comparator<DeptEmp> COMPARING_EMP_NO = Comparator.comparing(DeptEmp::getEmpNo);
+
+    // --------------------------------------------------------------------------------------------------------- dept_no
     public static final String COLUMN_NAME_DEPT_NO = Department.COLUMN_NAME_DEPT_NO;
 
     public static final int COLUMN_LENGTH_DEPT_NO = Department.COLUMN_LENGTH_DEPT_NO;
@@ -138,12 +140,14 @@ public class DeptEmp
 
     public static final String ATTRIBUTE_NAME_DEPARTMENT = "department";
 
+    private static final Comparator<DeptEmp> COMPARING_DEPT_NO = Comparator.comparing(DeptEmp::getDeptNo);
+
     // ------------------------------------------------------------------------------------------------------- from_date
     public static final String COLUMN_NAME_FROM_DATE = _DomainConstants.COLUMN_NAME_FROM_DATE;
 
     public static final String ATTRIBUTE_NAME_FROM_DATE = "fromDate";
 
-    public static final Comparator<DeptEmp> COMPARING_FROM_DATE = Comparator.comparing(DeptEmp::getFromDate);
+    private static final Comparator<DeptEmp> COMPARING_FROM_DATE = Comparator.comparing(DeptEmp::getFromDate);
 
     // --------------------------------------------------------------------------------------------------------- to_date
     public static final String COLUMN_NAME_TO_DATE = _DomainConstants.COLUMN_NAME_TO_DATE;
@@ -182,9 +186,28 @@ public class DeptEmp
         return Objects.hash(empNo, deptNo);
     }
 
+    // -------------------------------------------------------------------------------------------- java.lang.Comparable
+    @Override
+    public int compareTo(final DeptEmp o) {
+        Objects.requireNonNull(o, "o is null");
+        {
+            final var result = COMPARING_EMP_NO.compare(this, o);
+            if (result != 0) {
+                return result;
+            }
+        }
+        {
+            final var result = COMPARING_DEPT_NO.compare(this, o);
+            if (result != 0) {
+                return result;
+            }
+        }
+        return _ILocalDateTerm.super.compareTo(o);
+    }
+
     // --------------------------------------------------------------------------------------------- Jakarta Persistence
     @jakarta.persistence.PrePersist
-    private void onPrePersist() {
+    private void doOnPrePersist() {
         if (toDate == null) {
             toDate = ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED;
         }

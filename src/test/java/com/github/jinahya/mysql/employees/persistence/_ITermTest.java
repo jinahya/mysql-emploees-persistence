@@ -4,7 +4,7 @@ import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalAmount;
 
 interface _ITermTest<
-        TERM extends _ITerm<TEMPORAL_ACCESSOR, TEMPORAL_AMOUNT>,
+        TERM extends _ITerm<TERM, TEMPORAL_ACCESSOR, TEMPORAL_AMOUNT>,
         TEMPORAL_ACCESSOR extends TemporalAccessor & Comparable<? super TEMPORAL_ACCESSOR>,
         TEMPORAL_AMOUNT extends TemporalAmount> {
 

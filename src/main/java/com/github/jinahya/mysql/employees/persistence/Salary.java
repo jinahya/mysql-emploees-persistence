@@ -65,7 +65,7 @@ import java.util.Optional;
 })
 public class Salary
         extends _BaseEntity<SalaryId>
-        implements _ILocalDateTerm {
+        implements _ILocalDateTerm<Salary> {
 
     @Serial
     private static final long serialVersionUID = 604718367871825963L;
@@ -117,7 +117,7 @@ public class Salary
         return !fromDate.isAfter(toDate);
     }
 
-    // -------------------------------------------------------------------------------------------------- ILocalDateSpan
+    // -------------------------------------------------------------------------------------------------- ILocalDateTerm
 
     @Override
     public LocalDate getTermStart() {
@@ -125,8 +125,18 @@ public class Salary
     }
 
     @Override
+    public void getTermStart(final LocalDate termStart) {
+        setFromDate(termStart);
+    }
+
+    @Override
     public LocalDate getTermEnd() {
         return getToDate();
+    }
+
+    @Override
+    public void getTermEnd(final LocalDate termEnd) {
+        setToDate(termEnd);
     }
 
     // -------------------------------------------------------------------------------------------------- empNo/employee

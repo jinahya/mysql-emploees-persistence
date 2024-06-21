@@ -14,6 +14,8 @@ import java.util.List;
 public interface IDeptEmpService
         extends _IBaseEntityService<DeptEmp, DeptEmpId> {
 
+    // -----------------------------------------------------------------------------------------------------------------
+
     /**
      * Returns assignments of specified employee based on specified date.
      *

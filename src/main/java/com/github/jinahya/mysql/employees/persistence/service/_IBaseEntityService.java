@@ -27,7 +27,9 @@ public interface _IBaseEntityService<ENTITY extends _BaseEntity<ID>, ID extends 
      * @param id the value to identify the entity.
      * @return an optional of identified entity; {@link Optional#empty() empty} when non identified.
      */
-    Optional<ENTITY> find(@NotNull @Nonnull ID id);
+    @NotNull
+    @Nonnull
+    Optional<@Valid ENTITY> findEntity(@NotNull @Nonnull ID id);
 
     /**
      * Persists specified entity, and returns the entity.
@@ -35,5 +37,8 @@ public interface _IBaseEntityService<ENTITY extends _BaseEntity<ID>, ID extends 
      * @param entity the entity to persist.
      * @return given {@code entity}.
      */
-    ENTITY persist(@Valid @NotNull @Nonnull ENTITY entity);
+    @Valid
+    @NotNull
+    @Nonnull
+    ENTITY persistEntity(@Valid @NotNull @Nonnull ENTITY entity);
 }

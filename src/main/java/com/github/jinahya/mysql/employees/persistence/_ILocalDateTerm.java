@@ -4,10 +4,11 @@ import java.time.LocalDate;
 import java.time.Period;
 
 @SuppressWarnings({
-        "java:S114" // interface _ILocal...
+        "java:S114", // interface _ILocal...
+        "java:S119" // <SELF ...>
 })
-public interface _ILocalDateTerm
-        extends _IChronoLocalDateTerm<LocalDate, Period> {
+public interface _ILocalDateTerm<SELF extends _ILocalDateTerm<SELF>>
+        extends _IChronoLocalDateTerm<SELF, LocalDate, Period> {
 
     @Override
     default Period getTermSpan() {

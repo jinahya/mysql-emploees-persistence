@@ -4,6 +4,7 @@ import jakarta.validation.constraints.AssertTrue;
 
 import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalAmount;
+import java.util.Objects;
 
 /**
  * Represents a span.
@@ -14,13 +15,23 @@ import java.time.temporal.TemporalAmount;
  */
 @SuppressWarnings({
         "java:S114", // interface _Iterm
-        "java:S119" // <TEMPORAL_ACCESSOR ...>
+        "java:S119" // <SELF ...>
 })
-public interface _ITerm<
+public interface _ITerm<SELF extends _ITerm<SELF, TEMPORAL_ACCESSOR, TEMPORAL_AMOUNT>,
         TEMPORAL_ACCESSOR extends TemporalAccessor & Comparable<? super TEMPORAL_ACCESSOR>,
-        TEMPORAL_AMOUNT extends TemporalAmount> {
+        TEMPORAL_AMOUNT extends TemporalAmount>
+        extends Comparable<SELF> {
 
-    // ------------------------------------------------------------------------------------------------- Bean-Validation
+    // -------------------------------------------------------------------------------------------- java.lang.Comparable
+
+    @Override
+    default int compareTo(final SELF o) {
+        Objects.requireNonNull(o, "o is null");
+        // https://stackoverflow.com/q/78650289/330457
+        return getTermStart().compareTo(o.getTermStart());
+    }
+
+    // ----------------------------------------------------------------------------------------- Jakarta Bean Validation
 
     /**
      * Asserts that {@link #getTermStart() termStart} is not after the {@link #getTermEnd() termEnd}.
