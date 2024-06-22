@@ -125,7 +125,7 @@ public class Salary
     }
 
     @Override
-    public void getTermStart(final LocalDate termStart) {
+    public void setTermStart(final LocalDate termStart) {
         setFromDate(termStart);
     }
 
@@ -135,7 +135,7 @@ public class Salary
     }
 
     @Override
-    public void getTermEnd(final LocalDate termEnd) {
+    public void setTermEnd(final LocalDate termEnd) {
         setToDate(termEnd);
     }
 

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @SuppressWarnings({
         "java:S101" // class _Domain...
 })
-public final class _DomainConstants {
+public final class _BaseEntityConstants {
 
     // ------------------------------------------------------------------------------------------------------- from_date
 
@@ -41,7 +41,7 @@ public final class _DomainConstants {
             LocalDate.parse(COLUMN_VALUE_TO_DATE_UNSPECIFIED);
 
     // -----------------------------------------------------------------------------------------------------------------
-    private _DomainConstants() {
+    private _BaseEntityConstants() {
         throw new AssertionError("instantiation is not allowed");
     }
 }

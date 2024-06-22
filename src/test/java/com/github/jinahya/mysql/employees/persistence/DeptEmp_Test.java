@@ -4,21 +4,26 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @Slf4j
 class DeptEmp_Test
         extends _BaseEntity_Test<DeptEmp, DeptEmpId> {
 
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
     DeptEmp_Test() {
         super(DeptEmp.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+    @DisplayName("compareTo")
     @Nested
     class CompareToTest {
 
@@ -38,13 +43,101 @@ class DeptEmp_Test
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+    @DisplayName("_ILocalDateTerm")
+    @Nested
+    class _ILocalDateTermTest {
+
+        @DisplayName("getTermStart")
+        @Nested
+        class GetTermStartClass {
+
+            @Test
+            void __() {
+                // ----------------------------------------------------------------------------------------------- given
+                final var instance = newEntitySpy();
+                // ------------------------------------------------------------------------------------------------ when
+                final var termStart = instance.getTermStart();
+                // ------------------------------------------------------------------------------------------------ then
+                verify(instance, times(1)).getFromDate();
+            }
+        }
+
+        @DisplayName("setTermStart")
+        @Nested
+        class SetTermStartTest {
+
+            @Test
+            void _Null_Null() {
+                // ----------------------------------------------------------------------------------------------- given
+                final var instance = newEntitySpy();
+                // ------------------------------------------------------------------------------------------------ when
+                instance.setTermStart(null);
+                // ------------------------------------------------------------------------------------------------ then
+                verify(instance, times(1)).setFromDate(null);
+            }
+
+            @Test
+            void _Nonnull_Nonnull() {
+                // ----------------------------------------------------------------------------------------------- given
+                final var instance = newEntitySpy();
+                final var termStart = LocalDate.now();
+                // ------------------------------------------------------------------------------------------------ when
+                instance.setTermStart(termStart);
+                // ------------------------------------------------------------------------------------------------ then
+                verify(instance, times(1)).setFromDate(termStart);
+            }
+        }
+
+        @DisplayName("getTermEnd")
+        @Nested
+        class GetTermEndClass {
+
+            @Test
+            void __() {
+                // ----------------------------------------------------------------------------------------------- given
+                final var instance = newEntitySpy();
+                // ------------------------------------------------------------------------------------------------ when
+                final var termEnd = instance.getTermEnd();
+                // ------------------------------------------------------------------------------------------------ then
+                verify(instance, times(1)).getToDate();
+            }
+        }
+
+        @DisplayName("setTermEnd")
+        @Nested
+        class SetTermEndTest {
+
+            @Test
+            void _Null_Null() {
+                // ----------------------------------------------------------------------------------------------- given
+                final var instance = newEntitySpy();
+                // ------------------------------------------------------------------------------------------------ when
+                instance.setTermEnd(null);
+                // ------------------------------------------------------------------------------------------------ then
+                verify(instance, times(1)).setToDate(null);
+            }
+
+            @Test
+            void _Nonnull_Nonnull() {
+                // ----------------------------------------------------------------------------------------------- given
+                final var instance = newEntitySpy();
+                final var termEnd = LocalDate.now();
+                // ------------------------------------------------------------------------------------------------ when
+                instance.setTermEnd(termEnd);
+                // ------------------------------------------------------------------------------------------------ then
+                verify(instance, times(1)).setToDate(termEnd);
+            }
+        }
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
     @DisplayName("setEmployee(employee)")
     @Nested
     class SetEmployeeTest {
 
-        @DisplayName("null -> setEmpNo(null)")
+        @DisplayName("(null) -> setEmpNo(null)")
         @Test
-        void __Null() {
+        void _SetEmpNoNull_NullEmployee() {
             // --------------------------------------------------------------------------------------------------- given
             final var instance = newEntitySpy();
             final var employee = (Employee) null;
@@ -54,17 +147,76 @@ class DeptEmp_Test
             verify(instance, times(1)).setEmpNo(null);
         }
 
-        @DisplayName("non-null-with-null-empNo -> setEmpNo(null)")
+        @DisplayName("nonnull-with-null-empNo -> setEmpNo(null)")
         @Test
-        void __NonNullWithNullId() {
+        void _SetEmpNoNull_NonnullWithNullEmpNo() {
             // --------------------------------------------------------------------------------------------------- given
             final var instance = newEntitySpy();
-            final var employee = spy(Employee.class);
-            assert employee.getEmpNo() == null;
+            final var employee = Mockito.mock(Employee.class);
+            given(employee.getEmpNo()).willReturn(null);
             // ---------------------------------------------------------------------------------------------------- when
             instance.setEmployee(employee);
             // ---------------------------------------------------------------------------------------------------- then
             verify(instance, times(1)).setEmpNo(null);
+        }
+
+        @DisplayName("nonnull-with-null-empNo -> setEmpNo(empNo)")
+        @Test
+        void _SetEmpNoEmpNo_NonnullWithNonnullEmpNo() {
+            // --------------------------------------------------------------------------------------------------- given
+            final var instance = newEntitySpy();
+            final var employee = Mockito.mock(Employee.class);
+            final var empNo = 0;
+            given(employee.getEmpNo()).willReturn(empNo);
+            // ---------------------------------------------------------------------------------------------------- when
+            instance.setEmployee(employee);
+            // ---------------------------------------------------------------------------------------------------- then
+            verify(instance, times(1)).setEmpNo(empNo);
+        }
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @DisplayName("setDepartment(department)")
+    @Nested
+    class SetDepartmentTest {
+
+        @DisplayName("(null) -> setDeptNo(null)")
+        @Test
+        void _SetDeptNoNull_NullDepartment() {
+            // --------------------------------------------------------------------------------------------------- given
+            final var instance = newEntitySpy();
+            final var department = (Department) null;
+            // ---------------------------------------------------------------------------------------------------- when
+            instance.setDepartment(department);
+            // ---------------------------------------------------------------------------------------------------- then
+            verify(instance, times(1)).setDeptNo(null);
+        }
+
+        @DisplayName("nonnull-with-null-deptNo -> setDeptNo(null)")
+        @Test
+        void _SetDeptNoNull_NonnullWithNullDeptNo() {
+            // --------------------------------------------------------------------------------------------------- given
+            final var instance = newEntitySpy();
+            final var department = Mockito.mock(Department.class);
+            given(department.getDeptNo()).willReturn(null);
+            // ---------------------------------------------------------------------------------------------------- when
+            instance.setDepartment(department);
+            // ---------------------------------------------------------------------------------------------------- then
+            verify(instance, times(1)).setDeptNo(null);
+        }
+
+        @DisplayName("nonnull-with-null-deptNo -> setDeptNo(deptNo)")
+        @Test
+        void _SetDeptNoDeptNo_NonnullWithNonnullDeptNo() {
+            // --------------------------------------------------------------------------------------------------- given
+            final var instance = newEntitySpy();
+            final var department = Mockito.mock(Department.class);
+            final var deptNo = "0";
+            given(department.getDeptNo()).willReturn(deptNo);
+            // ---------------------------------------------------------------------------------------------------- when
+            instance.setDepartment(department);
+            // ---------------------------------------------------------------------------------------------------- then
+            verify(instance, times(1)).setDeptNo(deptNo);
         }
     }
 }

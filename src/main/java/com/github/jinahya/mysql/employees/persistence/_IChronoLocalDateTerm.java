@@ -4,6 +4,13 @@ import java.time.chrono.ChronoLocalDate;
 import java.time.temporal.TemporalAmount;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * An extended {@link _ITerm} for {@link ChronoLocalDate}.
+ *
+ * @param <TEMPORAL_ACCESSOR> temporal access type parameter
+ * @param <TEMPORAL_AMOUNT>   temporal amount type parameter
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ */
 @SuppressWarnings({
         "java:S114", // interface _IChrono...
         "java:S119" // <TEMPORAL_ACCESSOR ...>

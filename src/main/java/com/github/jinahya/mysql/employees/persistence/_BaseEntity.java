@@ -32,4 +32,25 @@ public abstract class _BaseEntity<ID extends Serializable>
     protected _BaseEntity() {
         super();
     }
+
+    // ------------------------------------------------------------------------------------------------ java.lang.Object
+
+    @Override
+    public String toString() {
+        return super.toString() + '{' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        return obj instanceof _BaseEntity<?>;
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

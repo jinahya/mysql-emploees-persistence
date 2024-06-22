@@ -106,7 +106,7 @@ public class DeptManager
     // --------------------------------------------------------------------------------------------------------- to_date
     public static final String COLUMN_NAME_TO_DATE = "to_date";
 
-    public static final LocalDate COLUMN_VALUE_TO_DATE_UNSPECIFIED = _DomainConstants.ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED;
+    public static final LocalDate COLUMN_VALUE_TO_DATE_UNSPECIFIED = _BaseEntityConstants.ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED;
 
     // ------------------------------------------------------------------------------------------------ java.lang.Object
 

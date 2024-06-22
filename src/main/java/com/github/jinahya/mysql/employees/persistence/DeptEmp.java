@@ -5,7 +5,9 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serial;
 import java.time.LocalDate;
@@ -93,10 +95,7 @@ import java.util.Optional;
 @IdClass(DeptEmpId.class)
 @Entity
 @Table(name = DeptEmp.TABLE_NAME)
-@Setter
-@Getter
-@ToString(callSuper = true)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Slf4j
 public class DeptEmp
         extends _BaseEntity<DeptEmpId>
         implements _ILocalDateTerm {
@@ -120,11 +119,22 @@ public class DeptEmp
 
     /**
      * The name of the entity attribute from which the {@value #COLUMN_NAME_EMP_NO} column maps. The value is {@value}.
+     *
+     * @see #ATTRIBUTE_NAME_EMPLOYEE
      */
     public static final String ATTRIBUTE_NAME_EMP_NO = "empNo";
 
+    /**
+     * The name of the entity attribute, of {@link Employee}, from which the {@value #COLUMN_NAME_EMP_NO} column maps.
+     * The value is {@value}.
+     *
+     * @see #ATTRIBUTE_NAME_EMP_NO
+     */
     public static final String ATTRIBUTE_NAME_EMPLOYEE = "employee";
 
+    /**
+     * A comparator compares {@value #ATTRIBUTE_NAME_EMP_NO} attribute.
+     */
     private static final Comparator<DeptEmp> COMPARING_EMP_NO = Comparator.comparing(DeptEmp::getEmpNo);
 
     // --------------------------------------------------------------------------------------------------------- dept_no
@@ -140,30 +150,38 @@ public class DeptEmp
 
     public static final String ATTRIBUTE_NAME_DEPARTMENT = "department";
 
+    /**
+     * A compartor compares {@link #ATTRIBUTE_NAME_DEPT_NO} attribute.
+     */
     private static final Comparator<DeptEmp> COMPARING_DEPT_NO = Comparator.comparing(DeptEmp::getDeptNo);
 
     // ------------------------------------------------------------------------------------------------------- from_date
-    public static final String COLUMN_NAME_FROM_DATE = _DomainConstants.COLUMN_NAME_FROM_DATE;
+    public static final String COLUMN_NAME_FROM_DATE = _BaseEntityConstants.COLUMN_NAME_FROM_DATE;
 
     public static final String ATTRIBUTE_NAME_FROM_DATE = "fromDate";
 
     private static final Comparator<DeptEmp> COMPARING_FROM_DATE = Comparator.comparing(DeptEmp::getFromDate);
 
     // --------------------------------------------------------------------------------------------------------- to_date
-    public static final String COLUMN_NAME_TO_DATE = _DomainConstants.COLUMN_NAME_TO_DATE;
+    public static final String COLUMN_NAME_TO_DATE = _BaseEntityConstants.COLUMN_NAME_TO_DATE;
 
     public static final String ATTRIBUTE_NAME_TO_DATE = "toDate";
 
     public static final LocalDate ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED =
-            _DomainConstants.ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED;
+            _BaseEntityConstants.ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED;
 
     // -----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * A comparator combines {@link #COMPARING_EMP_NO}, {@link #COMPARING_DEPT_NO}, and
+     * {@link _ITerm#COMPARING_TERM_START}.
+     */
     static final Comparator<DeptEmp> COMPARATOR =
             COMPARING_EMP_NO
                     .thenComparing(COMPARING_DEPT_NO)
                     .thenComparing(COMPARING_TERM_START);
 
-    // ------------------------------------------------------------------------------------------ STATIC FACTORY METHODS
+    // ------------------------------------------------------------------------------------------ STATIC-FACTORY-METHODS
     static DeptEmp of(final Integer empNo, final String deptNo) {
         final var instance = new DeptEmp();
         instance.setEmpNo(empNo);
@@ -173,43 +191,59 @@ public class DeptEmp
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
+    /**
+     * Creates a new instance.
+     */
+    protected DeptEmp() {
+        super();
+    }
+
     // ------------------------------------------------------------------------------------------------ java.lang.Object
+
+    @Override
+    public String toString() {
+        return super.toString() + '{' +
+                "empNo=" + empNo +
+                ",deptNo=" + deptNo +
+                ",fromDate=" + fromDate +
+                ",toDate=" + toDate +
+                '}';
+    }
 
     @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof DeptEmp that)) {
+        if (!(obj instanceof DeptEmp deptEmp)) {
             return false;
         }
-        return Objects.equals(empNo, that.empNo) &&
-                Objects.equals(deptNo, that.deptNo);
+        if (!super.equals(obj)) {
+            return false;
+        }
+        return Objects.equals(empNo, deptEmp.empNo)
+                && Objects.equals(deptNo, deptEmp.deptNo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(empNo, deptNo);
+        return Objects.hash(
+                super.hashCode(),
+                empNo,
+                deptNo
+        );
     }
 
     // -------------------------------------------------------------------------------------------- java.lang.Comparable
-
     @Override
     public int compareTo(final _ITerm<?, ?> o) {
-        Objects.requireNonNull(o, "o is null");
-        if (!(o instanceof DeptEmp)) {
-            throw new ClassCastException("not an instance of " + getClass());
-        }
-        return COMPARATOR.compare(this, (DeptEmp) o);
+        return COMPARATOR.compare(
+                this,
+                (DeptEmp) Objects.requireNonNull(o, "o is null") // NullPointerException, ClassCastException
+        );
     }
 
     // --------------------------------------------------------------------------------------------- Jakarta Persistence
-    @jakarta.persistence.PrePersist
-    private void doOnPrePersist() {
-        if (toDate == null) {
-            toDate = ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED;
-        }
-    }
 
     // ----------------------------------------------------------------------------------------- Jakarta Bean Validation
 
@@ -219,7 +253,10 @@ public class DeptEmp
      *
      * @return {@code true} if current value of the {@link DeptEmp_#fromDate fromDate} attribute <em>is after</em>
      * current value of the {@link DeptEmp_#toDate toDate} attribute; {@code false} otherwise.
+     * @deprecated covered by {@link _ITerm#isTermStartNotAfterTermEnd()}
      */
+    // TODO: remove;
+    @Deprecated
     @AssertFalse(message = "fromDate shouldn't be after the toDate")
     private boolean isFromDateAfterToDate() {
         if (fromDate == null || toDate == null) {
@@ -229,7 +266,7 @@ public class DeptEmp
     }
 
     /**
-     * Asserts current value of {@link DeptEmp_#toDate toDate} attribute <em>is not after</em>
+     * Asserts current value of {@link DeptEmp_#toDate toDate} attribute <em>is not after</em> the
      * {@link #ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED}.
      *
      * @return {@code true} if current value of the {@link DeptEmp_#toDate toDate} attribute <em>is after</em> the
@@ -250,7 +287,7 @@ public class DeptEmp
     }
 
     @Override
-    public void getTermStart(final LocalDate termStart) {
+    public void setTermStart(final LocalDate termStart) {
         setFromDate(termStart);
     }
 
@@ -260,7 +297,7 @@ public class DeptEmp
     }
 
     @Override
-    public void getTermEnd(final LocalDate termEnd) {
+    public void setTermEnd(final LocalDate termEnd) {
         setToDate(termEnd);
     }
 
@@ -326,24 +363,18 @@ public class DeptEmp
     }
 
     // ---------------------------------------------------------------------------------------------- dept_no/department
-    // TODO: put javadoc
-    // TODO: narrow the scope
     public String getDeptNo() {
         return deptNo;
     }
 
-    // TODO: put javadoc
-    // TODO: narrow the scope
     public void setDeptNo(final String deptNo) {
         this.deptNo = deptNo;
     }
 
-    // TODO: put javadoc
     public Department getDepartment() {
         return department;
     }
 
-    // TODO: put javadoc
     public void setDepartment(final Department department) {
         this.department = department;
         setDeptNo(
@@ -353,7 +384,6 @@ public class DeptEmp
         );
     }
 
-    // TODO: put javadoc
     public DeptEmp department(final Department department) {
         setDepartment(department);
         return this;
@@ -392,17 +422,17 @@ public class DeptEmp
     }
 
     // ---------------------------------------------------------------------------------------------------------- toDate
-    // TODO: put javadoc
+    // TODO: javadoc
     public LocalDate getToDate() {
         return toDate;
     }
 
-    // TODO: put javadoc
+    // TODO: javadoc
     public void setToDate(final LocalDate toDate) {
         this.toDate = toDate;
     }
 
-    // TODO: put javadoc
+    // TODO: javadoc
     public DeptEmp toDate(final LocalDate toDate) {
         setToDate(toDate);
         return this;
@@ -445,5 +475,5 @@ public class DeptEmp
     @NotNull
     @Basic(optional = false)
     @Column(name = COLUMN_NAME_TO_DATE, nullable = false, insertable = true, updatable = true)
-    private LocalDate toDate;
+    private LocalDate toDate = ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED;
 }

@@ -1,6 +1,5 @@
 package com.github.jinahya.mysql.employees.persistence;
 
-import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.AssertTrue;
 
 import java.time.temporal.TemporalAccessor;
@@ -14,6 +13,8 @@ import java.util.Objects;
  * @param <TEMPORAL_ACCESSOR> temporal accessor type parameter
  * @param <TEMPORAL_AMOUNT>   temporal amount type parameter
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ * @see <a href="https://blog-ko.engram.us/duration/">기간 영어로 (duration, period, time frame, span, length of time,
+ * interval, term, tenure 차이)</a>
  */
 @SuppressWarnings({
         "java:S114", // interface _Iterm
@@ -25,7 +26,7 @@ public interface _ITerm<
         extends Comparable<_ITerm<?, ?>> {
 
     /**
-     * A comparator compares {@link #getTermStart() termStart} properties.
+     * A comparator compares {@link #getTermStart() termStart} property.
      */
     Comparator<_ITerm<?, ?>> COMPARING_TERM_START = Comparator.comparing(_ITerm::getTermStart);
 
@@ -49,8 +50,11 @@ public interface _ITerm<
     @AssertTrue
     default boolean isTermStartNotAfterTermEnd() {
         final TEMPORAL_ACCESSOR termStart = getTermStart();
+        if (termStart == null) {
+            return true;
+        }
         final TEMPORAL_ACCESSOR termEnd = getTermEnd();
-        if (termStart == null || termEnd == null) {
+        if (termEnd == null) {
             return true;
         }
         return termStart.compareTo(termEnd) <= 0;
@@ -82,7 +86,7 @@ public interface _ITerm<
      *
      * @param termStart new value for the {@code termStart} property.
      */
-    void getTermStart(TEMPORAL_ACCESSOR termStart);
+    void setTermStart(TEMPORAL_ACCESSOR termStart);
 
     // --------------------------------------------------------------------------------------------------------- termEnd
 
@@ -98,5 +102,5 @@ public interface _ITerm<
      *
      * @param termEnd new value for the {@code termEnd} property.
      */
-    void getTermEnd(TEMPORAL_ACCESSOR termEnd);
+    void setTermEnd(TEMPORAL_ACCESSOR termEnd);
 }
