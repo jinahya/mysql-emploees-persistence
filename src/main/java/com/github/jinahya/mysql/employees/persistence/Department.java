@@ -40,8 +40,6 @@ import java.util.Objects;
 @Table(name = Department.TABLE_NAME)
 @Setter
 @Getter
-@ToString(callSuper = true)
-@NoArgsConstructor
 public class Department
         extends _BaseEntity<String> {
 
@@ -83,7 +81,22 @@ public class Department
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
+    /**
+     * Creates a new instance.
+     */
+    protected Department() {
+        super();
+    }
+
     // ------------------------------------------------------------------------------------------------ java.lang.Object
+
+    @Override
+    public String toString() {
+        return super.toString() + '{' +
+                "deptNo=" + deptNo +
+                ",deptName=" + deptName +
+                '}';
+    }
 
     @Override
     public boolean equals(final Object obj) {
@@ -93,12 +106,18 @@ public class Department
         if (!(obj instanceof Department that)) {
             return false;
         }
+        if (!super.equals(obj)) {
+            return false;
+        }
         return Objects.equals(deptNo, that.deptNo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(deptNo);
+        return Objects.hash(
+                super.hashCode(),
+                deptNo
+        );
     }
 
     // -----------------------------------------------------------------------------------------------------------------

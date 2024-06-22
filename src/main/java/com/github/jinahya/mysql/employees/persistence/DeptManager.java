@@ -62,8 +62,6 @@ import java.util.function.Function;
 @Table(name = DeptManager.TABLE_NAME)
 @Setter
 @Getter
-@ToString(callSuper = true)
-@NoArgsConstructor
 public class DeptManager
         extends _BaseEntity<DeptManagerId> {
 
@@ -92,7 +90,7 @@ public class DeptManager
     // ------------------------------------------------------------------------------------------------------- from_date
 
     /**
-     * The name of the tabel column to which the {@value #ATTRIBUTE_NAME_FROM_DATE} attribute maps. The value is
+     * The name of the table column to which the {@value #ATTRIBUTE_NAME_FROM_DATE} attribute maps. The value is
      * {@value}.
      */
     public static final String COLUMN_NAME_FROM_DATE = "from_date";
@@ -108,7 +106,27 @@ public class DeptManager
 
     public static final LocalDate COLUMN_VALUE_TO_DATE_UNSPECIFIED = _BaseEntityConstants.ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED;
 
+    // ------------------------------------------------------------------------------------------ STATIC-FACTORY-METHODS
+
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    /**
+     * Creates a new instance.
+     */
+    protected DeptManager() {
+        super();
+    }
+
     // ------------------------------------------------------------------------------------------------ java.lang.Object
+
+    @Override
+    public String toString() {
+        return super.toString() + '{' +
+                "id=" + id +
+                ",fromDate=" + fromDate +
+                ",toDate=" + toDate +
+                '}';
+    }
 
     @Override
     public boolean equals(final Object obj) {
@@ -118,15 +136,23 @@ public class DeptManager
         if (!(obj instanceof DeptManager that)) {
             return false;
         }
+        if (!super.equals(obj)) {
+            return false;
+        }
         return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(
+                super.hashCode(),
+                id
+        );
     }
 
-    // ------------------------------------------------------------------------------------------------- BEAN-VALIDATION
+    // --------------------------------------------------------------------------------------------- Jakarta Persistence
+
+    // ----------------------------------------------------------------------------------------- Jakarta Bean Validation
 
     // ------------------------------------------------------------------------------------------------- _ILocalDateTerm
 

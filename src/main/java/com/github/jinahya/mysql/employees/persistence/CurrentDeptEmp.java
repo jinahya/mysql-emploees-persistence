@@ -51,11 +51,27 @@ public class CurrentDeptEmp
     // -----------------------------------------------------------------------------------------------------------------
 
     @Override
+    public String toString() {
+        return super.toString() + '{' +
+                "empNo=" + empNo +
+                ",deptNo=" + deptNo +
+                ",fromDate=" + fromDate +
+                ",toDate=" + toDate +
+                '}';
+    }
+
+//    @Override
+//    public boolean equals(final Object obj) {
+
+    @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
         if (!(obj instanceof CurrentDeptEmp that)) {
+            return false;
+        }
+        if (false && !super.equals(obj)) {
             return false;
         }
         return Objects.equals(empNo, that.empNo) &&
@@ -64,7 +80,11 @@ public class CurrentDeptEmp
 
     @Override
     public int hashCode() {
-        return Objects.hash(empNo, deptNo);
+        return Objects.hash(
+                super.hashCode(),
+                empNo,
+                deptNo
+        );
     }
 
     // -----------------------------------------------------------------------------------------------------------------
