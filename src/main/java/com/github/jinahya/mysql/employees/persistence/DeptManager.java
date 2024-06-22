@@ -136,7 +136,7 @@ public class DeptManager
         if (!(obj instanceof DeptManager that)) {
             return false;
         }
-        if (!super.equals(obj)) {
+        if (false && !super.equals(obj)) {
             return false;
         }
         return Objects.equals(id, that.id);

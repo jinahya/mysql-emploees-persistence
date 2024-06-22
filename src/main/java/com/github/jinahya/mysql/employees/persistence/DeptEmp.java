@@ -218,7 +218,7 @@ public class DeptEmp
         if (!(obj instanceof DeptEmp deptEmp)) {
             return false;
         }
-        if (!super.equals(obj)) {
+        if (false && !super.equals(obj)) {
             return false;
         }
         return Objects.equals(empNo, deptEmp.empNo)

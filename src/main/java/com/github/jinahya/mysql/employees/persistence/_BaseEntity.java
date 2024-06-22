@@ -41,13 +41,13 @@ public abstract class _BaseEntity<ID extends Serializable>
                 '}';
     }
 
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        return obj instanceof _BaseEntity<?>;
-    }
+//    @Override
+//    public boolean equals(final Object obj) {
+//        if (this == obj) {
+//            return true;
+//        }
+//        return obj instanceof _BaseEntity<?>;
+//    }
 
     @Override
     public int hashCode() {

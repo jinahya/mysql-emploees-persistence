@@ -106,7 +106,7 @@ public class Department
         if (!(obj instanceof Department that)) {
             return false;
         }
-        if (!super.equals(obj)) {
+        if (false && !super.equals(obj)) {
             return false;
         }
         return Objects.equals(deptNo, that.deptNo);
