@@ -184,6 +184,19 @@ public class Salary
         );
     }
 
+    /**
+     * Replaces current value of {@link Salary_#employee employee} attribute with specified value, and returns this
+     * object.
+     *
+     * @param employee new value for the {@link Salary_#employee employee} attribute.
+     * @return this object.
+     * @see #setEmployee(Employee)
+     */
+    public Salary employee(final Employee employee) {
+        setEmployee(employee);
+        return this;
+    }
+
     // ---------------------------------------------------------------------------------------------------------- salary
 
     // -------------------------------------------------------------------------------------------------------- fromDate

@@ -22,12 +22,31 @@ package com.github.jinahya.mysql.employees.persistence;
 
 import java.util.Objects;
 
+import static org.mockito.Mockito.spy;
+
 abstract class __BaseId_Test<ID extends _BaseId> {
 
-    // -----------------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
     __BaseId_Test(final Class<ID> idClass) {
         super();
         this.idClass = Objects.requireNonNull(idClass, "idClass is null");
+    }
+
+    // --------------------------------------------------------------------------------------------------------- idClass
+    ID newIdSpy() {
+        return spy(newIdInstance());
+    }
+
+    ID newIdInstance() {
+        try {
+            final var constructor = idClass.getDeclaredConstructor();
+            if (!constructor.canAccess(null)) {
+                constructor.setAccessible(true);
+            }
+            return constructor.newInstance();
+        } catch (final ReflectiveOperationException roe) {
+            throw new RuntimeException("failed to instantiate " + idClass, roe);
+        }
     }
 
     // -----------------------------------------------------------------------------------------------------------------
