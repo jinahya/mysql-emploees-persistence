@@ -3,14 +3,15 @@ package com.github.jinahya.mysql.employees.persistence;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serial;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 /**
  * An entity class maps {@value DeptManager#TABLE_NAME} table.
@@ -104,7 +105,10 @@ public class DeptManager
     // --------------------------------------------------------------------------------------------------------- to_date
     public static final String COLUMN_NAME_TO_DATE = "to_date";
 
-    public static final LocalDate COLUMN_VALUE_TO_DATE_UNSPECIFIED = _BaseEntityConstants.ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED;
+    public static final String ATTRIBUTE_NAME_TO_DATE = "toDate";
+
+    public static final LocalDate COLUMN_VALUE_TO_DATE_UNSPECIFIED =
+            _BaseEntityConstants.ATTRIBUTE_VALUE_TO_DATE_UNSPECIFIED;
 
     // ------------------------------------------------------------------------------------------ STATIC-FACTORY-METHODS
 
@@ -155,26 +159,46 @@ public class DeptManager
     // ----------------------------------------------------------------------------------------- Jakarta Bean Validation
 
     // ------------------------------------------------------------------------------------------------- _ILocalDateTerm
+    // TODO: implement methods
 
-    // -------------------------------------------------------------------------------------------------------------- id
-    public <R> R applyId(final Function<? super DeptManagerId, ? extends R> function) {
-        return Objects.requireNonNull(function, "function is null").apply(getId());
+    // ------------------------------------------------------------------------------------------ id/employee/department
+
+    /**
+     * Returns current value of {@link DeptManager_#id id} attribute.
+     *
+     * @return current value of the {@link DeptManager_#id id} attribute.
+     */
+    // TODO: narrow the scope
+    public DeptManagerId getId() {
+        return id;
     }
 
-    public DeptManager acceptId(final Consumer<? super DeptManagerId> consumer) {
-        Objects.requireNonNull(consumer, "consumer is null");
-        return applyId(v -> {
-            consumer.accept(v);
-            return this;
-        });
+    /**
+     * Replaces current value of {@link DeptManager_#id id} attribute with specified value.
+     *
+     * @param id new value for the {@link DeptManager_#id id} attribute.
+     */
+    // TODO: narrow the scope
+    public void setId(final DeptManagerId id) {
+        this.id = id;
     }
 
-    // -------------------------------------------------------------------------------------------------------- employee
-
+    /**
+     * Returns current value of {@link DeptManager_#employee employee} attribute.
+     *
+     * @return current value of the {@link DeptManager_#employee employee} attribute.
+     */
     public Employee getEmployee() {
         return employee;
     }
 
+    /**
+     * Replaces current value of {@link DeptManager_#employee employee} attribute with specified value.
+     *
+     * @param employee new value for the {@link DeptManager_#employee employee} attribute.
+     * @implSpec This method also updates {@link DeptManagerId_#empNo id.empNo} attribute path with
+     * {@code employee?.empNo}.
+     */
     public void setEmployee(final Employee employee) {
         this.employee = employee;
         id.setEmpNo(
@@ -184,7 +208,19 @@ public class DeptManager
         );
     }
 
-    // ------------------------------------------------------------------------------------------------------ department
+    /**
+     * Replaces current value of {@link DeptManager_#employee employee} attribute with specified value, and returns this
+     * object.
+     *
+     * @param employee new value for the {@link DeptManager_#employee employee} attribute.
+     * @return this object.
+     * @see #setEmployee(Employee)
+     */
+    public DeptManager employee(final Employee employee) {
+        setEmployee(employee);
+        return this;
+    }
+
     public Department getDepartment() {
         return department;
     }
@@ -198,12 +234,45 @@ public class DeptManager
         );
     }
 
+    public DeptManager department(final Department department) {
+        setDepartment(department);
+        return this;
+    }
+
+    // -------------------------------------------------------------------------------------------------------- fromDate
+
+    /**
+     * Returns current value of {@link DeptManager_#fromDate fromDate} attribute.
+     *
+     * @return current value of {@link DeptManager_#fromDate fromDate} attribute.
+     */
+    public @NotNull LocalDate getFromDate() {
+        return fromDate;
+    }
+
+    /**
+     * Replaces current value of {@link DeptManager_#fromDate fromDate} attribute with specified value.
+     *
+     * @param fromDate new value for the {@link DeptManager_#fromDate fromDate} attribute.
+     */
+    public void setFromDate(@NotNull LocalDate fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    // ---------------------------------------------------------------------------------------------------------- toDate
+    public @NotNull LocalDate getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(@NotNull LocalDate toDate) {
+        this.toDate = toDate;
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     @Valid
     @NotNull
     @EmbeddedId
-    @Setter(AccessLevel.NONE)
-    private DeptManagerId id = new DeptManagerId();
+    private /* final */ DeptManagerId id = new DeptManagerId();
 
     @Valid
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

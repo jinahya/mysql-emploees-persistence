@@ -10,6 +10,7 @@ class Title_Basic_Test
         super(Title.class);
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
     @Override
     SingleTypeEqualsVerifierApi<Title> equals__(final SingleTypeEqualsVerifierApi<Title> verifierApi) {
         return super.equals__(verifierApi)
