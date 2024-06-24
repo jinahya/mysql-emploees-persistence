@@ -30,10 +30,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.Serial;
 import java.time.LocalDate;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
- * An entity for {@value DeptEmpLatestDate#VIEW_NAME} view.
+ * An entity class for {@value DeptEmpLatestDate#VIEW_NAME} view.
  *
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
  */
@@ -45,6 +44,7 @@ import java.util.Optional;
                 WHERE e.employee = :employee"""
 )
 @NamedQuery(
+        /* DEPRECATE; REMOVE; It's the @Id */
         name = "DeptEmpLatestDate.selectOneByEmpNo",
         query = """
                 SELECT e
@@ -76,7 +76,11 @@ public class DeptEmpLatestDate
     public static final String COLUMN_NAME_EMP_NO = DeptEmp.COLUMN_NAME_EMP_NO;
 
     // ------------------------------------------------------------------------------------------------------- from_date
-    // TODO: javadoc
+
+    /**
+     * The name of the view column to which the {@link DeptEmpLatestDate_#fromDate fromDate} attribute maps. The value
+     * is {@value}.
+     */
     public static final String COLUMN_NAME_FROM_DATE = DeptEmp.COLUMN_NAME_FROM_DATE;
 
     // --------------------------------------------------------------------------------------------------------- to_date
@@ -118,7 +122,10 @@ public class DeptEmpLatestDate
 
     @Override
     public int hashCode() {
-        return Objects.hash(empNo);
+        return Objects.hash(
+                super.hashCode(),
+                empNo
+        );
     }
 
     // -------------------------------------------------------------------------------------------------- empNo/employee
@@ -132,11 +139,6 @@ public class DeptEmpLatestDate
         return empNo;
     }
 
-    // TODO: remove! why?
-    public void setEmpNo(final Integer empNo) {
-        this.empNo = empNo;
-    }
-
     /**
      * Returns current value of {@link DeptEmpLatestDate_#employee employee} attribute.
      *
@@ -146,34 +148,21 @@ public class DeptEmpLatestDate
         return employee;
     }
 
-    // TODO: remove! why?
-    public void setEmployee(final Employee employee) {
-        this.employee = employee;
-        setEmpNo(
-                Optional.ofNullable(this.employee)
-                        .map(Employee::getEmpNo)
-                        .orElse(null)
-        );
-    }
-
     // -------------------------------------------------------------------------------------------------------- fromDate
+
+    /**
+     * Returns current value of {@link DeptEmpLatestDate_#fromDate fromDate} attribute.
+     *
+     * @return current value of the {@link DeptEmpLatestDate_#fromDate fromDate} attribute.
+     */
     public LocalDate getFromDate() {
         return fromDate;
     }
 
-    // TODO: remove! why?
-    public void setFromDate(final LocalDate fromDate) {
-        this.fromDate = fromDate;
-    }
-
     // ---------------------------------------------------------------------------------------------------------- toDate
+    // TODO: javadoc
     public LocalDate getToDate() {
         return toDate;
-    }
-
-    // TODO: remove! why?
-    public void setToDate(final LocalDate toDate) {
-        this.toDate = toDate;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -190,8 +179,8 @@ public class DeptEmpLatestDate
     @NotNull
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = COLUMN_NAME_EMP_NO, nullable = false, insertable = false, updatable = false)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
+    @EqualsAndHashCode.Exclude // just for note
+    @ToString.Exclude          // just for note
     private Employee employee;
 
     // -----------------------------------------------------------------------------------------------------------------

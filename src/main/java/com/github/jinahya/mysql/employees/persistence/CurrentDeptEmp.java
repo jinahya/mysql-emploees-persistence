@@ -25,7 +25,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serial;
@@ -41,8 +40,6 @@ import java.util.Objects;
 @Entity
 @Table(name = CurrentDeptEmp.VIEW_NAME)
 @Getter
-@ToString(callSuper = true)
-@NoArgsConstructor
 public class CurrentDeptEmp
         extends _BaseEntity<CurrentDeptEmpId> {
 
@@ -68,7 +65,18 @@ public class CurrentDeptEmp
     // --------------------------------------------------------------------------------------------------------- to_date
     public static final String COLUMN_NAME_TO_DATE = DeptEmpLatestDate.COLUMN_NAME_TO_DATE;
 
-    // -----------------------------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
+
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    /**
+     * Creates a new instance.
+     */
+    protected CurrentDeptEmp() {
+        super();
+    }
+
+    // ------------------------------------------------------------------------------------------------ java.lang.Object
 
     @Override
     public String toString() {
@@ -79,9 +87,6 @@ public class CurrentDeptEmp
                 ",toDate=" + toDate +
                 '}';
     }
-
-//    @Override
-//    public boolean equals(final Object obj) {
 
     @Override
     public boolean equals(final Object obj) {
@@ -105,6 +110,32 @@ public class CurrentDeptEmp
                 empNo,
                 deptNo
         );
+    }
+
+    // ----------------------------------------------------------------------------------------------------------- empNo
+    public Integer getEmpNo() {
+        return empNo;
+    }
+
+    // ---------------------------------------------------------------------------------------------------------- deptNo
+    public String getDeptNo() {
+        return deptNo;
+    }
+
+    // --------------------------------------------------------------------------------------------------------- deptEmp
+    public DeptEmp getDeptEmp() {
+        return deptEmp;
+    }
+
+    // -------------------------------------------------------------------------------------------------------- fromDate
+
+    public LocalDate getFromDate() {
+        return fromDate;
+    }
+
+    // ---------------------------------------------------------------------------------------------------------- toDate
+    public LocalDate getToDate() {
+        return toDate;
     }
 
     // -----------------------------------------------------------------------------------------------------------------

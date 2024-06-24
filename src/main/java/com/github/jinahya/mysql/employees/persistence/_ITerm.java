@@ -28,7 +28,7 @@ import java.util.Comparator;
 import java.util.Objects;
 
 /**
- * Represents a span.
+ * Represents a term of two temporal accessors.
  *
  * @param <TEMPORAL_ACCESSOR> temporal accessor type parameter
  * @param <TEMPORAL_AMOUNT>   temporal amount type parameter
@@ -48,7 +48,8 @@ public interface _ITerm<
     /**
      * A comparator compares {@link #getTermStart() termStart} property.
      */
-    Comparator<_ITerm<?, ?>> COMPARING_TERM_START = Comparator.comparing(_ITerm::getTermStart);
+    /* public static final */ Comparator<_ITerm<?, ?>> COMPARING_TERM_START =
+            Comparator.comparing(_ITerm::getTermStart);
 
     // -------------------------------------------------------------------------------------------- java.lang.Comparable
 

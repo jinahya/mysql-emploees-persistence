@@ -40,7 +40,14 @@ public class CurrentDeptEmpId
     @Serial
     private static final long serialVersionUID = -1321574687810134588L;
 
-    // -----------------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------------- emp_no
+
+    // --------------------------------------------------------------------------------------------------------- dept_no
+    public static final int SIZE_MIN_DEPT_NO = Department.SIZE_MIN_DEPT_NO;
+
+    public static final int SIZE_MAX_DEPT_NO = Department.SIZE_MAX_DEPT_NO;
+
+    // ------------------------------------------------------------------------------------------------ java.lang.Object
 
     @Override
     public boolean equals(final Object obj) {
@@ -57,6 +64,16 @@ public class CurrentDeptEmpId
     @Override
     public int hashCode() {
         return Objects.hash(empNo, deptNo);
+    }
+
+    // ----------------------------------------------------------------------------------------------------------- empNo
+    public Integer getEmpNo() {
+        return empNo;
+    }
+
+    // ---------------------------------------------------------------------------------------------------------- deptNo
+    public String getDeptNo() {
+        return deptNo;
     }
 
     // -----------------------------------------------------------------------------------------------------------------

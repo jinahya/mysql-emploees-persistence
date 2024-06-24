@@ -31,22 +31,26 @@ group by `dept_emp`.`emp_no`
 ;
 
 -- -------------------------------------------------------------------------------------------------------------- emp_no
+-- obviously
 SELECT emp_no, COUNT(1) AS c
-FROM employees.dept_emp_latest_date
+FROM dept_emp_latest_date
 GROUP BY emp_no
 HAVING c > 1
 ;
 
 -- ----------------------------------------------------------------------------------------------------------- from_date
+SELECT MIN(from_date)
+FROM dept_emp_latest_date
+;
 
 -- ------------------------------------------------------------------------------------------------------------- to_date
-SELECT *
+SELECT COUNT(1)
 FROM dept_emp_latest_date
-WHERE to_date <> '9999-01-01'
+WHERE to_date > '9999-01-01'
 ;
 
 -- --------------------------------------------------------------------------------------------------- from_date,to_date
 SELECT *
-FROM employees.dept_emp_latest_date
+FROM dept_emp_latest_date
 WHERE from_date > to_date
 ;

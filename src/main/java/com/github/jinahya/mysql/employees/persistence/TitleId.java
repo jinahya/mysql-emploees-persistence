@@ -20,7 +20,6 @@ package com.github.jinahya.mysql.employees.persistence;
  * #L%
  */
 
-import jakarta.annotation.Nonnull;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -54,8 +53,7 @@ public class TitleId
      * @param fromDate a value for {@link TitleId_#fromDate fromDate} attribute.
      * @return a new instance of {@code empNo}, {@code title}, and {@code fromDate}.
      */
-    public static @Nonnull TitleId of(final @Nonnull Integer empNo, final @Nonnull String title,
-                                      final @Nonnull LocalDate fromDate) {
+    public static TitleId of(final Integer empNo, final String title, final LocalDate fromDate) {
         // TODO: implement!
         throw new UnsupportedOperationException("not implemented yet");
     }

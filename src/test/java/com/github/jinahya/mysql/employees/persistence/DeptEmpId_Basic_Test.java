@@ -20,13 +20,23 @@ package com.github.jinahya.mysql.employees.persistence;
  * #L%
  */
 
-class Department_Test
-        extends _BaseEntity_Test<Department, String> {
+import nl.jqno.equalsverifier.Warning;
+import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
+
+class DeptEmpId_Basic_Test
+        extends _BaseId_Basic_Test<DeptEmpId> {
 
     /**
      * Creates a new instance.
      */
-    Department_Test() {
-        super(Department.class);
+    DeptEmpId_Basic_Test() {
+        super(DeptEmpId.class);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @Override
+    SingleTypeEqualsVerifierApi<DeptEmpId> equals__(final SingleTypeEqualsVerifierApi<DeptEmpId> verifierApi) {
+        return super.equals__(verifierApi)
+                    .suppress(Warning.NONFINAL_FIELDS);
     }
 }

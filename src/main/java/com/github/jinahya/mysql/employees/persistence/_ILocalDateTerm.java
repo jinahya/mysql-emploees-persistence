@@ -29,11 +29,15 @@ import java.time.Period;
 public interface _ILocalDateTerm
         extends _IChronoLocalDateTerm<LocalDate, Period> {
 
+    // ---------------------------------------------------------------------------------------------------------- _ITerm
     @Override
     default Period getTermSpan() {
         final var termStart = getTermStart();
+        if (termStart == null) {
+            return null;
+        }
         final var termEnd = getTermEnd();
-        if (termStart == null || termEnd == null) {
+        if (termEnd == null) {
             return null;
         }
         return Period.between(termStart, termEnd);
