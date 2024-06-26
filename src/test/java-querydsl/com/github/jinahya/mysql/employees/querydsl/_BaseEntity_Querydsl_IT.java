@@ -9,9 +9,9 @@ package com.github.jinahya.mysql.employees.querydsl;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,7 +22,7 @@ package com.github.jinahya.mysql.employees.querydsl;
 
 import com.github.jinahya.mysql.employees.persistence._BaseEntity;
 import com.github.jinahya.mysql.employees.persistence._BaseEntityTestUtils;
-import com.github.jinahya.mysql.employees.persistence._PersistenceProducer;
+import com.github.jinahya.mysql.employees.persistence.__PersistenceProducer;
 import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -43,7 +43,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 @AddBeanClasses({
-        _PersistenceProducer.class
+        __PersistenceProducer.class
 })
 @ExtendWith(WeldJunit5AutoExtension.class)
 abstract class _BaseEntity_Querydsl_IT<ENTITY extends _BaseEntity<ID>, ID extends Serializable> {

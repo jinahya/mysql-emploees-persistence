@@ -58,7 +58,8 @@
 <!--    <version.lombok>1.18.30</version.lombok>-->
     <version.lombok>1.18.32</version.lombok>
     <version.maven-failsafe>${version.maven-surefire}</version.maven-failsafe>
-    <version.maven-surefire>3.2.5</version.maven-surefire>
+<!--    <version.maven-surefire>3.2.5</version.maven-surefire>-->
+    <version.maven-surefire>3.3.0</version.maven-surefire>
     <version.mysql-connector-j>8.3.0</version.mysql-connector-j>
     <!-- https://search.maven.org/artifact/org.eclipse.persistence/eclipselink -->
     <version.org.eclipse.persistence>4.0.2</version.org.eclipse.persistence>
@@ -191,7 +192,8 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.6.3</version>
+<!--          <version>3.6.3</version>-->
+          <version>3.7.0</version>
           <configuration>
             <additionalOptions>
               <additionalOption>-Xdoclint:${doclint}</additionalOption>
@@ -222,22 +224,22 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>3.4.1</version>
+          <version>3.4.2</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.5.0</version>
+          <version>3.6.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
-          <version>4.0.0-M13</version>
+          <version>4.0.0-M15</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>build-helper-maven-plugin</artifactId>
-          <version>3.5.0</version>
+          <version>3.6.0</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -247,7 +249,8 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>sonar-maven-plugin</artifactId>
-          <version>3.11.0.3922</version>
+<!--          <version>3.11.0.3922</version>-->
+          <version>4.0.0.4121</version>
         </plugin>
         <plugin>
           <groupId>org.jacoco</groupId>
@@ -298,7 +301,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.4.1</version>
+        <version>3.5.0</version>
         <executions>
           <execution>
             <id>enforce-dependency-convergence</id>
@@ -389,12 +392,12 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>4.8.4.0</version>
+        <version>4.8.6.0</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jxr-plugin</artifactId>
-        <version>3.3.2</version>
+        <version>3.4.0</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -403,12 +406,12 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>3.3.1</version>
+        <version>3.4.0</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.22.0</version>
+        <version>3.23.0</version>
         <configuration>
           <!-- Unsupported targetJdk value '21'. -->
           <skip>true</skip>
@@ -775,7 +778,8 @@
       <properties>
         <groupId.querydsl>io.github.openfeign.querydsl</groupId.querydsl>
         <!--        <version.querydsl>6.1</version.querydsl>-->
-        <version.querydsl>6.2.1</version.querydsl>
+<!--        <version.querydsl>6.2.1</version.querydsl>-->
+        <version.querydsl>6.4</version.querydsl>
       </properties>
       <dependencies>
         <dependency>

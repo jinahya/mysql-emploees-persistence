@@ -9,14 +9,15 @@
 
 ### API Versions
 
-| platform / framework                        | version                             | notes               |
-|---------------------------------------------|-------------------------------------|---------------------|
-| [Jakarta Persistence]                       | [Jakarta Persistence 3.2]           |                     |
-| [Jakarta Persistence]                       | [Jakarta Persistence 3.1]           |                     |
-| [Spring Boot Dependency Versions (current)] | `:jakarta.persistence-api:3.1.0`    |                     |
-| [Spring Boot Dependency Versions (3.2.6)]   | `:jakarta.persistence-api:3.1.0`    |                     |
-| [Jakarta EE Platform 11]                    | `:jakarta.persistence-api:3.2.0-M2` | (Under development) |
-| [Jakarta EE Platform 10]                    | `:jakarta.persistence-api:3.1.0`    |                     |
+| platform / framework                         | version                          | notes                                                                                                            |
+|----------------------------------------------|----------------------------------|------------------------------------------------------------------------------------------------------------------|
+| [Jakarta Persistence]                        | [Jakarta Persistence 3.2]        |                                                                                                                  |
+| [Jakarta Persistence]                        | [Jakarta Persistence 3.1]        |                                                                                                                  |
+| [Spring Boot Dependency Versions (current)]  | `:jakarta.persistence-api:3.1.0` |                                                                                                                  |
+| [Spring Boot Dependency Versions (3.2.7)]    | `:jakarta.persistence-api:3.1.0` |                                                                                                                  |
+| [Spring Boot Dependency Versions (3.2.6)]    | `:jakarta.persistence-api:3.1.0` |                                                                                                                  |
+| [Jakarta EE Platform 11] (Under development) | `:jakarta.persistence-api:3.2.0` | [jakarta.platform:jakartaee-api-parent](https://search.maven.org/artifact/jakarta.platform/jakartaee-api-parent) |
+| [Jakarta EE Platform 10]                     | `:jakarta.persistence-api:3.1.0` |                                                                                                                  |
 
 ---
 
@@ -26,13 +27,14 @@ The [latest LTS](https://www.oracle.com/java/technologies/java-se-support-roadma
 module.
 
 ```text
-$ grep \<maven\\.compiler\\. pom.xml
+ mvn help:effective-pom | grep \<maven\\.compiler\\.                                                                                                                                                                                                                                                                                                  sketch ✗
+Running `/Users/jin.kwon/gitcl/github.com/jinahya/mysql-emploees-persistence/mvnw`...
+    <maven.compiler.release>21</maven.compiler.release>
     <maven.compiler.source>21</maven.compiler.source>
-    <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
-    <maven.compiler.release>${maven.compiler.target}</maven.compiler.release>
-    <maven.compiler.testSource>${maven.compiler.source}</maven.compiler.testSource>
-    <maven.compiler.testTarget>${maven.compiler.testSource}</maven.compiler.testTarget>
-    <maven.compiler.testRelease>${maven.compiler.testTarget}</maven.compiler.testRelease>
+    <maven.compiler.target>21</maven.compiler.target>
+    <maven.compiler.testRelease>21</maven.compiler.testRelease>
+    <maven.compiler.testSource>21</maven.compiler.testSource>
+    <maven.compiler.testTarget>21</maven.compiler.testTarget>
 ```
 
 ## Apache Maven
@@ -81,18 +83,18 @@ src
 * &#x2705; - should be selected
 * &#x2713; - either one should be selected
 
-| Profiles                | Java | Jakarta Persistence | Querydsl | Jakarta EE | Spring Boot | Notes   |
-|-------------------------|------|---------------------|----------|------------|-------------|---------|
-| application             |      |                     |          | &#x2705;   | &#x2705;    |         |
-| application-jakarta-ee  |      |                     |          | &#x2705;   |             |         |
-| application-spring-boot |      |                     |          |            | &#x2705;    |         |
-| failsafe                |      | &#x2705;            | &#x2705; | &#x2705;   | &#x2705;    | for ITs |
-| persistence             |      | &#x2705;            | &#x2705; |            |             |         |
-| persistence-eclipselink |      | &#x2713;            | &#x2713; |            |             |         |
-| persistence-hibernate   |      | &#x2713;            | &#x2713; |            |             |         |
-| querydsl                |      |                     | &#x2705; |            |             |         |
-| querydsl-5              |      |                     | &#x2713; |            |             |         |
-| querydsl-6              |      |                     | &#x2713; |            |             |         |
+| Profiles                  | Java | Jakarta Persistence | Querydsl | Jakarta EE | Spring Boot | Notes   |
+|---------------------------|------|---------------------|----------|------------|-------------|---------|
+| `application`             |      |                     |          | &#x2705;   | &#x2705;    |         |
+| `application-jakarta-ee`  |      |                     |          | &#x2705;   |             |         |
+| `application-spring-boot` |      |                     |          |            | &#x2705;    |         |
+| `failsafe`                |      | &#x2705;            | &#x2705; | &#x2705;   | &#x2705;    | for ITs |
+| `persistence`             |      | &#x2705;            | &#x2705; |            |             |         |
+| `persistence-eclipselink` |      | &#x2713;            | &#x2713; |            |             |         |
+| `persistence-hibernate`   |      | &#x2713;            | &#x2713; |            |             |         |
+| `querydsl`                |      |                     | &#x2705; |            |             |         |
+| `querydsl-5`              |      |                     | &#x2713; |            |             |         |
+| `querydsl-6`              |      |                     | &#x2713; |            |             |         |
 
 e.g.
 
@@ -264,6 +266,8 @@ $ sh ./.docker.stop.sh
 [Jakarta Persistence 3.1]: https://jakarta.ee/specifications/persistence/3.1/
 
 [Spring Boot Dependency Versions (current)]: https://docs.spring.io/spring-boot/appendix/dependency-versions/coordinates.html
+
+[Spring Boot Dependency Versions (3.2.7)]: https://docs.spring.io/spring-boot/docs/3.2.7/reference/html/dependency-versions.html#appendix.dependency-versions
 
 [Spring Boot Dependency Versions (3.2.6)]: https://docs.spring.io/spring-boot/docs/3.2.6/reference/html/dependency-versions.html#appendix.dependency-versions
 
